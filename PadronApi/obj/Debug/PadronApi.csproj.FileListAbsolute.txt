@@ -1,0 +1,7 @@
+C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\PadronApi\bin\Debug\PadronApi.dll
+C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\PadronApi\bin\Debug\PadronApi.pdb
+C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\PadronApi\bin\Debug\ScjnUtilities.dll
+C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\PadronApi\bin\Debug\ScjnUtilities.pdb
+C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\PadronApi\obj\Debug\PadronApi.dll
+C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\PadronApi\obj\Debug\PadronApi.pdb
+C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\PadronApi\obj\Debug\PadronApi.csprojResolveAssemblyReference.cache

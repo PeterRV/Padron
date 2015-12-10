@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="Organismos.ListaOrganismos"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:UIControls="clr-namespace:UIControls;assembly=UIControls"
+             xmlns:converter="clr-namespace:Organismos.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:filter="http://schemas.bolapansoft.com/xaml/Controls/ItemsFilter"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             Background="White"
+             Loaded="UserControl_Loaded"
+             d:DesignHeight="300"
+             d:DesignWidth="600"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <converter:CiudadConverter x:Key="ciudadConv" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+            <!--<RowDefinition Height="*" />-->
+        </Grid.RowDefinitions>
+        <UIControls:SearchTextBox Width="256"
+                                  Margin="10,18,0,0"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Top"
+                                  LabelText="Buscar por organismo o ubicación..."
+                                  TextChanged="SearchTextBox_TextChanged"
+                                  TextWrapping="Wrap" />
+
+
+        <filter:FilterDataGrid x:Name="GOrganismos"
+                               Grid.Row="1"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Stretch"
+                               AutoGenerateColumns="False"
+                               EnableRowVirtualization="True"
+                               FontSize="14"
+                               IsReadOnly="True"
+                               ItemsSource="{Binding}"
+                               SelectionChanged="GOrganismos_SelectionChanged">
+            <DataGrid.Columns>
+
+                <DataGridTextColumn Width="*"
+                                    Binding="{Binding OrganismoDesc}"
+                                    Header="Organismo" />
+                <DataGridTextColumn Width="120"
+                                    Binding="{Binding TipoOrganismo}"
+                                    Header="Tipo" />
+                <DataGridTextColumn Width="120"
+                                    Binding="{Binding TipoDistr}"
+                                    Header="Distribución" />
+                <DataGridTextColumn Width="150"
+                                    Binding="{Binding Ciudad,
+                                                      Converter={StaticResource ciudadConv}}"
+                                    Header="Ciudad" />
+            </DataGrid.Columns>
+        </filter:FilterDataGrid>
+    </Grid>
+</UserControl>

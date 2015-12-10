@@ -1,0 +1,142 @@
+﻿<Window x:Class="Obras.ObrasWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:control="clr-namespace:NumericUpDownControl;assembly=NumericUpDownControl"
+        xmlns:converter="clr-namespace:Obras.Converters"
+        Title="Obras"
+        Width="661"
+        Height="396"
+        Loaded="Window_Loaded"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <converter:TextValConverter x:Key="textconverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="35" />
+        </Grid.RowDefinitions>
+
+        <Grid Name="PanelCentral">
+            <Label Margin="24,32,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="Título:" />
+            <TextBox x:Name="TxtTitulo"
+                     Height="96"
+                     Margin="25,63,25,0"
+                     HorizontalAlignment="Stretch"
+                     VerticalAlignment="Top"
+                     Text="{Binding Titulo,
+                                    Converter={StaticResource textconverter}}"
+                     TextWrapping="Wrap" />
+            <Label Margin="25,180,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="Núm. de material:" />
+            <TextBox x:Name="TxtNumMaterial"
+                     Width="140"
+                     Height="23"
+                     Margin="24,210,0,0"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top"
+                     Text="{Binding NumMaterial,Mode=TwoWay,Converter={StaticResource textconverter}}"
+                     TextWrapping="Wrap" PreviewTextInput="TxtNumMaterial_PreviewTextInput" />
+            <Label Margin="25,252,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="Presentación:" />
+            <ComboBox x:Name="CbxPresentacion"
+                      Width="176"
+                      Margin="24,278,0,0"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top"
+                      DisplayMemberPath="Descripcion"
+                      ItemsSource="{Binding}"
+                      SelectedValuePath="IdElemento" />
+            <Label Margin="192,180,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="Núm. de volúmenes:" />
+            <control:NumericBox x:Name="TxtNumVolumen"
+                                Width="120"
+                                Height="23"
+                                Margin="192,210,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Maximum="15"
+                                Minimum="1"
+                                Value="{Binding NumLibros,
+                                                Mode=TwoWay}" />
+            <TextBox x:Name="TxtIsbn"
+                     Width="140"
+                     Height="23"
+                     Margin="347,210,0,0"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top"
+                     LostFocus="TxtIsbn_LostFocus"
+                     Text="{Binding Isbn}"
+                     TextWrapping="Wrap" />
+            <Label Margin="347,180,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="ISBN:" />
+            <Label Margin="273,252,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="Tipo de obra:" />
+            <ComboBox x:Name="CbxTipoObra"
+                      Width="176"
+                      Margin="273,278,0,0"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top"
+                      DisplayMemberPath="Descripcion"
+                      ItemsSource="{Binding}"
+                      SelectedValuePath="IdElemento" />
+
+            <Label Margin="505,180,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Content="Año publicación:" />
+
+            <control:NumericBox x:Name="TxtYear"
+                                Width="125"
+                                Height="23"
+                                Margin="505,210,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Maximum="3000"
+                                Minimum="1870"
+                                Value="{Binding AnioPublicacion,
+                                                Mode=TwoWay}" />
+            <Image Width="29"
+                   Height="20"
+                   Margin="390,186,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Source="Resources/question_64.png"
+                   ToolTip="El formato de ISBN para 10 digitos es XXX-XXX-XXX-XXX-X para 13 dígitos es 978-XXX-XXX-XXX-X" />
+
+        </Grid>
+        <Button x:Name="BtnSalir"
+                Grid.Row="1"
+                Width="75"
+                Margin="0,7,15,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Click="BtnSalir_Click"
+                Content="Salir"
+                IsCancel="True" />
+        <Button x:Name="BtnGuardar"
+                Grid.Row="1"
+                Width="75"
+                Margin="0,7,95,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Click="BtnGuardar_Click"
+                Content="Guardar"
+                IsDefault="True" />
+
+    </Grid>
+</Window>

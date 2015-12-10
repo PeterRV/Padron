@@ -1,0 +1,50 @@
+﻿<Window x:Class="Padron.PapeleriaFolder.Parrafos"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:filter="http://schemas.bolapansoft.com/xaml/Controls/ItemsFilter"
+        Title="Parrafos"
+        Width="800"
+        Height="600"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height=".5*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+        <filter:FilterDataGrid x:Name="GParrafos"
+                               Margin="20"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Stretch" />
+        <Label Grid.Row="1"
+               Margin="20,10,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Content="Párrafo:" />
+        <TextBox x:Name="TxtParrafo"
+                 Grid.Row="1"
+                 Margin="20,40,20,20"
+                 HorizontalAlignment="Stretch"
+                 VerticalAlignment="Stretch"
+                 TextWrapping="Wrap" />
+        <Button x:Name="BtnCancelar"
+                Grid.Row="2"
+                Width="75"
+                Margin="0,18,20,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Content="Cancelar"
+                IsCancel="True" />
+        <Button x:Name="BtnGuardar"
+                Grid.Row="2"
+                Width="75"
+                Margin="20,18,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Guardar"
+                IsEnabled="False" />
+
+
+    </Grid>
+</Window>
