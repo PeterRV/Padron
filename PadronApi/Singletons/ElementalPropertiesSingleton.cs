@@ -34,6 +34,7 @@ namespace PadronApi.Singletons
         #region Organismos 
 
          private static ObservableCollection<ElementalProperties> tipoOrganismo;
+         private static ObservableCollection<ElementalProperties> distribucion;
 
          public static ObservableCollection<ElementalProperties> TipoOrganismo
          {
@@ -46,6 +47,17 @@ namespace PadronApi.Singletons
              }
          }
 
+
+         public static ObservableCollection<ElementalProperties> Distribucion
+         {
+             get
+             {
+                 if (distribucion == null)
+                     distribucion = new ElementalPropertiesModel().GetTiposDistribucion();
+
+                 return distribucion;
+             }
+         }
         #endregion
 
     }

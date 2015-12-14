@@ -6,6 +6,7 @@
         Title="Obras"
         Width="661"
         Height="396"
+        Icon="Resources/rocket.ico"
         Loaded="Window_Loaded"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
@@ -41,8 +42,11 @@
                      Margin="24,210,0,0"
                      HorizontalAlignment="Left"
                      VerticalAlignment="Top"
-                     Text="{Binding NumMaterial,Mode=TwoWay,Converter={StaticResource textconverter}}"
-                     TextWrapping="Wrap" PreviewTextInput="TxtNumMaterial_PreviewTextInput" />
+                     PreviewTextInput="TxtNumMaterial_PreviewTextInput"
+                     Text="{Binding NumMaterial,
+                                    Mode=TwoWay,
+                                    Converter={StaticResource textconverter}}"
+                     TextWrapping="Wrap" />
             <Label Margin="25,252,0,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"

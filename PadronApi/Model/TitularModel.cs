@@ -105,7 +105,11 @@ namespace PadronApi.Model
                 cmd.Parameters.AddWithValue("@Funcion", titular.Funcion);
                 cmd.Parameters.AddWithValue("@NombMay", StringUtilities.PrepareToAlphabeticalOrder(titular.Apellidos) + " " + StringUtilities.PrepareToAlphabeticalOrder(titular.Nombre));
                 cmd.Parameters.AddWithValue("@Fecha", DateTimeUtilities.DateToInt(DateTime.Now));
-                cmd.Parameters.AddWithValue("@Obs", titular.Observaciones);
+
+                if (titular.Observaciones == null)
+                    cmd.Parameters.AddWithValue("@Obs", String.Empty);
+                else
+                    cmd.Parameters.AddWithValue("@Obs", titular.Observaciones);
                 cmd.Parameters.AddWithValue("@Activo", 1);
                 cmd.Parameters.AddWithValue("@QuiereDist", 0);
                 cmd.Parameters.AddWithValue("@IdTitulo", titular.IdTitulo);

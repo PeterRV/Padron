@@ -5,6 +5,7 @@ using System.Windows;
 using PadronApi.Dto;
 using PadronApi.Model;
 using PadronApi.Singletons;
+using ScjnUtilities;
 
 namespace Funcionarios
 {
@@ -62,6 +63,8 @@ namespace Funcionarios
                 CbxGrado.SelectedValue = titular.IdTitulo;
                 CbxEstado.SelectedValue = titular.Estado;
             }
+            else
+                CbxEstado.SelectedIndex = 0;
         }
 
         private void BtnEliminaAdscripcion_Click(object sender, RoutedEventArgs e)
@@ -98,25 +101,31 @@ namespace Funcionarios
 
         private void BtnGuardar_Click(object sender, RoutedEventArgs e)
         {
-            if (!isUpdating)
+            if (CbxGrado.SelectedIndex == -1)
             {
-                //if (CbxCargo.SelectedIndex == -1)
-                //{
-                //    MessageBox.Show("Debes seleccionar el cargo del titular");
-                //    return;
-                //}
-
-                if ((titular.IdOrganismoAdscripcion != 0 && titular.IdOrganismoAdscripcion != 7090) && CbxFuncion.SelectedIndex == -1)
-                {
-                    MessageBox.Show("Selecciona la función del titular dentro del organismo");
+                MessageBox.Show("Selecciona el título con el cual se deben dirigir los oficios al titular", "Agregar Titular", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
-                }
+            }
 
-                if (String.IsNullOrEmpty(TxtNombre.Text) || String.IsNullOrEmpty(TxtApellidos.Text))
-                {
-                    MessageBox.Show("Ingresa el nombre y los apellidos del titular");
+            if (String.IsNullOrEmpty(TxtNombre.Text) || String.IsNullOrEmpty(TxtApellidos.Text))
+            {
+                MessageBox.Show("Ingresa el nombre y los apellidos del titular", "Agregar Titular", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+
+            if ((titular.IdOrganismoAdscripcion != 0 && titular.IdOrganismoAdscripcion != 7090) && CbxFuncion.SelectedIndex == -1)
+            {
+                MessageBox.Show("Selecciona la función del titular dentro del organismo", "Agregar Titular", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (titular.IdOrganismoAdscripcion == 0)
+            {
+                MessageBoxResult result = MessageBox.Show("Este titular no ha sido adscrito a ningún organismo ¿Deseas continuar?", "Titulares", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.No)
                     return;
-                }
             }
 
             titular.IdTitulo = Convert.ToInt32(CbxGrado.SelectedValue);
@@ -129,6 +138,9 @@ namespace Funcionarios
 
             TitularModel model = new TitularModel();
             bool exito = false;
+
+            titular.Nombre = VerificationUtilities.TextBoxStringValidation(titular.Nombre);
+            titular.Apellidos = VerificationUtilities.TextBoxStringValidation(titular.Apellidos);
 
             if (isUpdating)
             {
@@ -159,6 +171,11 @@ namespace Funcionarios
                     this.Close();
                 }
             }
+        }
+
+        private void TxtPreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            e.Handled = VerificationUtilities.ContieneCaractNoPermitidos(e.Text);
         }
     }
 }

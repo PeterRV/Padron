@@ -6,13 +6,14 @@
         Title="PadronWin"
         Height="500"
         MinWidth="500"
+        Icon="Resources/rocket.ico"
         Loaded="Window_Loaded"
         WindowState="Maximized">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="25" />
         </Grid.RowDefinitions>
 
         <Custom:Ribbon Margin="0,0,0,0"

@@ -41,6 +41,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -70,6 +71,7 @@
       <DependentUpon>PaisEstadoWin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\CiudadConverter.cs" />
+    <Compile Include="Converters\TextValConverter.cs" />
     <Compile Include="Exportar.xaml.cs">
       <DependentUpon>Exportar.xaml</DependentUpon>
     </Compile>
@@ -137,6 +139,9 @@
       <Project>{94d9b299-2078-4757-9024-f7910f5713a5}</Project>
       <Name>PadronApi</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\rocket.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

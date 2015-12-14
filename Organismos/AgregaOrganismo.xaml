@@ -1,9 +1,15 @@
 ﻿<Window x:Class="Organismos.AgregaOrganismo"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converter="clr-namespace:Organismos.Converters"
         Title="AgregaOrganismo"
         Width="950"
-        Height="800">
+        Height="800"
+        WindowStartupLocation="CenterScreen"
+        Icon="Resources/rocket.ico" Loaded="Window_Loaded">
+    <Window.Resources>
+        <converter:TextValConverter x:Key="textConvert" />
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="53*" />
@@ -40,6 +46,7 @@
                    Margin="771,16,0,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
+                   Visibility="Hidden"
                    FontSize="14"
                    FontWeight="Bold"
                    Text="Orden" />
@@ -51,7 +58,7 @@
                   DisplayMemberPath="Descripcion"
                   IsEnabled="True"
                   ItemsSource="{Binding }"
-                  SelectedValuePath="IdElemento" />
+                  SelectedValuePath="IdElemento" SelectionChanged="CbxTipoOrg_SelectionChanged" />
         <ComboBox x:Name="CbxOrdinal"
                   Width="176"
                   Margin="274,45,0,0"
@@ -74,9 +81,10 @@
                  Margin="770,44,0,0"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
+                 Visibility="Hidden"
                  Text="{Binding OrdenImpresion,
-                                Mode=TwoWay}" />
-        <GroupBox Name="groupBox1"
+                                Mode=TwoWay}"  />
+        <GroupBox x:Name="GbxMaterias"
                   Height="71"
                   Margin="20,81,20,0"
                   HorizontalAlignment="Stretch"
@@ -148,8 +156,8 @@
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
                  FontSize="14"
-                 Text="{Binding Organismo,
-                                Mode=TwoWay}" />
+                 Text="{Binding OrganismoDesc,
+                                Mode=TwoWay,Converter={StaticResource textConvert}}" />
 
 
         <TextBlock x:Name="textBlock7_Copy"
@@ -178,6 +186,9 @@
         <ComboBox x:Name="CbxDistribucion"
                   Width="247"
                   Margin="655,214,0,0"
+                  ItemsSource="{Binding}"
+                  DisplayMemberPath="Descripcion"
+                  SelectedValuePath="IdElemento"
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top" />
         <GroupBox Grid.Row="1"
@@ -229,7 +240,7 @@
                          Margin="513,60,0,0"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Top"
-                         TextWrapping="Wrap" />
+                         TextWrapping="Wrap" PreviewTextInput="TxtPreviewTextInput" />
                 <Label Margin="638,103,0,0"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
@@ -254,7 +265,7 @@
                          HorizontalAlignment="Left"
                          VerticalAlignment="Top"
                          RenderTransformOrigin="0.5,0.5"
-                         TextWrapping="Wrap">
+                         TextWrapping="Wrap" PreviewTextInput="TxtTelValidation">
                     <TextBox.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform />
@@ -274,7 +285,7 @@
                          Margin="513,146,0,0"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Top"
-                         TextWrapping="Wrap" />
+                         TextWrapping="Wrap" PreviewTextInput="TxtTelValidation" />
                 <Label Margin="10,192,0,0"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
@@ -285,7 +296,7 @@
                          Margin="94,192,0,0"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Top"
-                         TextWrapping="Wrap" />
+                         TextWrapping="Wrap" PreviewTextInput="TxtTelValidation" />
                 <Label Margin="439,189,0,0"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
@@ -296,7 +307,7 @@
                          Margin="513,189,0,0"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Top"
-                         TextWrapping="Wrap" />
+                         TextWrapping="Wrap" PreviewTextInput="TxtTelValidation" />
                 <Label Margin="15,103,0,0"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
@@ -308,7 +319,7 @@
                           VerticalAlignment="Top" />
                 <ComboBox x:Name="CbxEstado"
                           Width="159"
-                          Margin="439,103,0,0"
+                          Margin="422,103,0,0"
                           HorizontalAlignment="Left"
                           VerticalAlignment="Top" />
 
@@ -320,6 +331,21 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+
+            <Button Name="RbtnAgregaFuncionario"
+                    Width="135"
+                    Height="35"
+                    Margin="171,182,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Agregar Funcionario" />
+            <Button Name="RbtnEliminar"
+                    Width="135"
+                    Height="35"
+                    Margin="22,182,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Eliminar Funcionario" />
 
             <TextBlock Name="textBlock10"
                        Grid.Row="2"
@@ -337,21 +363,6 @@
                       Margin="21,27,0,0"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Top" />
-
-            <Button Name="RbtnAgregaFuncionario"
-                    Width="135"
-                    Height="35"
-                    Margin="171,182,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Content="Agregar Funcionario" />
-            <Button Name="RbtnEliminar"
-                    Width="135"
-                    Height="35"
-                    Margin="22,182,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Content="Eliminar Funcionario" />
 
             <TextBlock x:Name="textBlock10_Copy"
                        Grid.Row="2"

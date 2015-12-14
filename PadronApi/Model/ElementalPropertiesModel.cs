@@ -346,7 +346,7 @@ namespace PadronApi.Model
         {
             ObservableCollection<ElementalProperties> catalogoTipoObras = new ObservableCollection<ElementalProperties>();
 
-            string sqlCadena = "SELECT * FROM C_Distribucion ORDER BY IdDistribucion";
+            string sqlCadena = "SELECT * FROM C_TipoOrganismo ORDER BY IdTpo";
 
 
             OleDbConnection connection = new OleDbConnection(connectionString);
@@ -366,8 +366,8 @@ namespace PadronApi.Model
                     while (reader.Read())
                     {
                         ElementalProperties elemento = new ElementalProperties();
-                        elemento.IdElemento = Convert.ToInt32(reader["IdDistribucion"]);
-                        elemento.Descripcion = reader["Distribucion"].ToString();
+                        elemento.IdElemento = Convert.ToInt32(reader["IdTpo"]);
+                        elemento.Descripcion = reader["DescTpo"].ToString();
 
                         catalogoTipoObras.Add(elemento);
 

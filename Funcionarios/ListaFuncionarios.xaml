@@ -13,6 +13,7 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <converter:FuncionConverter x:Key="funcionConv" />
+        <converter:TituloConverter x:Key="tituloConv" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -21,13 +22,20 @@
         </Grid.RowDefinitions>
 
 
-        <UIControls:SearchTextBox Width="250"
-                                  Margin="0,0,0,0"
+        <UIControls:SearchTextBox Width="382"
+                                  Margin="75,15,0,0"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Top"
                                   LabelText="Buscar por nombre, apellidos u organismo..."
                                   Search="SearchTextBox_Search"
                                   TextWrapping="Wrap" />
+
+        <Label Margin="10,10,0,5"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Content="Buscar:"
+               FontSize="14"
+               FontWeight="Black" />
 
         <filter:FilterDataGrid x:Name="GTitulares"
                                Grid.Row="1"
@@ -42,11 +50,9 @@
             <DataGrid.Columns>
 
                 <DataGridTextColumn Width="80"
-                                    Binding="{Binding IdTitulo}"
+                                    Binding="{Binding IdTitulo,
+                                                      Converter={StaticResource tituloConv}}"
                                     Header="Título" />
-                <DataGridTextColumn Width="80"
-                                    Binding="{Binding Cargo}"
-                                    Header="Cargo" />
                 <DataGridTextColumn Width=".7*"
                                     Binding="{Binding Nombre}"
                                     Header="Nombre" />
@@ -62,6 +68,7 @@
                                     Header="Funcion" />
             </DataGrid.Columns>
         </filter:FilterDataGrid>
+
 
 
     </Grid>

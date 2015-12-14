@@ -5,6 +5,7 @@
         Title="Alta de funcionario"
         Width="600"
         Height="670"
+        Icon="Resources/rocket.ico"
         Loaded="Window_Loaded"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
@@ -33,6 +34,7 @@
                              Margin="103,74,0,0"
                              HorizontalAlignment="Left"
                              VerticalAlignment="Top"
+                             PreviewTextInput="TxtPreviewTextInput"
                              Text="{Binding Apellidos,
                                             Converter={StaticResource textConv}}"
                              TextWrapping="Wrap" />
@@ -46,6 +48,7 @@
                              Margin="103,126,0,0"
                              HorizontalAlignment="Left"
                              VerticalAlignment="Top"
+                             PreviewTextInput="TxtPreviewTextInput"
                              Text="{Binding Nombre,
                                             Converter={StaticResource textConv}}"
                              TextWrapping="Wrap" />

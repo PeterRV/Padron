@@ -63,6 +63,7 @@
     </Compile>
     <Compile Include="Converters\FuncionConverter.cs" />
     <Compile Include="Converters\TextValConverter.cs" />
+    <Compile Include="Converters\TituloConverter.cs" />
     <Compile Include="ListaFuncionarios.xaml.cs">
       <DependentUpon>ListaFuncionarios.xaml</DependentUpon>
     </Compile>
@@ -124,6 +125,9 @@
       <Project>{94d9b299-2078-4757-9024-f7910f5713a5}</Project>
       <Name>PadronApi</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\rocket.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

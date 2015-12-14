@@ -6,6 +6,7 @@
         Title="Selecciona organismo de adscripción"
         Width="500"
         Height="300"
+        Icon="Resources/rocket.ico"
         Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen">
     <Grid>

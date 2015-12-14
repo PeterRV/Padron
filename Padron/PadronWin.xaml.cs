@@ -107,13 +107,19 @@ namespace Padron
 
         private void AgregaTitular_Click(object sender, RoutedEventArgs e)
         {
+            if (funcionariosControl == null)
+            {
+                MessageBox.Show("Primero debes de cargar el listado de titulares");
+                return;
+            }
+
             AgregaFuncionario addFuncionario = new AgregaFuncionario(funcionariosControl.CatalogoTitulares);
             addFuncionario.ShowDialog();
         }
 
         private void AgregaOrganismo_Click(object sender, RoutedEventArgs e)
         {
-            if (funcionariosControl == null)
+            if (organismosControl == null)
             {
                 MessageBox.Show("Primero debes de cargar el listado de titulares");
                 return;
