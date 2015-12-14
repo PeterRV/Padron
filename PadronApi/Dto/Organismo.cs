@@ -13,6 +13,7 @@ namespace PadronApi.Dto
         private string organismoDesc;
         private string organismoStr;
         private int tipoOrganismo;
+        private string tipoOrganismoStr;
         private int circuito;
         private int ordinal;
         private int materia;
@@ -29,9 +30,34 @@ namespace PadronApi.Dto
         private string observaciones;
         private int activo;
         private int tipoDistr;
+        private string distribucion;
         private string abreviado;
         private int orden;
         private ObservableCollection<Titular> integrantes;
+
+        public string Distribucion
+        {
+            get
+            {
+                return this.distribucion;
+            }
+            set
+            {
+                this.distribucion = value;
+            }
+        }
+
+        public string TipoOrganismoStr
+        {
+            get
+            {
+                return this.tipoOrganismoStr;
+            }
+            set
+            {
+                this.tipoOrganismoStr = value;
+            }
+        }
 
         public int IdOrganismo
         {

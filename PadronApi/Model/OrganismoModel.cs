@@ -21,7 +21,9 @@ namespace PadronApi.Model
         {
             ObservableCollection<Organismo> catalogoOrganismo = new ObservableCollection<Organismo>();
 
-            string sqlCadena = "SELECT * FROM C_Organismo ORDER BY OrdenVer";
+            string sqlCadena = "SELECT C_Organismo.*, C_TipoOrganismo.DescTpo, C_Distribucion.Distribucion " +
+                               "FROM C_Distribucion INNER JOIN (C_TipoOrganismo INNER JOIN C_Organismo ON C_TipoOrganismo.IdTpo = C_Organismo.TpoOrg) " + 
+                               " ON C_Distribucion.IdDistribucion = C_Organismo.tpodist ORDER BY OrdenVer";
 
 
             OleDbConnection connection = new OleDbConnection(connectionString);
@@ -63,6 +65,8 @@ namespace PadronApi.Model
                         obra.Activo = Convert.ToInt32(reader["lActivo"]);
                         obra.TipoDistr = Convert.ToInt32(reader["TpoDist"]);
                         obra.Abreviado = reader["Abreviado"].ToString();
+                        obra.TipoOrganismoStr = reader["DescTpo"].ToString();
+                        obra.Distribucion = reader["Distribucion"].ToString();
 
                         catalogoOrganismo.Add(obra);
 

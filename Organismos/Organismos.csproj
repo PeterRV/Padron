@@ -71,6 +71,7 @@
       <DependentUpon>PaisEstadoWin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\CiudadConverter.cs" />
+    <Compile Include="Converters\DistribucionConverter.cs" />
     <Compile Include="Converters\TextValConverter.cs" />
     <Compile Include="Exportar.xaml.cs">
       <DependentUpon>Exportar.xaml</DependentUpon>

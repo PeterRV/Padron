@@ -56,10 +56,10 @@ namespace Organismos
         {
             selectedTipoOrg = CbxTipoOrg.SelectedItem as ElementalProperties;
 
-            if (selectedTipoOrg.IdElemento < 2 && selectedTipoOrg.IdElemento > 10)
+            if (selectedTipoOrg.IdElemento < 2 || selectedTipoOrg.IdElemento > 10)
             {
                 GbxMaterias.IsEnabled = false;
-                CbxOrdinal.IsEditable = false;
+                CbxOrdinal.IsEnabled = false;
                 CbxCircuito.IsEnabled = false;
 
                 CbxCircuito.SelectedIndex = -1;
@@ -68,7 +68,7 @@ namespace Organismos
             else
             {
                 GbxMaterias.IsEnabled = true;
-                CbxOrdinal.IsEditable = true;
+                CbxOrdinal.IsEnabled = true;
                 CbxCircuito.IsEnabled = true;
             }
         }

@@ -13,6 +13,7 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <converter:CiudadConverter x:Key="ciudadConv" />
+        <converter:DistribucionConverter x:Key="distrConv"/>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -45,10 +46,10 @@
                                     Binding="{Binding OrganismoDesc}"
                                     Header="Organismo" />
                 <DataGridTextColumn Width="120"
-                                    Binding="{Binding TipoOrganismo}"
+                                    Binding="{Binding TipoOrganismoStr}"
                                     Header="Tipo" />
                 <DataGridTextColumn Width="120"
-                                    Binding="{Binding TipoDistr}"
+                                    Binding="{Binding Distribucion}"
                                     Header="Distribución" />
                 <DataGridTextColumn Width="150"
                                     Binding="{Binding Ciudad,
