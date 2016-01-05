@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace PadronApi.Dto
 {
-    public class PaisEstado
+    public class Pais
     {
         private int idPais;
-        private int idEstdo;
-        private int idCiudad;
-        private string descripcion;
+        private string pais;
+        private string paisStr;
+        private ObservableCollection<Estado> estados;
 
         public int IdPais
         {
@@ -22,39 +23,39 @@ namespace PadronApi.Dto
             }
         }
 
-        public int IdEstdo
+        public string PaisDesc
         {
             get
             {
-                return this.idEstdo;
+                return this.pais;
             }
             set
             {
-                this.idEstdo = value;
+                this.pais = value;
             }
         }
 
-        public int IdCiudad
+        public string PaisStr
         {
             get
             {
-                return this.idCiudad;
+                return this.paisStr;
             }
             set
             {
-                this.idCiudad = value;
+                this.paisStr = value;
             }
         }
 
-        public string Descripcion
+        public ObservableCollection<Estado> Estados
         {
             get
             {
-                return this.descripcion;
+                return this.estados;
             }
             set
             {
-                this.descripcion = value;
+                this.estados = value;
             }
         }
     }

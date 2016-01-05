@@ -1,4 +1,5 @@
 ﻿using PadronApi.Dto;
+using PadronApi.Model;
 using PadronApi.Singletons;
 using ScjnUtilities;
 using System;
@@ -34,6 +35,9 @@ namespace Organismos
         {
             CbxTipoOrg.DataContext = ElementalPropertiesSingleton.TipoOrganismo;
             CbxDistribucion.DataContext = ElementalPropertiesSingleton.Distribucion;
+
+            CbxPais.DataContext = PaisesSingleton.Paises;
+            CbxEstado.DataContext = new PaisEstadoModel().GetEstados();
         }
 
         private void TxtPreviewTextInput(object sender, TextCompositionEventArgs e)

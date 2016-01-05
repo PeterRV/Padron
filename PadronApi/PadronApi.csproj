@@ -45,10 +45,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dto\Autor.cs" />
+    <Compile Include="Dto\Ciudad.cs" />
     <Compile Include="Dto\ElementalProperties.cs" />
+    <Compile Include="Dto\Estado.cs" />
     <Compile Include="Dto\Obra.cs" />
     <Compile Include="Dto\Organismo.cs" />
-    <Compile Include="Dto\PaisEstado.cs" />
+    <Compile Include="Dto\Pais.cs" />
     <Compile Include="Dto\Titular.cs" />
     <Compile Include="Model\AutorModel.cs" />
     <Compile Include="Model\ElementalPropertiesModel.cs" />
@@ -59,7 +61,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Singletons\ElementalPropertiesSingleton.cs" />
     <Compile Include="Singletons\FuncionesSingleton.cs" />
-    <Compile Include="Singletons\PaisEstadoSingleton.cs" />
+    <Compile Include="Singletons\PaisesSingleton.cs" />
     <Compile Include="Singletons\TituloSingleton.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

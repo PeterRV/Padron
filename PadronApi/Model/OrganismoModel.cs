@@ -1,13 +1,10 @@
-﻿using PadronApi.Dto;
-using ScjnUtilities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data.OleDb;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PadronApi.Dto;
+using ScjnUtilities;
 
 namespace PadronApi.Model
 {
@@ -152,6 +149,71 @@ namespace PadronApi.Model
             return catalogoOrganismo;
         }
 
+
+
+        public bool InsertaAutor(Organismo organismo)
+        {
+            OleDbConnection connection = new OleDbConnection(connectionString);
+
+            bool insertCompleted = false;
+
+            organismo.IdOrganismo = DataBaseUtilities.GetNextIdForUse("C_Organismo", "IdOrg", connection);
+
+            try
+            {
+                connection.Open();
+
+                string sqlQuery = "INSERT INTO C_Organismo(IdOrg,TpoOrg,DescOrg,Cto,Ordinal,Materia,Ciudad,Estado,OrdenVer,DescOrgMay,Calle,Colonia,Delegacion,CP,Tel,Tel1,Tel2,Tel3,IdUsr,Fecha,Obs,lActivo,TpoDist,Abreviado)" +
+                                "VALUES (@IdOrg,@TpoOrg,@DescOrg,@Cto,@Ordinal,@Materia,@Ciudad,@Estado,@OrdenVer,@DescOrgMay,@Calle,@Colonia,@Delegacion,@CP,@Tel,@Tel1,@Tel2,@Tel3,@IdUsr,@Fecha,@Obs,@lActivo,@TpoDist,@Abreviado)";
+
+                OleDbCommand cmd = new OleDbCommand(sqlQuery, connection);
+                cmd.Parameters.AddWithValue("@IdOrg", organismo.IdOrganismo);
+                cmd.Parameters.AddWithValue("@TpoOrg", organismo.TipoOrganismo);
+                cmd.Parameters.AddWithValue("@DescOrg", organismo.OrganismoDesc);
+                cmd.Parameters.AddWithValue("@Cto", organismo.Circuito);
+                cmd.Parameters.AddWithValue("@Ordinal", organismo.Ordinal);
+                cmd.Parameters.AddWithValue("@Materia", organismo.Materia);
+                cmd.Parameters.AddWithValue("@Ciudad", organismo.Ciudad);
+                cmd.Parameters.AddWithValue("@Estado", organismo.Estado);
+                cmd.Parameters.AddWithValue("@OrdenVer", organismo.Orden);
+                cmd.Parameters.AddWithValue("@DescOrgMay",StringUtilities.PrepareToAlphabeticalOrder(organismo.OrganismoDesc));
+                cmd.Parameters.AddWithValue("@Calle", organismo.Calle);
+                cmd.Parameters.AddWithValue("@Colonia", organismo.Colonia);
+                cmd.Parameters.AddWithValue("@Delegacion", organismo.Delegacion);
+                cmd.Parameters.AddWithValue("@CP", organismo.Cp);
+                cmd.Parameters.AddWithValue("@Tel", organismo.Telefono);
+                cmd.Parameters.AddWithValue("@Tel1", organismo.Telefono1);
+                cmd.Parameters.AddWithValue("@Tel2", organismo.Telefono2);
+                cmd.Parameters.AddWithValue("@Tel3", organismo.Telefono3);
+                cmd.Parameters.AddWithValue("@IdUsr", 0);
+                cmd.Parameters.AddWithValue("@Fecha", DateTimeUtilities.DateToInt(DateTime.Now));
+                cmd.Parameters.AddWithValue("@Obs", organismo.Observaciones);
+                cmd.Parameters.AddWithValue("@lActivo", organismo.Activo);
+                cmd.Parameters.AddWithValue("@TpoDist", organismo.TipoDistr);
+                cmd.Parameters.AddWithValue("@Abreviado", organismo.Abreviado);
+
+                cmd.ExecuteNonQuery();
+
+                cmd.Dispose();
+                insertCompleted = true;
+            }
+            catch (OleDbException ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,AutorModel", "PadronApi");
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,AutorModel", "PadronApi");
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return insertCompleted;
+        }
 
 
     }

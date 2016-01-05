@@ -1,5 +1,6 @@
 ﻿using PadronApi.Dto;
 using PadronApi.Model;
+using PadronApi.Singletons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,24 +22,35 @@ namespace Organismos.Ciudades
     /// </summary>
     public partial class PaisEstadoWin : Window
     {
-        /// <summary>
-        /// Indica si estoy agregando un estado o un país
-        /// 1 País
-        /// 2 Estado
-        /// </summary>
-        private int queAgrego;
-        private PaisEstado elemento;
-        
-        public PaisEstadoWin(int queAgrega)
+        private bool isUpdating;
+
+        private Pais pais;
+        private Estado estado;
+
+        public PaisEstadoWin(Pais pais,bool isUpdating)
         {
             InitializeComponent();
-            this.queAgrego = queAgrega;
-            this.elemento = new PaisEstado();
+            this.pais = pais;
+            this.isUpdating = isUpdating;
+        }
+
+        public PaisEstadoWin(Estado estado, bool isUpdating)
+        {
+            InitializeComponent();
+            this.estado = estado;
+            this.isUpdating = isUpdating;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            if (pais != null)
+            {
+                TxtPaisEstado.Text = pais.PaisDesc;
+            }
+            else
+            {
+                TxtPaisEstado.Text = estado.EstadoDesc;
+            }
         }
 
         private void BtnSalir_Click(object sender, RoutedEventArgs e)
@@ -49,15 +61,36 @@ namespace Organismos.Ciudades
         private void BtnGuardar_Click(object sender, RoutedEventArgs e)
         {
             PaisEstadoModel model = new PaisEstadoModel();
-            elemento.Descripcion = TxtPaisEstado.Text;
 
-            if (queAgrego == 1)
+            if (pais != null)
             {
-                model.InsertaPais(elemento);
-                this.Close();
+                pais.PaisDesc = TxtPaisEstado.Text;
+                bool complete = model.InsertaPais(pais);
+
+                if (complete)
+                {
+                    PaisesSingleton.Paises.Add(pais);
+                    this.Close();
+                }
             }
             else
             {
+                estado.EstadoDesc = TxtPaisEstado.Text;
+                bool complete = model.InsertaEstado(estado);
+
+                if (complete)
+                {
+                    Pais myPais = (from n in PaisesSingleton.Paises
+                                   where n.IdPais == estado.IdPais
+                                   select n).ToList()[0];
+
+                    if (myPais.Estados == null)
+                        myPais.Estados = new System.Collections.ObjectModel.ObservableCollection<Estado>();
+
+                    myPais.Estados.Add(estado);
+
+                    this.Close();
+                }
 
             }
         }

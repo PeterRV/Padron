@@ -19,9 +19,9 @@ namespace Organismos.Converters
 
                 
 
-                return (from n in PaisEstadoSingleton.Ciudades
+                return (from n in PaisesSingleton.Ciudades
                         where n.IdCiudad == number
-                        select n.Descripcion).ToList()[0];
+                        select n.CiudadDesc).ToList()[0];
             }
 
             return " ";

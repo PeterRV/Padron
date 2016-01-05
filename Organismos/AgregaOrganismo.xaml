@@ -5,8 +5,9 @@
         Title="AgregaOrganismo"
         Width="950"
         Height="800"
-        WindowStartupLocation="CenterScreen"
-        Icon="Resources/rocket.ico" Loaded="Window_Loaded">
+        Icon="Resources/rocket.ico"
+        Loaded="Window_Loaded"
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <converter:TextValConverter x:Key="textConvert" />
     </Window.Resources>
@@ -46,10 +47,10 @@
                    Margin="771,16,0,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
-                   Visibility="Hidden"
                    FontSize="14"
                    FontWeight="Bold"
-                   Text="Orden" />
+                   Text="Orden"
+                   Visibility="Hidden" />
         <ComboBox x:Name="CbxTipoOrg"
                   Width="184"
                   Margin="21,45,0,0"
@@ -58,7 +59,8 @@
                   DisplayMemberPath="Descripcion"
                   IsEnabled="True"
                   ItemsSource="{Binding }"
-                  SelectedValuePath="IdElemento" SelectionChanged="CbxTipoOrg_SelectionChanged" />
+                  SelectedValuePath="IdElemento"
+                  SelectionChanged="CbxTipoOrg_SelectionChanged" />
         <ComboBox x:Name="CbxOrdinal"
                   Width="176"
                   Margin="274,45,0,0"
@@ -81,9 +83,9 @@
                  Margin="770,44,0,0"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
-                 Visibility="Hidden"
                  Text="{Binding OrdenImpresion,
-                                Mode=TwoWay}"  />
+                                Mode=TwoWay}"
+                 Visibility="Hidden" />
         <GroupBox x:Name="GbxMaterias"
                   Height="71"
                   Margin="20,81,20,0"
@@ -152,17 +154,18 @@
         <TextBox x:Name="TxtOrganismo"
                  Width="636"
                  Height="28"
-                 Margin="119,166,0,0"
+                 Margin="98,166,0,0"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
                  FontSize="14"
                  Text="{Binding OrganismoDesc,
-                                Mode=TwoWay,Converter={StaticResource textConvert}}" />
+                                Mode=TwoWay,
+                                Converter={StaticResource textConvert}}" />
 
 
         <TextBlock x:Name="textBlock7_Copy"
                    Height="23"
-                   Margin="22,215,0,0"
+                   Margin="22,207,0,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    FontSize="14"
@@ -171,13 +174,15 @@
         <TextBox x:Name="TxtAbreviatura"
                  Width="416"
                  Height="23"
-                 Margin="119,214,0,0"
+                 Margin="119,206,0,0"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
-                 TextWrapping="Wrap" />
+                 Text="{Binding Abreviado,
+                                Mode=TwoWay,
+                                Converter={StaticResource textConvert}}" />
         <TextBlock x:Name="textBlock7_Copy1"
                    Height="23"
-                   Margin="566,214,0,0"
+                   Margin="566,206,0,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    FontSize="14"
@@ -185,12 +190,12 @@
                    Text="Distribución:" />
         <ComboBox x:Name="CbxDistribucion"
                   Width="247"
-                  Margin="655,214,0,0"
-                  ItemsSource="{Binding}"
-                  DisplayMemberPath="Descripcion"
-                  SelectedValuePath="IdElemento"
+                  Margin="655,206,0,0"
                   HorizontalAlignment="Left"
-                  VerticalAlignment="Top" />
+                  VerticalAlignment="Top"
+                  DisplayMemberPath="Descripcion"
+                  ItemsSource="{Binding}"
+                  SelectedValuePath="IdElemento" />
         <GroupBox Grid.Row="1"
                   Margin="20,10,20,10"
                   HorizontalAlignment="Stretch"
@@ -207,7 +212,9 @@
                          Margin="53,19,0,0"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Top"
-                         TextWrapping="Wrap" />
+                         Text="{Binding Calle,
+                                        Mode=TwoWay,
+                                        Converter={StaticResource textConvert}}" />
                 <Label Margin="455,19,0,0"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
@@ -218,7 +225,9 @@
                          Margin="513,19,0,0"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Top"
-                         TextWrapping="Wrap" />
+                         Text="{Binding Colonia,
+                                        Mode=TwoWay,
+                                        Converter={StaticResource textConvert}}" />
                 <Label Margin="10,63,0,0"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
@@ -229,7 +238,9 @@
                          Margin="144,63,0,0"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Top"
-                         TextWrapping="Wrap" />
+                         Text="{Binding Delegacion,
+                                        Mode=TwoWay,
+                                        Converter={StaticResource textConvert}}" />
                 <Label Margin="476,60,0,0"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
@@ -240,7 +251,8 @@
                          Margin="513,60,0,0"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Top"
-                         TextWrapping="Wrap" PreviewTextInput="TxtPreviewTextInput" />
+                         PreviewTextInput="TxtPreviewTextInput"
+                         TextWrapping="Wrap" />
                 <Label Margin="638,103,0,0"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
@@ -264,17 +276,11 @@
                          Margin="95,147,0,0"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Top"
+                         PreviewTextInput="TxtTelValidation"
                          RenderTransformOrigin="0.5,0.5"
-                         TextWrapping="Wrap" PreviewTextInput="TxtTelValidation">
-                    <TextBox.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform />
-                            <SkewTransform />
-                            <RotateTransform Angle="0.076" />
-                            <TranslateTransform />
-                        </TransformGroup>
-                    </TextBox.RenderTransform>
-                </TextBox>
+                         Text="{Binding Telefono,
+                                        Mode=TwoWay,
+                                        Converter={StaticResource textConvert}}" />
                 <Label Margin="439,146,0,0"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
@@ -285,7 +291,10 @@
                          Margin="513,146,0,0"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Top"
-                         TextWrapping="Wrap" PreviewTextInput="TxtTelValidation" />
+                         PreviewTextInput="TxtTelValidation"
+                         Text="{Binding Telefono2,
+                                        Mode=TwoWay,
+                                        Converter={StaticResource textConvert}}" />
                 <Label Margin="10,192,0,0"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
@@ -296,7 +305,10 @@
                          Margin="94,192,0,0"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Top"
-                         TextWrapping="Wrap" PreviewTextInput="TxtTelValidation" />
+                         PreviewTextInput="TxtTelValidation"
+                         Text="{Binding Telefono3,
+                                        Mode=TwoWay,
+                                        Converter={StaticResource textConvert}}" />
                 <Label Margin="439,189,0,0"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
@@ -307,7 +319,10 @@
                          Margin="513,189,0,0"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Top"
-                         TextWrapping="Wrap" PreviewTextInput="TxtTelValidation" />
+                         PreviewTextInput="TxtTelValidation"
+                         Text="{Binding Telefono4,
+                                        Mode=TwoWay,
+                                        Converter={StaticResource textConvert}}" />
                 <Label Margin="15,103,0,0"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
@@ -380,6 +395,9 @@
                      Margin="15,35,20,20"
                      HorizontalAlignment="Stretch"
                      VerticalAlignment="Stretch"
+                     Text="{Binding Observaciones,
+                                    Mode=TwoWay,
+                                    Converter={StaticResource textConvert}}"
                      TextWrapping="Wrap" />
         </Grid>
 
