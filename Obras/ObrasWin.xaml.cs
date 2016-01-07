@@ -6,7 +6,6 @@ using System.Windows.Input;
 using PadronApi.Dto;
 using PadronApi.Model;
 using ScjnUtilities;
-using System.Windows.Controls;
 
 namespace Obras
 {

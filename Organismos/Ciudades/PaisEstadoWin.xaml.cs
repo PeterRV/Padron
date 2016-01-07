@@ -1,19 +1,10 @@
-﻿using PadronApi.Dto;
+﻿using System;
+using System.Linq;
+using System.Windows;
+using PadronApi.Dto;
 using PadronApi.Model;
 using PadronApi.Singletons;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using ScjnUtilities;
 
 namespace Organismos.Ciudades
 {
@@ -55,44 +46,60 @@ namespace Organismos.Ciudades
 
         private void BtnSalir_Click(object sender, RoutedEventArgs e)
         {
+            DialogResult = false;
             this.Close();
         }
 
         private void BtnGuardar_Click(object sender, RoutedEventArgs e)
         {
-            PaisEstadoModel model = new PaisEstadoModel();
-
-            if (pais != null)
+            if (String.IsNullOrEmpty(TxtPaisEstado.Text) || String.IsNullOrWhiteSpace(TxtPaisEstado.Text))
             {
-                pais.PaisDesc = TxtPaisEstado.Text;
-                bool complete = model.InsertaPais(pais);
+                MessageBox.Show("Para poder continuar debes ingresar el nombre del país o estado que deseas agregar");
+                return;
 
-                if (complete)
-                {
-                    PaisesSingleton.Paises.Add(pais);
-                    this.Close();
-                }
             }
             else
             {
-                estado.EstadoDesc = TxtPaisEstado.Text;
-                bool complete = model.InsertaEstado(estado);
+                PaisEstadoModel model = new PaisEstadoModel();
 
-                if (complete)
+                if (pais != null)
                 {
-                    Pais myPais = (from n in PaisesSingleton.Paises
-                                   where n.IdPais == estado.IdPais
-                                   select n).ToList()[0];
+                    pais.PaisDesc = TxtPaisEstado.Text;
+                    bool complete = model.InsertaPais(pais);
 
-                    if (myPais.Estados == null)
-                        myPais.Estados = new System.Collections.ObjectModel.ObservableCollection<Estado>();
-
-                    myPais.Estados.Add(estado);
-
-                    this.Close();
+                    if (complete)
+                    {
+                        PaisesSingleton.Paises.Add(pais);
+                        DialogResult = true;
+                        this.Close();
+                    }
                 }
+                else
+                {
+                    estado.EstadoDesc = TxtPaisEstado.Text;
+                    bool complete = model.InsertaEstado(estado);
 
+                    if (complete)
+                    {
+                        Pais myPais = (from n in PaisesSingleton.Paises
+                                       where n.IdPais == estado.IdPais
+                                       select n).ToList()[0];
+
+                        if (myPais.Estados == null)
+                            myPais.Estados = new System.Collections.ObjectModel.ObservableCollection<Estado>();
+
+                        myPais.Estados.Add(estado);
+                        DialogResult = true;
+                        this.Close();
+                    }
+
+                }
             }
+        }
+
+        private void TxtPaisEstado_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TxtPaisEstado.Text = VerificationUtilities.TextBoxStringValidation(TxtPaisEstado.Text);
         }
     }
 }

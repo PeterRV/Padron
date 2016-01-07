@@ -1,0 +1,80 @@
+﻿<Window x:Class="Organismos.SelecccionaFuncionarios"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:UIControls="clr-namespace:UIControls;assembly=UIControls"
+        xmlns:converter="clr-namespace:Funcionarios.Converters;assembly=Funcionarios"
+        xmlns:filter="http://schemas.bolapansoft.com/xaml/Controls/ItemsFilter"
+        Title="Selecccionar Funcionarios"
+        Width="600"
+        Height="300"
+        Loaded="Window_Loaded">
+    <Window.Resources>
+        <converter:TituloConverter x:Key="tituloConv" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="45" />
+        </Grid.RowDefinitions>
+
+
+        <UIControls:SearchTextBox Width="382"
+                                  Margin="75,15,0,0"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Top"
+                                  LabelText="Buscar por nombre y apellidos..."
+                                  Search="SearchTextBox_Search" />
+
+        <Label Margin="10,10,0,5"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Content="Buscar:"
+               FontSize="14"
+               FontWeight="Black" />
+
+        <filter:FilterDataGrid x:Name="GTitulares"
+                               Grid.Row="1"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Stretch"
+                               AutoGenerateColumns="False"
+                               EnableRowVirtualization="True"
+                               FontSize="14"
+                               IsReadOnly="True"
+                               ItemsSource="{Binding}"
+                               SelectionChanged="GTitulares_SelectionChanged">
+            <DataGrid.Columns>
+
+                <DataGridTextColumn Width="80"
+                                    Binding="{Binding IdTitulo,
+                                                      Converter={StaticResource tituloConv}}"
+                                    Header="Título" />
+                <DataGridTextColumn Width=".7*"
+                                    Binding="{Binding Nombre}"
+                                    Header="Nombre" />
+                <DataGridTextColumn Width=".8*"
+                                    Binding="{Binding Apellidos}"
+                                    Header="Apellidos" />
+            </DataGrid.Columns>
+        </filter:FilterDataGrid>
+        <Button x:Name="BtnSalir"
+                Grid.Row="2"
+                Width="75"
+                Margin="507,14,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Click="BtnSalir_Click"
+                Content="Salir" />
+        <Button x:Name="BtnGuardar"
+                Grid.Row="2"
+                Width="75"
+                Margin="427,14,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Click="BtnGuardar_Click"
+                Content="Agregar" />
+
+
+
+    </Grid>
+</Window>

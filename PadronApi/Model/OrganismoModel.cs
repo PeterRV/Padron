@@ -18,8 +18,8 @@ namespace PadronApi.Model
         {
             ObservableCollection<Organismo> catalogoOrganismo = new ObservableCollection<Organismo>();
 
-            string sqlCadena = "SELECT C_Organismo.*, C_TipoOrganismo.DescTpo, C_Distribucion.Distribucion " +
-                               "FROM C_Distribucion INNER JOIN (C_TipoOrganismo INNER JOIN C_Organismo ON C_TipoOrganismo.IdTpo = C_Organismo.TpoOrg) " + 
+            string sqlCadena = "SELECT C_Organismo.*, C_TipoOrganismo.TpoOrgAvr, C_Distribucion.Distribucion " +
+                               "FROM C_Distribucion INNER JOIN (C_TipoOrganismo INNER JOIN C_Organismo ON C_TipoOrganismo.IdTpoOrg = C_Organismo.TpoOrg) " + 
                                " ON C_Distribucion.IdDistribucion = C_Organismo.tpodist ORDER BY OrdenVer";
 
 
@@ -62,7 +62,7 @@ namespace PadronApi.Model
                         obra.Activo = Convert.ToInt32(reader["lActivo"]);
                         obra.TipoDistr = Convert.ToInt32(reader["TpoDist"]);
                         obra.Abreviado = reader["Abreviado"].ToString();
-                        obra.TipoOrganismoStr = reader["DescTpo"].ToString();
+                        obra.TipoOrganismoStr = reader["TpoOrgAvr"].ToString();
                         obra.Distribucion = reader["Distribucion"].ToString();
 
                         catalogoOrganismo.Add(obra);
@@ -151,7 +151,7 @@ namespace PadronApi.Model
 
 
 
-        public bool InsertaAutor(Organismo organismo)
+        public bool InsertaOrganismo(Organismo organismo)
         {
             OleDbConnection connection = new OleDbConnection(connectionString);
 
@@ -195,6 +195,10 @@ namespace PadronApi.Model
                 cmd.ExecuteNonQuery();
 
                 cmd.Dispose();
+
+                if (organismo.Integrantes != null && organismo.Integrantes.Count > 0)
+                    new TitularModel().EstableceAdscripcion(organismo.IdOrganismo, organismo.Integrantes);
+
                 insertCompleted = true;
             }
             catch (OleDbException ex)

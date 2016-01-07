@@ -1,11 +1,8 @@
-﻿using PadronApi.Dto;
-using PadronApi.Model;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PadronApi.Dto;
+using PadronApi.Model;
 
 namespace PadronApi.Singletons
 {

@@ -84,6 +84,7 @@
                                          Label="Agregar Organismo"
                                          LargeImageSource="Resources/Building_add.png" />
                     <Custom:RibbonButton x:Name="ModificaOrganismo"
+                                         Click="ModificaOrganismo_Click"
                                          Label="Modificar Organismo"
                                          LargeImageSource="Resources/Building_edit.png" />
                     <Custom:RibbonButton x:Name="DesactivaOrganismo"

@@ -1,13 +1,10 @@
-﻿using PadronApi.Dto;
-using ScjnUtilities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data.OleDb;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PadronApi.Dto;
+using ScjnUtilities;
 
 namespace PadronApi.Model
 {
@@ -16,6 +13,11 @@ namespace PadronApi.Model
 
         private readonly string connectionString = ConfigurationManager.ConnectionStrings["Base"].ConnectionString;
 
+
+        /// <summary>
+        /// Obtiene la lista complete de funcionarios sin importar si al momento estan o no adscritos a algún organismo
+        /// </summary>
+        /// <returns></returns>
         public ObservableCollection<Titular> GetTitulares()
         {
             ObservableCollection<Titular> catalogoTitulares = new ObservableCollection<Titular>();
@@ -79,6 +81,67 @@ namespace PadronApi.Model
             return catalogoTitulares;
         }
 
+
+        public ObservableCollection<Titular> GetTitularesSinAdscripcion()
+        {
+            ObservableCollection<Titular> catalogoTitulares = new ObservableCollection<Titular>();
+
+            string sqlCadena = "SELECT * FROM C_Titular WHERE CveAdscripcion = 7090 OR CveAdscripcion = 0 ORDER BY Apellidos";
+
+
+            OleDbConnection connection = new OleDbConnection(connectionString);
+            OleDbCommand cmd = null;
+            OleDbDataReader reader = null;
+
+
+            try
+            {
+                connection.Open();
+
+                cmd = new OleDbCommand(sqlCadena, connection);
+                reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Titular titular = new Titular();
+                        titular.IdTitular = Convert.ToInt32(reader["IdLic"]);
+                        titular.Nombre = reader["Nombre"].ToString();
+                        titular.Apellidos = reader["Apellidos"].ToString();
+                        titular.NombreStr = reader["NombMay"].ToString();
+                        titular.IdTitulo = reader["IdTitulo"] as int? ?? 0;
+                        //titular.Cargo = Convert.ToInt32(reader["Cargo"]);
+                        titular.Funcion = Convert.ToInt32(reader["Funcion"]);
+                        titular.Observaciones = reader["Obs"].ToString();
+                        titular.Activo = Convert.ToInt32(reader["Activo"]);
+                        titular.Estado = reader["IdEstatus"] as int? ?? 0;
+                        titular.QuiereDistribucion = Convert.ToBoolean(reader["QuiereDist"]);
+
+                        catalogoTitulares.Add(titular);
+
+                    }
+                }
+                cmd.Dispose();
+                reader.Close();
+            }
+            catch (OleDbException ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TitularModel", "PadronApi");
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TitularModel", "PadronApi");
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return catalogoTitulares;
+        }
 
         public bool InsertaTitular(Titular titular)
         {
@@ -166,8 +229,9 @@ namespace PadronApi.Model
                 cmd.Parameters.AddWithValue("@Obs", titular.Observaciones);
                 cmd.Parameters.AddWithValue("@IdTitulo", titular.IdTitulo);
                 cmd.Parameters.AddWithValue("@IdEstatus", titular.Estado);
-                cmd.Parameters.AddWithValue("@IdLic", titular.IdTitular);
                 cmd.Parameters.AddWithValue("@Activo", titular.Activo);
+                cmd.Parameters.AddWithValue("@IdLic", titular.IdTitular);
+                
 
 
                 cmd.ExecuteNonQuery();
@@ -178,18 +242,105 @@ namespace PadronApi.Model
             catch (OleDbException ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,ObraModel", "PadronApi");
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TitularModel", "PadronApi");
             }
             catch (Exception ex)
             {
                 string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,ObraModel", "PadronApi");
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TitularModel", "PadronApi");
             }
             finally
             {
                 connection.Close();
             }
 
+            return updateCompleted;
+        }
+
+
+
+        public void EstableceAdscripcion(int idOrganismo, ObservableCollection<Titular> listaIntegrantes)
+        {
+            OleDbConnection connection = new OleDbConnection(connectionString);
+
+            try
+            {
+                connection.Open();
+
+                foreach (Titular integrante in listaIntegrantes)
+                {
+
+                    string sqlQuery = "UPDATE C_Titular SET CveAdscripcion = @CveAdscripcion WHERE IdLic = @IdLic";
+
+                    OleDbCommand cmd = new OleDbCommand(sqlQuery, connection);
+                    cmd.Parameters.AddWithValue("@CveAdscripcion", idOrganismo);
+                    cmd.Parameters.AddWithValue("@IdLic", integrante.IdTitular);
+
+
+                    cmd.ExecuteNonQuery();
+
+                    cmd.Dispose();
+                }
+            }
+            catch (OleDbException ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TitularModel", "PadronApi");
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TitularModel", "PadronApi");
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        /// <summary>
+        /// Elimina relación organismo-titular
+        /// </summary>
+        /// <param name="idTitular">Identificador del titular que queda fuera del organismo</param>
+        /// <returns></returns>
+        public bool EliminaAdscripcion(int idTitular)
+        {
+            OleDbConnection connection = new OleDbConnection(connectionString);
+
+            bool updateCompleted = false;
+
+
+            try
+            {
+                connection.Open();
+
+                string sqlQuery = "UPDATE C_Titular SET CveAdscripcion = @CveAdscripcion" +
+                          " WHERE IdLic = @IdLic";
+
+                OleDbCommand cmd = new OleDbCommand(sqlQuery, connection);
+                cmd.Parameters.AddWithValue("@CveAdscripcion", 0);
+                cmd.Parameters.AddWithValue("@IdLic", idTitular);
+
+
+                cmd.ExecuteNonQuery();
+
+                cmd.Dispose();
+                updateCompleted = true;
+            }
+            catch (OleDbException ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TitularModel", "PadronApi");
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TitularModel", "PadronApi");
+            }
+            finally
+            {
+                connection.Close();
+            }
             return updateCompleted;
         }
 

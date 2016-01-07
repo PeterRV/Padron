@@ -1,18 +1,19 @@
-﻿using PadronApi.Dto;
-using ScjnUtilities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data.OleDb;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PadronApi.Dto;
+using ScjnUtilities;
 
 namespace PadronApi.Model
 {
     public class PaisEstadoModel
     {
+        Pais dummyPais = new Pais() { IdPais = 999999999, PaisDesc = "Agregar país..." };
+        Estado dummyEstado = new Estado() { IdEstado = 999999999, EstadoDesc = "Agregar estado..." };
+        Ciudad dummyCiudad = new Ciudad() { IdCiudad = 999999999, CiudadDesc = "Agregar ciudad..." };
+
         private readonly string connectionString = ConfigurationManager.ConnectionStrings["Base"].ConnectionString;
 
         #region Pais
@@ -25,7 +26,7 @@ namespace PadronApi.Model
         {
             ObservableCollection<Pais> catalogoPaises = new ObservableCollection<Pais>();
 
-            string sqlCadena = "SELECT * FROM C_Pais ORDER BY IdPais";
+            string sqlCadena = "SELECT * FROM C_Pais ORDER BY PaisMay";
 
 
             OleDbConnection connection = new OleDbConnection(connectionString);
@@ -55,6 +56,7 @@ namespace PadronApi.Model
                 }
                 cmd.Dispose();
                 reader.Close();
+                catalogoPaises.Add(dummyPais);
             }
             catch (OleDbException ex)
             {
@@ -87,13 +89,13 @@ namespace PadronApi.Model
             {
                 connection.Open();
 
-                string sqlQuery = "INSERT INTO C_Pais(IdPais,Desc,DescMay)" +
-                                "VALUES (@IdPais,@Desc,@DescMay)";
+                string sqlQuery = "INSERT INTO C_Pais(IdPais,Pais,PaisMay)" +
+                                "VALUES (@IdPais,@Pais,@PaisMay)";
 
                 OleDbCommand cmd = new OleDbCommand(sqlQuery, connection);
                 cmd.Parameters.AddWithValue("@IdPais", pais.IdPais);
-                cmd.Parameters.AddWithValue("@Desc", pais.PaisDesc);
-                cmd.Parameters.AddWithValue("@DescMay", StringUtilities.PrepareToAlphabeticalOrder(pais.PaisDesc));
+                cmd.Parameters.AddWithValue("@Pais", pais.PaisDesc);
+                cmd.Parameters.AddWithValue("@PaisMay", StringUtilities.PrepareToAlphabeticalOrder(pais.PaisDesc));
 
                 cmd.ExecuteNonQuery();
 
@@ -155,7 +157,7 @@ namespace PadronApi.Model
                         estado.IdEstado = Convert.ToInt32(reader["IdEstado"]);
                         estado.EstadoDesc = reader["Estado"].ToString();
                         estado.EstadoStr = reader["EstadoMay"].ToString();
-                        estado.Abreviatura = reader["Abreviado"].ToString();
+                        estado.Abreviatura = reader["EstadoAbr"].ToString();
                         estado.IdPais = Convert.ToInt32(reader["IdPais"]);
 
                         catalogoEstados.Add(estado);
@@ -216,7 +218,7 @@ namespace PadronApi.Model
                         estado.IdEstado = Convert.ToInt32(reader["IdEstado"]);
                         estado.EstadoDesc = reader["Estado"].ToString();
                         estado.EstadoStr = reader["EstadoMay"].ToString();
-                        estado.Abreviatura = reader["Abreviado"].ToString();
+                        estado.Abreviatura = reader["EstadoAbr"].ToString();
                         estado.IdPais = Convert.ToInt32(reader["IdPais"]);
 
                         catalogoEstados.Add(estado);
@@ -225,6 +227,7 @@ namespace PadronApi.Model
                 }
                 cmd.Dispose();
                 reader.Close();
+                catalogoEstados.Add(dummyEstado);
             }
             catch (OleDbException ex)
             {
@@ -257,13 +260,13 @@ namespace PadronApi.Model
             {
                 connection.Open();
 
-                string sqlQuery = "INSERT INTO C_Estado(IdEstado,Estado,Abreviado,EstadoMay,IdPais)" +
-                                "VALUES (@IdEstado,@Estado,@Abreviado,@EstadoMay,@IdPais)";
+                string sqlQuery = "INSERT INTO C_Estado(IdEstado,Estado,EstadoAbr,EstadoMay,IdPais)" +
+                                "VALUES (@IdEstado,@Estado,@EstadoAbr,@EstadoMay,@IdPais)";
 
                 OleDbCommand cmd = new OleDbCommand(sqlQuery, connection);
                 cmd.Parameters.AddWithValue("@IdEstado", estado.IdEstado);
                 cmd.Parameters.AddWithValue("@Estado", estado.EstadoDesc);
-                cmd.Parameters.AddWithValue("@Abreviado", estado.Abreviatura);
+                cmd.Parameters.AddWithValue("@EstadoAbr", estado.EstadoDesc);
                 cmd.Parameters.AddWithValue("@EstadoMay", StringUtilities.PrepareToAlphabeticalOrder(estado.EstadoDesc));
                 cmd.Parameters.AddWithValue("@IdPais", estado.IdPais);
 
@@ -397,6 +400,8 @@ namespace PadronApi.Model
                 }
                 cmd.Dispose();
                 reader.Close();
+
+                catalogoCiudades.Add(dummyCiudad);
             }
             catch (OleDbException ex)
             {
@@ -423,13 +428,13 @@ namespace PadronApi.Model
 
             bool insertCompleted = false;
 
-            ciudad.IdEstado = DataBaseUtilities.GetNextIdForUse("C_Ciudad", "IdCiudad", connection);
+            ciudad.IdCiudad = DataBaseUtilities.GetNextIdForUse("C_Ciudad", "IdCiudad", connection);
 
             try
             {
                 connection.Open();
 
-                string sqlQuery = "INSERT INTO C_Estado(IdCiudad,Ciudad,CiudadMay,IdEstado)" +
+                string sqlQuery = "INSERT INTO C_Ciudad(IdCiudad,Ciudad,CiudadMay,IdEstado)" +
                                 "VALUES (@IdCiudad,@Ciudad,@CiudadMay,@IdEstado)";
 
                 OleDbCommand cmd = new OleDbCommand(sqlQuery, connection);

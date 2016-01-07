@@ -1,13 +1,10 @@
-﻿using PadronApi.Dto;
-using ScjnUtilities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data.OleDb;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PadronApi.Dto;
+using ScjnUtilities;
 
 namespace PadronApi.Model
 {
@@ -346,7 +343,7 @@ namespace PadronApi.Model
         {
             ObservableCollection<ElementalProperties> catalogoTipoObras = new ObservableCollection<ElementalProperties>();
 
-            string sqlCadena = "SELECT * FROM C_TipoOrganismo ORDER BY IdTpo";
+            string sqlCadena = "SELECT * FROM C_TipoOrganismo ORDER BY IdTpoOrg";
 
 
             OleDbConnection connection = new OleDbConnection(connectionString);
@@ -366,8 +363,8 @@ namespace PadronApi.Model
                     while (reader.Read())
                     {
                         ElementalProperties elemento = new ElementalProperties();
-                        elemento.IdElemento = Convert.ToInt32(reader["IdTpo"]);
-                        elemento.Descripcion = reader["DescTpo"].ToString();
+                        elemento.IdElemento = Convert.ToInt32(reader["IdTpoOrg"]);
+                        elemento.Descripcion = reader["TpoOrgAvr"].ToString();
 
                         catalogoTipoObras.Add(elemento);
 
@@ -392,6 +389,111 @@ namespace PadronApi.Model
             }
 
             return catalogoTipoObras;
+        }
+
+
+        public ObservableCollection<ElementalProperties> GetOrdinales()
+        {
+            ObservableCollection<ElementalProperties> catalogoOrdinales = new ObservableCollection<ElementalProperties>();
+
+            string sqlCadena = "SELECT * FROM C_Ordinal ORDER BY IdOrdinal";
+
+
+            OleDbConnection connection = new OleDbConnection(connectionString);
+            OleDbCommand cmd = null;
+            OleDbDataReader reader = null;
+
+
+            try
+            {
+                connection.Open();
+
+                cmd = new OleDbCommand(sqlCadena, connection);
+                reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        ElementalProperties elemento = new ElementalProperties();
+                        elemento.IdElemento = Convert.ToInt32(reader["IdOrdinal"]);
+                        elemento.Descripcion = reader["Ordinal"].ToString();
+
+                        catalogoOrdinales.Add(elemento);
+
+                    }
+                }
+                cmd.Dispose();
+                reader.Close();
+            }
+            catch (OleDbException ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,ElementalPropertiesModel", "PadronApi");
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,ElementalPropertiesModel", "PadronApi");
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return catalogoOrdinales;
+        }
+
+        public ObservableCollection<ElementalProperties> GetCircuitos()
+        {
+            ObservableCollection<ElementalProperties> catalogoCircuitos = new ObservableCollection<ElementalProperties>();
+
+            string sqlCadena = "SELECT * FROM C_Ordinal ORDER BY IdOrdinal";
+
+
+            OleDbConnection connection = new OleDbConnection(connectionString);
+            OleDbCommand cmd = null;
+            OleDbDataReader reader = null;
+
+
+            try
+            {
+                connection.Open();
+
+                cmd = new OleDbCommand(sqlCadena, connection);
+                reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        ElementalProperties elemento = new ElementalProperties();
+                        elemento.IdElemento = Convert.ToInt32(reader["IdOrdinal"]);
+                        elemento.Descripcion = reader["Ordinal"].ToString() + "Circuito";
+
+                        catalogoCircuitos.Add(elemento);
+
+                    }
+                }
+                cmd.Dispose();
+                reader.Close();
+            }
+            catch (OleDbException ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,ElementalPropertiesModel", "PadronApi");
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,ElementalPropertiesModel", "PadronApi");
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return catalogoCircuitos;
         }
 
         #endregion

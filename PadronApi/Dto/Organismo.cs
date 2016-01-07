@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PadronApi.Dto
 {
@@ -27,6 +24,7 @@ namespace PadronApi.Dto
         private string telefono1;
         private string telefono2;
         private string telefono3;
+        private string mail;
         private string observaciones;
         private int activo;
         private int tipoDistr;
@@ -34,6 +32,18 @@ namespace PadronApi.Dto
         private string abreviado;
         private int orden;
         private ObservableCollection<Titular> integrantes;
+
+        public string Mail
+        {
+            get
+            {
+                return this.mail;
+            }
+            set
+            {
+                this.mail = value;
+            }
+        }
 
         public string Distribucion
         {

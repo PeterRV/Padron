@@ -19,6 +19,7 @@
                  Margin="24,77,0,0"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
+                 LostFocus="TxtPaisEstado_LostFocus"
                  TextWrapping="Wrap" />
         <Button x:Name="BtnSalir"
                 Width="75"

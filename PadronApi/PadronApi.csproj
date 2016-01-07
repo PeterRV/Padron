@@ -48,6 +48,7 @@
     <Compile Include="Dto\Ciudad.cs" />
     <Compile Include="Dto\ElementalProperties.cs" />
     <Compile Include="Dto\Estado.cs" />
+    <Compile Include="Dto\Materia.cs" />
     <Compile Include="Dto\Obra.cs" />
     <Compile Include="Dto\Organismo.cs" />
     <Compile Include="Dto\Pais.cs" />

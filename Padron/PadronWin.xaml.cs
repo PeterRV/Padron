@@ -1,25 +1,13 @@
-﻿using Funcionarios;
+﻿using System;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using Funcionarios;
 using Obras;
-using Obras.AutoresFolder;
 using Obras.Padron;
 using Organismos;
 using Padron.PapeleriaFolder;
-using PadronApi.Dto;
 using PadronApi.Model;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Padron
 {
@@ -93,11 +81,7 @@ namespace Padron
                 CentralPanel.Children.RemoveAt(0);
         }
 
-        private void AgregarObra_Click(object sender, RoutedEventArgs e)
-        {
-            ObrasWin addObra = new ObrasWin(obraControl.CatalogoObras);
-            addObra.ShowDialog();
-        }
+       
 
         private void GeneraOrganismos_Click(object sender, RoutedEventArgs e)
         {
@@ -105,28 +89,35 @@ namespace Padron
             papeConfig.ShowDialog();
         }
 
-        private void AgregaTitular_Click(object sender, RoutedEventArgs e)
-        {
-            if (funcionariosControl == null)
-            {
-                MessageBox.Show("Primero debes de cargar el listado de titulares");
-                return;
-            }
+        
 
-            AgregaFuncionario addFuncionario = new AgregaFuncionario(funcionariosControl.CatalogoTitulares);
-            addFuncionario.ShowDialog();
+        
+
+       
+
+        
+
+        
+
+        #region Obras
+
+        private void AgregarObra_Click(object sender, RoutedEventArgs e)
+        {
+            ObrasWin addObra = new ObrasWin(obraControl.CatalogoObras);
+            addObra.ShowDialog();
         }
 
-        private void AgregaOrganismo_Click(object sender, RoutedEventArgs e)
+        private void VerObra_Click(object sender, RoutedEventArgs e)
         {
-            if (organismosControl == null)
+            if (obraControl == null || obraControl.SelectedObra == null)
             {
-                MessageBox.Show("Primero debes de cargar el listado de titulares");
+                MessageBox.Show("Primero debes seleccionar la obra de la cual deseas ver la información", "Atención:", MessageBoxButton.OK, MessageBoxImage.Stop);
                 return;
             }
 
-            AgregaOrganismo addOrg = new AgregaOrganismo();
-            addOrg.ShowDialog();
+            ObrasWin update = new ObrasWin(obraControl.SelectedObra, false);
+            update.Owner = this;
+            update.ShowDialog();
         }
 
         private void EditarObra_Click(object sender, RoutedEventArgs e)
@@ -137,7 +128,7 @@ namespace Padron
                 return;
             }
 
-            ObrasWin update = new ObrasWin(obraControl.SelectedObra,true);
+            ObrasWin update = new ObrasWin(obraControl.SelectedObra, true);
             update.Owner = this;
             update.ShowDialog();
         }
@@ -159,6 +150,23 @@ namespace Padron
             }
         }
 
+        #endregion
+
+
+        #region Titulares
+
+        private void AgregaTitular_Click(object sender, RoutedEventArgs e)
+        {
+            if (funcionariosControl == null)
+            {
+                MessageBox.Show("Primero debes de cargar el listado de titulares");
+                return;
+            }
+
+            AgregaFuncionario addFuncionario = new AgregaFuncionario(funcionariosControl.CatalogoTitulares);
+            addFuncionario.ShowDialog();
+        }
+
         private void ModificaTitular_Click(object sender, RoutedEventArgs e)
         {
             if (funcionariosControl == null)
@@ -167,7 +175,7 @@ namespace Padron
                 return;
             }
 
-            AgregaFuncionario update = new AgregaFuncionario(funcionariosControl.SelectedTitular,true);
+            AgregaFuncionario update = new AgregaFuncionario(funcionariosControl.SelectedTitular, true);
             update.Owner = this;
             update.ShowDialog();
         }
@@ -180,22 +188,39 @@ namespace Padron
                 return;
             }
 
-            AgregaFuncionario view = new AgregaFuncionario(funcionariosControl.SelectedTitular,false);
+            AgregaFuncionario view = new AgregaFuncionario(funcionariosControl.SelectedTitular, false);
             view.Owner = this;
             view.ShowDialog();
         }
 
-        private void VerObra_Click(object sender, RoutedEventArgs e)
+        #endregion
+
+
+
+        #region Organismos
+
+        private void AgregaOrganismo_Click(object sender, RoutedEventArgs e)
         {
-            if (obraControl == null || obraControl.SelectedObra == null)
+            if (organismosControl == null)
             {
-                MessageBox.Show("Primero debes seleccionar la obra de la cual deseas ver la información", "Atención:", MessageBoxButton.OK, MessageBoxImage.Stop);
+                MessageBox.Show("Primero debes de cargar el listado de titulares");
                 return;
             }
 
-            ObrasWin update = new ObrasWin(obraControl.SelectedObra, false);
-            update.Owner = this;
-            update.ShowDialog();
+            AgregaOrganismo addOrg = new AgregaOrganismo(organismosControl.CatalogoOrganismo);
+            addOrg.ShowDialog();
         }
+
+        private void ModificaOrganismo_Click(object sender, RoutedEventArgs e)
+        {
+            AgregaOrganismo editOrg = new AgregaOrganismo(organismosControl.SelectedOrganismo, true);
+            editOrg.ShowDialog();
+        }
+
+        #endregion
+
+        
+
+
     }
 }

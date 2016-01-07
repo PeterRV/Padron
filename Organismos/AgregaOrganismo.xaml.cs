@@ -1,20 +1,15 @@
-﻿using PadronApi.Dto;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using PadronApi.Dto;
 using PadronApi.Model;
 using PadronApi.Singletons;
 using ScjnUtilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using Organismos.Ciudades;
 
 namespace Organismos
 {
@@ -23,22 +18,122 @@ namespace Organismos
     /// </summary>
     public partial class AgregaOrganismo : Window
     {
+        private Pais selectedPais;
+        private Estado selectedEstado;
+        private Ciudad selectedCiudad;
 
+        private Titular selectedTitular;
         private ElementalProperties selectedTipoOrg;
 
-        public AgregaOrganismo()
+        private ObservableCollection<Organismo> listaOrganismos;
+        private ObservableCollection<Materia> listaMaterias;
+
+        private Organismo organismo;
+        private bool isUpdating;
+
+        /// <summary>
+        /// Permite generar un nuevo registro de Organismo y al finalizar agregar dicho organismo al listado previo
+        /// </summary>
+        /// <param name="listaOrganismos"></param>
+        public AgregaOrganismo(ObservableCollection<Organismo> listaOrganismos)
         {
             InitializeComponent();
+            this.listaOrganismos = listaOrganismos;
+            this.organismo = new Organismo();
+            this.organismo.Integrantes = new ObservableCollection<Titular>();
+            this.isUpdating = false;
+        }
+
+        /// <summary>
+        /// Permite actualizar la información relativa al organismo señalado
+        /// </summary>
+        /// <param name="organismo">Organismo que se va a actualizar</param>
+        /// <param name="isUpdating">Indica si el organismo podrá ser modificado o solamente se visualizará la información</param>
+        public AgregaOrganismo(Organismo organismo, bool isUpdating)
+        {
+            InitializeComponent();
+            this.organismo = organismo;
+            this.isUpdating = isUpdating;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CbxTipoOrg.DataContext = ElementalPropertiesSingleton.TipoOrganismo;
             CbxDistribucion.DataContext = ElementalPropertiesSingleton.Distribucion;
+            CbxCircuito.DataContext = new ElementalPropertiesModel().GetCircuitos();
+            CbxOrdinal.DataContext = new ElementalPropertiesModel().GetOrdinales();
 
             CbxPais.DataContext = PaisesSingleton.Paises;
-            CbxEstado.DataContext = new PaisEstadoModel().GetEstados();
+
+            this.DataContext = organismo;
+
+            GridIntegrantes.DataContext = organismo.Integrantes;
+
+            listaMaterias = new Materia().GetMaterias();
+            CbxMateria1.DataContext = listaMaterias;
+            CbxMateria2.DataContext = listaMaterias;
+            CbxMateria3.DataContext = listaMaterias;
+
+            if (listaOrganismos != null)
+                CbxPais.SelectedValue = 39;
+
         }
+
+        private void CbxTipoOrg_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedTipoOrg = CbxTipoOrg.SelectedItem as ElementalProperties;
+
+            if (selectedTipoOrg.IdElemento < 2 || selectedTipoOrg.IdElemento > 10)
+            {
+                GpxMaterias.IsEnabled = false;
+                CbxOrdinal.IsEnabled = false;
+                CbxCircuito.IsEnabled = false;
+                LblDescripcion.IsEnabled = false;
+
+                CbxCircuito.SelectedIndex = -1;
+                CbxOrdinal.SelectedIndex = -1;
+
+                foreach (Materia materia in listaMaterias)
+                    materia.IsChecked = false;
+            }
+            else
+            {
+                GpxMaterias.IsEnabled = true;
+                CbxOrdinal.IsEnabled = true;
+                CbxCircuito.IsEnabled = true;
+                LblDescripcion.IsEnabled = true;
+            }
+        }
+
+        private void GridIntegrantes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedTitular = GridIntegrantes.SelectedItem as Titular;
+        }
+
+        private void RbtnAgregaFuncionario_Click(object sender, RoutedEventArgs e)
+        {
+            SelecccionaFuncionarios select = new SelecccionaFuncionarios(organismo);
+            select.Owner = this;
+            select.ShowDialog();
+        }
+
+        private void RbtnEliminar_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedTitular == null)
+            {
+                MessageBox.Show("Antes de continuar debes seleccionar al titular que ya no pertenece a esta integración");
+                return;
+            }
+
+            MessageBoxResult result = MessageBox.Show("¿Estas seguro de que este funcionario ya no es integrante de este tribunal?", "Atención", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                organismo.Integrantes.Remove(selectedTitular);
+            }
+        }
+
+        #region Valida informacion
 
         private void TxtPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -56,25 +151,194 @@ namespace Organismos
             e.Handled = VerificationUtilities.IsNumberOrGuion(e.Text);
         }
 
-        private void CbxTipoOrg_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void TxtsLostFocus(object sender, RoutedEventArgs e)
         {
-            selectedTipoOrg = CbxTipoOrg.SelectedItem as ElementalProperties;
+            TextBox box = sender as TextBox;
 
-            if (selectedTipoOrg.IdElemento < 2 || selectedTipoOrg.IdElemento > 10)
+            if (!String.IsNullOrEmpty(box.Text) || !String.IsNullOrWhiteSpace(box.Text))
+                box.Text = VerificationUtilities.TextBoxStringValidation(box.Text);
+
+        }
+
+        
+        #endregion
+
+
+        #region Direccion
+
+        private void CbxPais_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedPais = CbxPais.SelectedItem as Pais;
+
+            if (selectedPais.IdPais == 999999999)
             {
-                GbxMaterias.IsEnabled = false;
-                CbxOrdinal.IsEnabled = false;
-                CbxCircuito.IsEnabled = false;
+                Pais newPais = new Pais();
+                PaisEstadoWin addPais = new PaisEstadoWin(newPais, false);
+                addPais.Owner = this;
+                addPais.ShowDialog();
 
-                CbxCircuito.SelectedIndex = -1;
-                CbxOrdinal.SelectedIndex = -1;
+                if (addPais.DialogResult == true)
+                {
+                    PaisesSingleton.Paises.Insert(0, newPais);
+                    CbxPais.SelectedItem = newPais;
+                }
+                else
+                {
+                    CbxPais.SelectedValue = 39;
+                }
+
             }
             else
             {
-                GbxMaterias.IsEnabled = true;
-                CbxOrdinal.IsEnabled = true;
-                CbxCircuito.IsEnabled = true;
+                if (selectedPais.Estados == null)
+                    selectedPais.Estados = new PaisEstadoModel().GetEstados(selectedPais.IdPais);
+            }
+
+            CbxEstado.DataContext = selectedPais.Estados;
+            CbxEstado.IsEnabled = true;
+        }
+
+        private void CbxEstado_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedEstado = CbxEstado.SelectedItem as Estado;
+
+            if (selectedEstado.IdEstado == 999999999)
+            {
+                Estado estado = new Estado();
+                estado.IdPais = selectedPais.IdPais;
+                PaisEstadoWin addEstado = new PaisEstadoWin(estado, false);
+                addEstado.Owner = this;
+                addEstado.ShowDialog();
+
+                if (addEstado.DialogResult == true)
+                {
+                    selectedPais.Estados.Insert(0, estado);
+                    CbxEstado.SelectedItem = estado;
+                }
+                else
+                {
+                    CbxEstado.SelectedIndex = -1;
+                }
+            }
+            else
+            {
+
+                if (selectedEstado.Ciudades == null)
+                    selectedEstado.Ciudades = new PaisEstadoModel().GetCiudades(selectedEstado.IdEstado);
+            }
+
+            CbxCiudad.DataContext = selectedEstado.Ciudades;
+            CbxCiudad.IsEnabled = true;
+        }
+
+       
+
+        private void CbxCiudad_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedCiudad = CbxCiudad.SelectedItem as Ciudad;
+
+            if (selectedCiudad.IdCiudad == 999999999)
+            {
+                AddCiudad addCiudad = new AddCiudad(selectedEstado);
+                addCiudad.Owner = this;
+                addCiudad.ShowDialog();
+
+                if (addCiudad.DialogResult == true)
+                {
+                    CbxCiudad.SelectedIndex = 0;
+                }
+                else
+                {
+                    CbxCiudad.SelectedIndex = -1;
+                }
             }
         }
+
+        #endregion
+
+        private void BtnAceptar_Click(object sender, RoutedEventArgs e)
+        {
+            if ((selectedTipoOrg.IdElemento > 2 && selectedTipoOrg.IdElemento < 10) && (CbxOrdinal.SelectedIndex == -1 || CbxCircuito.SelectedIndex == -1))
+            {
+                MessageBox.Show("Antes de continuar debes de seleccionar el Circuito y Ordinal del organismo que intentas crear");
+                return;
+            }
+            else
+            {
+                organismo.Ordinal = Convert.ToInt32(CbxOrdinal.SelectedValue);
+                organismo.Circuito = Convert.ToInt32(CbxCircuito.SelectedValue);
+                foreach (Materia materia in listaMaterias)
+                    if (materia.IsChecked == true)
+                        organismo.Materia += materia.DecimalValue;
+            }
+
+            if (String.IsNullOrEmpty(TxtOrganismo.Text) || String.IsNullOrWhiteSpace(TxtOrganismo.Text))
+            {
+                MessageBox.Show("Para continuar ingresa el nombre o descripción del organismo que intentas crear");
+                return;
+            }
+
+            if (CbxEstado.SelectedIndex == -1)
+            {
+                MessageBox.Show("Debes seleccionar el estado donde esta localizado el organismo");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(TxtCalle.Text) || String.IsNullOrWhiteSpace(TxtCalle.Text))
+            {
+                MessageBox.Show("Ingresa la calle y número donde se encuentra ubicado el organismo");
+                return;
+            }
+
+            if ((String.IsNullOrEmpty(TxtCp.Text) || String.IsNullOrWhiteSpace(TxtCp.Text)) || TxtCp.Text.Length < 4)
+            {
+                MessageBox.Show("Ingresa un Código Postal válido");
+                return;
+            }
+
+            if (selectedPais.IdPais == 1 && (String.IsNullOrEmpty(TxtDelMun.Text) || String.IsNullOrWhiteSpace(TxtDelMun.Text)))
+            {
+                if (selectedEstado.IdEstado == 9)
+                {
+                    MessageBox.Show("Ingresa la delegación donde se encuentra ubicado el organismo");
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("Ingresa el Municipio donde se encuentra ubicado el organismo");
+                    return;
+                }
+            }
+
+            organismo.TipoOrganismo = Convert.ToInt32(CbxTipoOrg.SelectedValue);
+            organismo.TipoDistr = Convert.ToInt32(CbxDistribucion.SelectedValue);
+            organismo.Estado = Convert.ToInt32(CbxEstado.SelectedValue);
+
+            if (CbxCiudad.SelectedIndex != -1)
+                organismo.Ciudad = Convert.ToInt32(CbxCiudad.SelectedValue);
+
+            bool complete = new OrganismoModel().InsertaOrganismo(organismo);
+
+            if (complete)
+            {
+                listaOrganismos.Insert(0, organismo);
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Hubo un error al intentar crear el organismo, intentelo nuevamente", "Atención", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void BtnCancelar_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        
+
+        
+
+        
     }
 }
