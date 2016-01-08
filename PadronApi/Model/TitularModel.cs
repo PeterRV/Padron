@@ -53,7 +53,7 @@ namespace PadronApi.Model
                         titular.Activo = Convert.ToInt32(reader["Activo"]);
                         titular.Estado = reader["IdEstatus"]as int? ?? 0;
                         titular.QuiereDistribucion = Convert.ToBoolean(reader["QuiereDist"]);
-                        titular.IdOrganismoAdscripcion = Convert.ToInt32(reader["IdOrg"]);
+                        titular.IdOrganismoAdscripcion = Convert.ToInt32(reader["T.IdOrg"]);
                         titular.OrganismoAdscripcion = reader["descOrg"].ToString();
 
                         catalogoTitulares.Add(titular);
@@ -116,7 +116,7 @@ namespace PadronApi.Model
                         titular.Apellidos = reader["Apellidos"].ToString();
                         titular.NombreStr = reader["NombMay"].ToString();
                         titular.IdTitulo = reader["IdTitulo"] as int? ?? 0;
-                        //titular.Cargo = Convert.ToInt32(reader["Cargo"]);
+                        titular.IdOrganismoAdscripcion = Convert.ToInt32(reader["IdOrg"]);
                         titular.Funcion = Convert.ToInt32(reader["IdFuncion"]);
                         titular.Observaciones = reader["Obs"].ToString();
                         titular.Activo = Convert.ToInt32(reader["Activo"]);

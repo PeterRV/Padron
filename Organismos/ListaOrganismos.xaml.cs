@@ -26,6 +26,7 @@ namespace Organismos
         {
             CatalogoOrganismo = new OrganismoModel().GetOrganismos();
             GOrganismos.DataContext = CatalogoOrganismo;
+            LblTotales.Content = CatalogoOrganismo.Count.ToString() + " registros";
         }
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -43,6 +44,8 @@ namespace Organismos
         private void GOrganismos_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SelectedOrganismo = GOrganismos.SelectedItem as Organismo;
+
+            LblTotales.Content = GOrganismos.SelectedIndex + 1 + " de " + CatalogoOrganismo.Count.ToString() + " registros";
         }
     }
 }

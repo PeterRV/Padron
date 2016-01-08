@@ -92,7 +92,7 @@ namespace PadronApi.Model
                     {
                         ElementalProperties elemento = new ElementalProperties();
                         elemento.IdElemento = Convert.ToInt32(reader["IdFuncion"]);
-                        elemento.Descripcion = reader["DescFuncion"].ToString();
+                        elemento.Descripcion = reader["Funcion"].ToString();
 
                         catalogoTitulos.Add(elemento);
 

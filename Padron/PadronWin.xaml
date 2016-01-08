@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Custom="http://schemas.microsoft.com/winfx/2006/xaml/presentation/ribbon"
         xmlns:UIControls="clr-namespace:UIControls;assembly=UIControls"
-        Title="PadronWin"
+        Title="Padrón de distribución"
         Height="500"
         MinWidth="500"
         Icon="Resources/rocket.ico"
@@ -77,8 +77,9 @@
             <Custom:RibbonTab Header="Organismos">
                 <Custom:RibbonGroup Header="Acciones">
                     <Custom:RibbonButton x:Name="InfoOrganismo"
+                                         Click="InfoOrganismo_Click"
                                          Label="Ver Información"
-                                         LargeImageSource="Resources/Building.png" Click="InfoOrganismo_Click" />
+                                         LargeImageSource="Resources/Building.png" />
                     <Custom:RibbonButton x:Name="AgregarOrganismo"
                                          Click="AgregaOrganismo_Click"
                                          Label="Agregar Organismo"

@@ -38,7 +38,8 @@
                                EnableRowVirtualization="True"
                                IsReadOnly="True"
                                ItemsSource="{Binding}"
-                               SelectionChanged="GObras_SelectionChanged" MouseDoubleClick="GObras_MouseDoubleClick">
+                               MouseDoubleClick="GObras_MouseDoubleClick"
+                               SelectionChanged="GObras_SelectionChanged">
             <DataGrid.Columns>
 
                 <DataGridTextColumn Width="*"

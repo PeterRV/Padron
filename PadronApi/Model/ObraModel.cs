@@ -21,7 +21,7 @@ namespace PadronApi.Model
         {
             ObservableCollection<Obra> catalogoObras = new ObservableCollection<Obra>();
 
-            string sqlCadena = "SELECT IdObra,Orden, Titulo, TituloTxt,Sintesis,Presentacion,NumeroMaterial,AnioPublicacion,ISBN,Paginas,IdTipoObra,IdMedio FROM C_Obra WHERE Activo = 1 ORDER BY Orden";
+            string sqlCadena = "SELECT IdObra,Orden, Titulo, TituloTxt,Sintesis,IdPresentacion,NumeroMaterial,AnioPublicacion,ISBN,Paginas,IdTipoObra,IdMedio FROM C_Obra WHERE Activo = 1 ORDER BY Orden";
 
 
             OleDbConnection connection = new OleDbConnection(connectionString);
@@ -50,7 +50,7 @@ namespace PadronApi.Model
                         obra.AnioPublicacion = reader["AnioPublicacion"] as int? ?? 0;
                         obra.Isbn = reader["ISBN"].ToString();
                         obra.Paginas = reader["Paginas"] as int? ?? 0;
-                        obra.Presentacion = reader["Presentacion"] as int? ?? 0;
+                        obra.Presentacion = reader["IdPresentacion"] as int? ?? 0;
                         obra.TipoObra = reader["IdTipoObra"] as Int16? ?? 0;
                         obra.MedioPublicacion = reader["IdMedio"] as int? ?? 0;
 
@@ -102,8 +102,8 @@ namespace PadronApi.Model
             {
                 connection.Open();
 
-                string sqlQuery = "INSERT INTO C_Obra(IdObra,Titulo,TituloTxt,NumeroMaterial,NoVolumenes,Presentacion,IdTipoObra,AnioPublicacion,Isbn,Activo)" +
-                                "VALUES (@IdObra,@Titulo,@TituloTxt,@NumeroMaterial,@NoVolumenes,@Presentacion,@IdTipoObra,@AnioPublicacion,@Isbn,@Activo)";
+                string sqlQuery = "INSERT INTO C_Obra(IdObra,Titulo,TituloTxt,NumeroMaterial,NoVolumenes,IdPresentacion,IdTipoObra,AnioPublicacion,Isbn,Activo)" +
+                                "VALUES (@IdObra,@Titulo,@TituloTxt,@NumeroMaterial,@NoVolumenes,@IdPresentacion,@IdTipoObra,@AnioPublicacion,@Isbn,@Activo)";
 
                 OleDbCommand cmd = new OleDbCommand(sqlQuery, connection);
                 cmd.Parameters.AddWithValue("@IdObra", obra.IdObra);
@@ -111,7 +111,7 @@ namespace PadronApi.Model
                 cmd.Parameters.AddWithValue("@TituloTxt", StringUtilities.PrepareToAlphabeticalOrder( obra.Titulo));
                 cmd.Parameters.AddWithValue("@NumeroMaterial", obra.NumMaterial);
                 cmd.Parameters.AddWithValue("@NoVolumenes", obra.NumLibros);
-                cmd.Parameters.AddWithValue("@Presentacion", obra.Presentacion);
+                cmd.Parameters.AddWithValue("@IdPresentacion", obra.Presentacion);
                 cmd.Parameters.AddWithValue("@IdTipoObra", obra.TipoObra);
                 cmd.Parameters.AddWithValue("@AnioPublicacion", obra.AnioPublicacion);
                 if (obra.Isbn != null)
@@ -159,7 +159,7 @@ namespace PadronApi.Model
                 connection.Open();
 
                 string sqlQuery = "UPDATE C_Obra SET Titulo = @Titulo, TituloTxt = @TituloTxt, NumeroMaterial = @NumeroMaterial," +
-                    "NoVolumenes = @NoVolumenes, Presentacion = @Presentacion,IdTipoObra = @IdTipoObra, AnioPublicacion = @AnioPublicacion, Isbn = @Isbn " +
+                    "NoVolumenes = @NoVolumenes, IdPresentacion = @IdPresentacion,IdTipoObra = @IdTipoObra, AnioPublicacion = @AnioPublicacion, Isbn = @Isbn " +
                     "WHERE IdObra = @IdObra";
 
 
@@ -168,7 +168,7 @@ namespace PadronApi.Model
                 cmd.Parameters.AddWithValue("@TituloTxt", StringUtilities.PrepareToAlphabeticalOrder(obra.Titulo));
                 cmd.Parameters.AddWithValue("@NumeroMaterial", obra.NumMaterial);
                 cmd.Parameters.AddWithValue("@NoVolumenes", obra.NumLibros);
-                cmd.Parameters.AddWithValue("@Presentacion", obra.Presentacion);
+                cmd.Parameters.AddWithValue("@IdPresentacion", obra.Presentacion);
                 cmd.Parameters.AddWithValue("@IdTipoObra", obra.TipoObra);
                 cmd.Parameters.AddWithValue("@AnioPublicacion", obra.AnioPublicacion);
                 cmd.Parameters.AddWithValue("@Isbn", obra.Isbn);

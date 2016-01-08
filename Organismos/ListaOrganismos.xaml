@@ -28,7 +28,13 @@
                                   LabelText="Buscar por organismo o ubicación..."
                                   TextChanged="SearchTextBox_TextChanged"
                                   TextWrapping="Wrap" />
-
+        <Label x:Name="LblTotales"
+               Margin="0,10,20,0"
+               HorizontalAlignment="Right"
+               VerticalAlignment="Top"
+               Content="Label"
+               FontSize="14"
+               FontWeight="Bold" />
 
         <filter:FilterDataGrid x:Name="GOrganismos"
                                Grid.Row="1"

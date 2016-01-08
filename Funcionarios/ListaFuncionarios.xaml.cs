@@ -27,11 +27,13 @@ namespace Funcionarios
             CatalogoTitulares = new TitularModel().GetTitulares();
 
             GTitulares.DataContext = CatalogoTitulares;
+            LblTotales.Content = CatalogoTitulares.Count.ToString() + " registros";
         }
 
         private void GTitulares_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SelectedTitular = GTitulares.SelectedItem as Titular;
+            LblTotales.Content = (GTitulares.SelectedIndex + 1) + " de " + CatalogoTitulares.Count.ToString() + " registros";
         }
 
         private void SearchTextBox_Search(object sender, RoutedEventArgs e)
