@@ -6,6 +6,7 @@ using System.Windows.Input;
 using PadronApi.Dto;
 using PadronApi.Model;
 using ScjnUtilities;
+using System.Windows.Controls;
 
 namespace Obras
 {
@@ -74,7 +75,7 @@ namespace Obras
                 return;
             }
 
-            if (!VerificationUtilities.IsbnValidation(TxtIsbn.Text))
+            if ((TxtIsbn.Text.Length > 0) && !VerificationUtilities.IsbnValidation(TxtIsbn.Text))
             {
                 MessageBoxResult result = MessageBox.Show("El número de ISBN que ingresaste es incorrecto sino cuentas con el y deseas continuar presiona SI y el campo se vaciará, para revisar el ISBN presona NO", "Atención", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
@@ -147,11 +148,15 @@ namespace Obras
 
         private void TxtIsbn_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (!VerificationUtilities.IsbnValidation(TxtIsbn.Text))
+            if (!String.IsNullOrEmpty(TxtIsbn.Text) || !String.IsNullOrWhiteSpace(TxtIsbn.Text))
             {
-                MessageBox.Show("El número de ISBN que ingresaste es incorrecto, sino cuentas con el deja el campo en blanco", "Atención", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
+                if (!VerificationUtilities.IsbnValidation(TxtIsbn.Text))
+                {
+                    MessageBox.Show("El número de ISBN que ingresaste es incorrecto, sino cuentas con el deja el campo en blanco", "Atención", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
             }
+           
         }
 
         private void TxtNumMaterial_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -169,6 +174,30 @@ namespace Obras
             }
 
             e.Handled = VerificationUtilities.IsNumberOrGuion(e.Text);
+            TxtNumMaterial.Text = TxtNumMaterial.Text.Trim();
         }
+
+        private void TxtsLostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox box = sender as TextBox;
+
+            box.Text = VerificationUtilities.TextBoxStringValidation(box.Text);
+        }
+
+        private void TxtIsbn_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = VerificationUtilities.IsNumberOrGuion(e.Text);
+            
+        }
+
+        private void TxtsPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+                e.Handled = true;
+        }
+
+
+
+       
     }
 }

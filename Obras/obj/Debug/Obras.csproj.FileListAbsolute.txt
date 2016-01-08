@@ -23,9 +23,7 @@ C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\Obras\obj\Debug\Obr
 C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\Obras\obj\Debug\Padron\CatalogoObrasPadron.g.cs
 C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\Obras\obj\Debug\PorAutor.g.cs
 C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\Obras\obj\Debug\PorObra.g.cs
-C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\Obras\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\Obras\obj\Debug\Obras_MarkupCompile.cache
-C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\Obras\obj\Debug\Obras_MarkupCompile.lref
 C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\Obras\obj\Debug\ObrasWin.baml
 C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\Obras\obj\Debug\Obras.g.resources
 C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\Obras\obj\Debug\Obras.Properties.Resources.resources

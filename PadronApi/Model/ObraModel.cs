@@ -16,12 +16,14 @@ namespace PadronApi.Model
         /// <summary>
         /// Obtiene el catálogo de obras que se mostrará en padrón
         /// </summary>
+        /// <param name="activo">Indica si las obras que se mostrarán estan activas o inactivas</param>
         /// <returns></returns>
-        public ObservableCollection<Obra> GetObras()
+        public ObservableCollection<Obra> GetObras(int activo)
         {
             ObservableCollection<Obra> catalogoObras = new ObservableCollection<Obra>();
 
-            string sqlCadena = "SELECT IdObra,Orden, Titulo, TituloTxt,Sintesis,IdPresentacion,NumeroMaterial,AnioPublicacion,ISBN,Paginas,IdTipoObra,IdMedio FROM C_Obra WHERE Activo = 1 ORDER BY Orden";
+            string sqlCadena = "SELECT IdObra,Orden, Titulo, TituloTxt,Sintesis,IdPresentacion,NumeroMaterial," + 
+                "AnioPublicacion,ISBN,Paginas,IdTipoObra,IdMedio FROM C_Obra WHERE Activo = @Activo ORDER BY Orden";
 
 
             OleDbConnection connection = new OleDbConnection(connectionString);
@@ -34,6 +36,7 @@ namespace PadronApi.Model
                 connection.Open();
 
                 cmd = new OleDbCommand(sqlCadena, connection);
+                cmd.Parameters.AddWithValue("@Activo", activo);
                 reader = cmd.ExecuteReader();
 
                 if (reader.HasRows)
@@ -200,12 +203,12 @@ namespace PadronApi.Model
 
 
         /// <summary>
-        /// Desactiva un registro del catálogo de la base de datos. Es decir dicho registro no se 
+        /// Activa o Desactiva un registro del catálogo de la base de datos. Si un registro es desactivado dicho registro no se 
         /// mostrará en mantenimiento ni en producción en ninguno de los programas que accedan a 
         /// este catálogo
         /// </summary>
         /// <param name="obra"></param>
-        public void DesactivaObra(Obra obra)
+        public void EstadoObra(Obra obra,int estado)
         {
             OleDbConnection connection = new OleDbConnection(connectionString);
 
@@ -218,7 +221,7 @@ namespace PadronApi.Model
 
 
                 OleDbCommand cmd = new OleDbCommand(sqlQuery, connection);
-                cmd.Parameters.AddWithValue("@Activo", 0);
+                cmd.Parameters.AddWithValue("@Activo", estado);
                 cmd.Parameters.AddWithValue("@IdObra", obra.IdObra);
 
                 cmd.ExecuteNonQuery();

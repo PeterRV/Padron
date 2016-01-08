@@ -35,8 +35,22 @@
                                          LargeImageSource="Resources/Books_128_edit.png" />
                     <Custom:RibbonButton x:Name="EliminarObra"
                                          Click="EliminarObra_Click"
-                                         Label="Eliminar obra"
+                                         Label="Desactivar obra"
                                          LargeImageSource="Resources/Books_128_delete.png" />
+                    <Custom:RibbonButton x:Name="ActivarObra"
+                                         Click="ActivarObra_Click"
+                                         Label="Activar obra"
+                                         LargeImageSource="Resources/Books_128_add.png"
+                                         Visibility="Collapsed" />
+                    <Custom:RibbonButton x:Name="ObrasDesctivadas"
+                                         Click="ObrasDesctivadas_Click"
+                                         Label="Obras Inactivas"
+                                         LargeImageSource="Resources/Books_128_add.png" />
+                    <Custom:RibbonButton x:Name="ObrasActivas"
+                                         Click="ObrasActivas_Click"
+                                         Label="Obras Activas"
+                                         LargeImageSource="Resources/Books_128_add.png"
+                                         Visibility="Collapsed" />
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
             <Custom:RibbonTab Header="Padrón">

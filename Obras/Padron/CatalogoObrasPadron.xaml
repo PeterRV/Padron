@@ -22,9 +22,14 @@
                Content="Label"
                FontSize="14"
                FontWeight="Bold" />
+        <Label Margin="10,5,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Content="Buscar:"
+               FontWeight="Bold" />
         <UIControls:SearchTextBox Grid.Row="0"
                                   Width="250"
-                                  Margin="0"
+                                  Margin="85,5,0,0"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Top"
                                   LabelText="Buscar por título, material o ISBN..."

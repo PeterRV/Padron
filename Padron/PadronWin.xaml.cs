@@ -133,21 +133,77 @@ namespace Padron
             update.ShowDialog();
         }
 
+        /// <summary>
+        /// Cambia el estatus de una obra activa por el de inactiva
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EliminarObra_Click(object sender, RoutedEventArgs e)
         {
             if (obraControl == null || obraControl.SelectedObra == null)
             {
-                MessageBox.Show("Primero debes seleccionar la obra que deseas eliminar", "Atención:", MessageBoxButton.OK, MessageBoxImage.Stop);
+                MessageBox.Show("Primero debes seleccionar la obra que deseas desactivar", "Atención:", MessageBoxButton.OK, MessageBoxImage.Stop);
                 return;
             }
 
-            MessageBoxResult result = MessageBox.Show("¿Estas seguro de eliminar la obra: " + obraControl.SelectedObra.Titulo + "?", "Atención:", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show("¿Estas seguro de desactivar la obra: " + obraControl.SelectedObra.Titulo + "?", "Atención:", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Yes)
             {
-                new ObraModel().DesactivaObra(obraControl.SelectedObra);
+                new ObraModel().EstadoObra(obraControl.SelectedObra,0);
                 obraControl.CatalogoObras.Remove(obraControl.SelectedObra);
             }
+        }
+
+        /// <summary>
+        /// Cambia el estatus de una obra desactivada por el de activa
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ActivarObra_Click(object sender, RoutedEventArgs e)
+        {
+            if (obraControl == null || obraControl.SelectedObra == null)
+            {
+                MessageBox.Show("Primero debes seleccionar la obra que deseas activar", "Atención:", MessageBoxButton.OK, MessageBoxImage.Stop);
+                return;
+            }
+
+            MessageBoxResult result = MessageBox.Show("¿Estas seguro de activar la obra: " + obraControl.SelectedObra.Titulo + "?", "Atención:", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                new ObraModel().EstadoObra(obraControl.SelectedObra, 1);
+                obraControl.CatalogoObras.Remove(obraControl.SelectedObra);
+            }
+        }
+
+        /// <summary>
+        /// Muestra todas las obras que han sido desactivadas
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ObrasDesctivadas_Click(object sender, RoutedEventArgs e)
+        {
+            obraControl.EstadoObras = 0;
+            ObrasDesctivadas.Visibility = Visibility.Collapsed;
+            EliminarObra.Visibility = Visibility.Collapsed;
+            ActivarObra.Visibility = Visibility.Visible;
+            ObrasActivas.Visibility = Visibility.Visible;
+
+        }
+
+        /// <summary>
+        /// Muestras las obras activas que forman parte del padrón de distribución
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ObrasActivas_Click(object sender, RoutedEventArgs e)
+        {
+            obraControl.EstadoObras = 1;
+            ObrasDesctivadas.Visibility = Visibility.Visible;
+            EliminarObra.Visibility = Visibility.Visible;
+            ActivarObra.Visibility = Visibility.Collapsed;
+            ObrasActivas.Visibility = Visibility.Collapsed;
         }
 
         #endregion
@@ -225,6 +281,10 @@ namespace Padron
         }
 
         #endregion
+
+        
+
+        
 
         
 

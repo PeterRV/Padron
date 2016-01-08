@@ -192,6 +192,7 @@ namespace Organismos
             }
 
             e.Handled = VerificationUtilities.IsNumber(e.Text);
+            TxtCp.Text.Trim();
         }
 
         private void TxtTelValidation(object sender, TextCompositionEventArgs e)
@@ -460,6 +461,12 @@ namespace Organismos
         private void CbxMateria2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             CbxMateria3.IsEnabled = true;
+        }
+
+        private void TxtCp_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+                e.Handled = true;
         }
 
         

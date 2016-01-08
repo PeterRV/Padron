@@ -22,7 +22,7 @@ namespace PadronApi.Model
         {
             ObservableCollection<Titular> catalogoTitulares = new ObservableCollection<Titular>();
 
-            string sqlCadena = "SELECT T.*,O.IdOrg, O.DescOrg FROM C_Titular T INNER JOIN C_Organismo O ON O.IdOrg = T.IdOrg ORDER BY Apellidos";
+            string sqlCadena = "SELECT T.*,O.IdOrg, O.DescOrg FROM C_Titular T INNER JOIN C_Organismo O ON O.IdOrg = T.IdOrg WHERE IdOrg <> 7090 AND IdOrg <> 0 ORDER BY Apellidos";
 
 
             OleDbConnection connection = new OleDbConnection(connectionString);

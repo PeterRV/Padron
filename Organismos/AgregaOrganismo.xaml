@@ -119,25 +119,6 @@
                  LostFocus="TxtsLostFocus"
                  Text="{Binding OrganismoDesc,
                                 Mode=TwoWay}" />
-
-
-        <TextBlock x:Name="textBlock7_Copy"
-                   Height="23"
-                   Margin="22,234,0,0"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   FontSize="14"
-                   FontWeight="Bold"
-                   Text="Abreviatura:" />
-        <TextBox x:Name="TxtAbreviatura"
-                 Width="558"
-                 Height="23"
-                 Margin="120,234,0,0"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Top"
-                 LostFocus="TxtsLostFocus"
-                 Text="{Binding Abreviado,
-                                Mode=TwoWay}" />
         <TextBlock x:Name="textBlock7_Copy1"
                    Height="23"
                    Margin="728,16,0,0"
@@ -252,6 +233,7 @@
                          Margin="513,60,0,0"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Top"
+                         PreviewKeyDown="TxtCp_PreviewKeyDown"
                          PreviewTextInput="TxtPreviewTextInput"
                          TextWrapping="Wrap" />
                 <Label Margin="638,103,0,0"
