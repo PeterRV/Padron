@@ -211,6 +211,13 @@ namespace Padron
             addOrg.ShowDialog();
         }
 
+
+        private void InfoOrganismo_Click(object sender, RoutedEventArgs e)
+        {
+            AgregaOrganismo editOrg = new AgregaOrganismo(organismosControl.SelectedOrganismo, false);
+            editOrg.ShowDialog();
+        }
+
         private void ModificaOrganismo_Click(object sender, RoutedEventArgs e)
         {
             AgregaOrganismo editOrg = new AgregaOrganismo(organismosControl.SelectedOrganismo, true);
@@ -218,6 +225,8 @@ namespace Padron
         }
 
         #endregion
+
+        
 
         
 

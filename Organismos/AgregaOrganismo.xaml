@@ -13,7 +13,7 @@
         <convFunc:TituloConverter x:Key="tituloConv" />
 
     </Window.Resources>
-    <Grid>
+    <Grid x:Name="Principal">
         <Grid.RowDefinitions>
             <RowDefinition Height="45*" />
             <RowDefinition Height="45*" />
@@ -92,17 +92,18 @@
         <Label Name="LblDescripcion"
                Width="147"
                Height="28"
-               Margin="771,72,0,0"
+               Margin="770,186,0,0"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
                Content="Construir descripción"
                Cursor="Hand"
                FontSize="14"
                FontStyle="Italic"
-               Foreground="#FF0BAAFD" />
+               Foreground="#FF0BAAFD"
+               MouseLeftButtonDown="LblDescripcion_MouseLeftButtonDown" />
         <TextBlock Name="textBlock7"
                    Height="23"
-                   Margin="22,94,0,0"
+                   Margin="22,194,0,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    FontSize="14"
@@ -111,7 +112,7 @@
         <TextBox x:Name="TxtOrganismo"
                  Width="558"
                  Height="28"
-                 Margin="120,89,0,0"
+                 Margin="120,189,0,0"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
                  FontSize="14"
@@ -122,7 +123,7 @@
 
         <TextBlock x:Name="textBlock7_Copy"
                    Height="23"
-                   Margin="22,134,0,0"
+                   Margin="22,234,0,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    FontSize="14"
@@ -131,7 +132,7 @@
         <TextBox x:Name="TxtAbreviatura"
                  Width="558"
                  Height="23"
-                 Margin="120,134,0,0"
+                 Margin="120,234,0,0"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
                  LostFocus="TxtsLostFocus"
@@ -152,10 +153,9 @@
                   VerticalAlignment="Top"
                   DisplayMemberPath="Descripcion"
                   ItemsSource="{Binding}"
-                  SelectedIndex="0"
                   SelectedValuePath="IdElemento" />
         <GroupBox x:Name="GpxMaterias"
-                  Margin="25,178,15,10"
+                  Margin="25,84,15,104"
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="Stretch"
                   Header="Materias">
@@ -169,7 +169,8 @@
                           VerticalAlignment="Center"
                           DisplayMemberPath="MateriaDesc"
                           ItemsSource="{Binding}"
-                          SelectedValuePath="IdMateria" />
+                          SelectedValuePath="DecimalValue"
+                          SelectionChanged="CbxMateria1_SelectionChanged" />
 
                 <ComboBox x:Name="CbxMateria2"
                           Grid.Column="1"
@@ -178,8 +179,10 @@
                           HorizontalAlignment="Left"
                           VerticalAlignment="Center"
                           DisplayMemberPath="MateriaDesc"
+                          IsEnabled="False"
                           ItemsSource="{Binding}"
-                          SelectedValuePath="IdMateria" />
+                          SelectedValuePath="DecimalValue"
+                          SelectionChanged="CbxMateria2_SelectionChanged" />
 
                 <ComboBox x:Name="CbxMateria3"
                           Grid.Column="1"
@@ -188,8 +191,9 @@
                           HorizontalAlignment="Left"
                           VerticalAlignment="Center"
                           DisplayMemberPath="MateriaDesc"
+                          IsEnabled="False"
                           ItemsSource="{Binding}"
-                          SelectedValuePath="IdMateria" />
+                          SelectedValuePath="DecimalValue" />
 
             </Grid>
         </GroupBox>
@@ -336,7 +340,6 @@
                           VerticalAlignment="Top"
                           DisplayMemberPath="PaisDesc"
                           ItemsSource="{Binding}"
-                          SelectedIndex="0"
                           SelectedValuePath="IdPais"
                           SelectionChanged="CbxPais_SelectionChanged" />
                 <ComboBox x:Name="CbxEstado"

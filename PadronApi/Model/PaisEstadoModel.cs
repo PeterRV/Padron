@@ -77,6 +77,62 @@ namespace PadronApi.Model
         }
 
 
+        /// <summary>
+        /// Obtiene el país al que pertenece un estado
+        /// </summary>
+        /// <param name="idEstado">Estado del cual se quiere conocer el país</param>
+        /// <returns></returns>
+        public Pais GetPaises(int idEstado)
+        {
+            Pais pais = new Pais();
+            string sqlCadena = "SELECT P.* FROM C_Pais P INNER JOIN C_Estado E ON P.IdPais = E.IdPais WHERE IdEstado = @IdEstado ORDER BY PaisMay";
+
+
+            OleDbConnection connection = new OleDbConnection(connectionString);
+            OleDbCommand cmd = null;
+            OleDbDataReader reader = null;
+
+
+            try
+            {
+                connection.Open();
+
+                cmd = new OleDbCommand(sqlCadena, connection);
+                cmd.Parameters.AddWithValue("@IdEstado", idEstado);
+                reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        pais.IdPais = Convert.ToInt32(reader["IdPais"]);
+                        pais.PaisDesc = reader["Pais"].ToString();
+                        pais.PaisStr = reader["PaisMay"].ToString();
+
+                    }
+                }
+                cmd.Dispose();
+                reader.Close();
+            }
+            catch (OleDbException ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,PaisEstadoModel", "PadronApi");
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,PaisEstadoModel", "PadronApi");
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return pais;
+        }
+
+
         public bool InsertaPais(Pais pais)
         {
             OleDbConnection connection = new OleDbConnection(connectionString);

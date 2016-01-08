@@ -22,7 +22,7 @@ namespace PadronApi.Model
         {
             ObservableCollection<Titular> catalogoTitulares = new ObservableCollection<Titular>();
 
-            string sqlCadena = "SELECT T.*,O.IdOrg, O.DescOrg FROM C_Titular T INNER JOIN C_Organismo O ON O.IdOrg = T.CveAdscripcion ORDER BY Apellidos";
+            string sqlCadena = "SELECT T.*,O.IdOrg, O.DescOrg FROM C_Titular T INNER JOIN C_Organismo O ON O.IdOrg = T.IdOrg ORDER BY Apellidos";
 
 
             OleDbConnection connection = new OleDbConnection(connectionString);
@@ -42,13 +42,13 @@ namespace PadronApi.Model
                     while (reader.Read())
                     {
                         Titular titular = new Titular();
-                        titular.IdTitular = Convert.ToInt32(reader["IdLic"]);
+                        titular.IdTitular = Convert.ToInt32(reader["IdTitular"]);
                         titular.Nombre = reader["Nombre"].ToString();
                         titular.Apellidos = reader["Apellidos"].ToString();
                         titular.NombreStr = reader["NombMay"].ToString();
                         titular.IdTitulo = reader["IdTitulo"] as int? ?? 0;
                         //titular.Cargo = Convert.ToInt32(reader["Cargo"]);
-                        titular.Funcion = Convert.ToInt32(reader["Funcion"]);
+                        titular.Funcion = Convert.ToInt32(reader["IdFuncion"]);
                         titular.Observaciones = reader["Obs"].ToString();
                         titular.Activo = Convert.ToInt32(reader["Activo"]);
                         titular.Estado = reader["IdEstatus"]as int? ?? 0;
@@ -81,12 +81,79 @@ namespace PadronApi.Model
             return catalogoTitulares;
         }
 
+        /// <summary>
+        /// Obtiene los integrantes del organismo seleccionado
+        /// </summary>
+        /// <param name="idOrganismo">Organismo seleccionado</param>
+        /// <returns></returns>
+        public ObservableCollection<Titular> GetTitulares(int idOrganismo)
+        {
+            ObservableCollection<Titular> catalogoTitulares = new ObservableCollection<Titular>();
+
+            string sqlCadena = "SELECT T.*,O.IdOrg, O.DescOrg FROM C_Titular T INNER JOIN C_Organismo O ON O.IdOrg = T.IdOrg WHERE T.IdOrg = @IdOrg ORDER BY Apellidos";
+
+
+            OleDbConnection connection = new OleDbConnection(connectionString);
+            OleDbCommand cmd = null;
+            OleDbDataReader reader = null;
+
+
+            try
+            {
+                connection.Open();
+
+                cmd = new OleDbCommand(sqlCadena, connection);
+                cmd.Parameters.AddWithValue("@IdOrg", idOrganismo);
+                reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Titular titular = new Titular();
+                        titular.IdTitular = Convert.ToInt32(reader["IdTitular"]);
+                        titular.Nombre = reader["Nombre"].ToString();
+                        titular.Apellidos = reader["Apellidos"].ToString();
+                        titular.NombreStr = reader["NombMay"].ToString();
+                        titular.IdTitulo = reader["IdTitulo"] as int? ?? 0;
+                        //titular.Cargo = Convert.ToInt32(reader["Cargo"]);
+                        titular.Funcion = Convert.ToInt32(reader["IdFuncion"]);
+                        titular.Observaciones = reader["Obs"].ToString();
+                        titular.Activo = Convert.ToInt32(reader["Activo"]);
+                        titular.Estado = reader["IdEstatus"] as int? ?? 0;
+                        titular.QuiereDistribucion = Convert.ToBoolean(reader["QuiereDist"]);
+
+                        catalogoTitulares.Add(titular);
+
+                    }
+                }
+                cmd.Dispose();
+                reader.Close();
+            }
+            catch (OleDbException ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TitularModel", "PadronApi");
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TitularModel", "PadronApi");
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return catalogoTitulares;
+        }
+
 
         public ObservableCollection<Titular> GetTitularesSinAdscripcion()
         {
             ObservableCollection<Titular> catalogoTitulares = new ObservableCollection<Titular>();
 
-            string sqlCadena = "SELECT * FROM C_Titular WHERE CveAdscripcion = 7090 OR CveAdscripcion = 0 ORDER BY Apellidos";
+            string sqlCadena = "SELECT * FROM C_Titular WHERE IdOrg = 7090 OR IdOrg = 0 ORDER BY Apellidos";
 
 
             OleDbConnection connection = new OleDbConnection(connectionString);
@@ -106,13 +173,13 @@ namespace PadronApi.Model
                     while (reader.Read())
                     {
                         Titular titular = new Titular();
-                        titular.IdTitular = Convert.ToInt32(reader["IdLic"]);
+                        titular.IdTitular = Convert.ToInt32(reader["IdTitular"]);
                         titular.Nombre = reader["Nombre"].ToString();
                         titular.Apellidos = reader["Apellidos"].ToString();
                         titular.NombreStr = reader["NombMay"].ToString();
                         titular.IdTitulo = reader["IdTitulo"] as int? ?? 0;
                         //titular.Cargo = Convert.ToInt32(reader["Cargo"]);
-                        titular.Funcion = Convert.ToInt32(reader["Funcion"]);
+                        titular.Funcion = Convert.ToInt32(reader["IdFuncion"]);
                         titular.Observaciones = reader["Obs"].ToString();
                         titular.Activo = Convert.ToInt32(reader["Activo"]);
                         titular.Estado = reader["IdEstatus"] as int? ?? 0;
@@ -155,15 +222,15 @@ namespace PadronApi.Model
             {
                 connection.Open();
 
-                string sqlQuery = "INSERT INTO C_Titular(IdLic, Nombre,Apellidos,CveAdscripcion,Funcion,NombMay,Fecha,Obs,Activo,QuiereDist,IdTitulo,IdEstatus)" +
-                                "VALUES (@IdLic, @Nombre,@Apellidos,@CveAdscripcion,@Funcion,@NombMay,@Fecha,@Obs,@Activo,@QuiereDist,@IdTitulo,@IdEstatus)";
+                string sqlQuery = "INSERT INTO C_Titular(IdTitular, Nombre,Apellidos,IdOrg,IdFuncion,NombMay,Fecha,Obs,Activo,QuiereDist,IdTitulo,IdEstatus)" +
+                                "VALUES (@IdTitular, @Nombre,@Apellidos,@IdOrg,@IdFuncion,@NombMay,@Fecha,@Obs,@Activo,@QuiereDist,@IdTitulo,@IdEstatus)";
 
                 OleDbCommand cmd = new OleDbCommand(sqlQuery, connection);
-                cmd.Parameters.AddWithValue("@IdLic", titular.IdTitular);
+                cmd.Parameters.AddWithValue("@IdTitular", titular.IdTitular);
                // cmd.Parameters.AddWithValue("@[Id de Licenciado]", titular.IdTitular);
                 cmd.Parameters.AddWithValue("@Nombre", titular.Nombre);
                 cmd.Parameters.AddWithValue("@Apellidos", titular.Apellidos);
-                cmd.Parameters.AddWithValue("@CveAdscripcion", titular.IdOrganismoAdscripcion);
+                cmd.Parameters.AddWithValue("@IdOrg", titular.IdOrganismoAdscripcion);
                 //cmd.Parameters.AddWithValue("@Cargo", titular.Cargo);
                 cmd.Parameters.AddWithValue("@Funcion", titular.Funcion);
                 cmd.Parameters.AddWithValue("@NombMay", StringUtilities.PrepareToAlphabeticalOrder(titular.Apellidos) + " " + StringUtilities.PrepareToAlphabeticalOrder(titular.Nombre));
@@ -215,22 +282,22 @@ namespace PadronApi.Model
                 connection.Open();
 
                 string sqlQuery = "UPDATE C_Titular SET Nombre = @Nombre,Apellidos = @Apellidos," +
-                          "CveAdscripcion = @CveAdscripcion,Funcion = @Funcion,NombMay = @NombMay," + 
+                          "IdOrg = @IdOrg,IdFuncion = @IdFuncion,NombMay = @NombMay," + 
                           "Obs = @Obs, IdTitulo = @IdTitulo, IdEstatus = @IdEstatus, Activo = @Activo " +
-                          " WHERE IdLic = @IdLic";
+                          " WHERE IdTitular = @IdTitular";
 
                 OleDbCommand cmd = new OleDbCommand(sqlQuery, connection);
                 cmd.Parameters.AddWithValue("@Nombre", titular.Nombre);
                 cmd.Parameters.AddWithValue("@Apellidos", titular.Apellidos);
-                cmd.Parameters.AddWithValue("@CveAdscripcion", titular.IdOrganismoAdscripcion);
+                cmd.Parameters.AddWithValue("@IdOrg", titular.IdOrganismoAdscripcion);
                 //cmd.Parameters.AddWithValue("@Cargo", titular.Cargo);
-                cmd.Parameters.AddWithValue("@Funcion", titular.Funcion);
+                cmd.Parameters.AddWithValue("@IdFuncion", titular.Funcion);
                 cmd.Parameters.AddWithValue("@NombMay", StringUtilities.PrepareToAlphabeticalOrder(titular.Apellidos) + " " + StringUtilities.PrepareToAlphabeticalOrder(titular.Nombre));
                 cmd.Parameters.AddWithValue("@Obs", titular.Observaciones);
                 cmd.Parameters.AddWithValue("@IdTitulo", titular.IdTitulo);
                 cmd.Parameters.AddWithValue("@IdEstatus", titular.Estado);
                 cmd.Parameters.AddWithValue("@Activo", titular.Activo);
-                cmd.Parameters.AddWithValue("@IdLic", titular.IdTitular);
+                cmd.Parameters.AddWithValue("@IdTitular", titular.IdTitular);
                 
 
 
@@ -270,11 +337,11 @@ namespace PadronApi.Model
                 foreach (Titular integrante in listaIntegrantes)
                 {
 
-                    string sqlQuery = "UPDATE C_Titular SET CveAdscripcion = @CveAdscripcion WHERE IdLic = @IdLic";
+                    string sqlQuery = "UPDATE C_Titular SET IdOrg = @IdOrg WHERE IdTitular = @IdLIdTitularic";
 
                     OleDbCommand cmd = new OleDbCommand(sqlQuery, connection);
-                    cmd.Parameters.AddWithValue("@CveAdscripcion", idOrganismo);
-                    cmd.Parameters.AddWithValue("@IdLic", integrante.IdTitular);
+                    cmd.Parameters.AddWithValue("@IdOrg", idOrganismo);
+                    cmd.Parameters.AddWithValue("@IdTitular", integrante.IdTitular);
 
 
                     cmd.ExecuteNonQuery();
@@ -314,12 +381,12 @@ namespace PadronApi.Model
             {
                 connection.Open();
 
-                string sqlQuery = "UPDATE C_Titular SET CveAdscripcion = @CveAdscripcion" +
-                          " WHERE IdLic = @IdLic";
+                string sqlQuery = "UPDATE C_Titular SET IdOrg = @IdOrg" +
+                          " WHERE IdTitular = @IdTitular";
 
                 OleDbCommand cmd = new OleDbCommand(sqlQuery, connection);
-                cmd.Parameters.AddWithValue("@CveAdscripcion", 0);
-                cmd.Parameters.AddWithValue("@IdLic", idTitular);
+                cmd.Parameters.AddWithValue("@IdOrg", 0);
+                cmd.Parameters.AddWithValue("@IdTitular", idTitular);
 
 
                 cmd.ExecuteNonQuery();

@@ -469,7 +469,7 @@ namespace PadronApi.Model
                     {
                         ElementalProperties elemento = new ElementalProperties();
                         elemento.IdElemento = Convert.ToInt32(reader["IdOrdinal"]);
-                        elemento.Descripcion = reader["Ordinal"].ToString() + "Circuito";
+                        elemento.Descripcion = reader["Ordinal"].ToString() + " Circuito";
 
                         catalogoCircuitos.Add(elemento);
 

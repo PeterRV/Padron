@@ -78,7 +78,7 @@
                 <Custom:RibbonGroup Header="Acciones">
                     <Custom:RibbonButton x:Name="InfoOrganismo"
                                          Label="Ver Información"
-                                         LargeImageSource="Resources/Building.png" />
+                                         LargeImageSource="Resources/Building.png" Click="InfoOrganismo_Click" />
                     <Custom:RibbonButton x:Name="AgregarOrganismo"
                                          Click="AgregaOrganismo_Click"
                                          Label="Agregar Organismo"

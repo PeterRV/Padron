@@ -10,6 +10,7 @@ using PadronApi.Singletons;
 using ScjnUtilities;
 using System.Windows.Media;
 using Organismos.Ciudades;
+using System.Collections.Generic;
 
 namespace Organismos
 {
@@ -29,7 +30,7 @@ namespace Organismos
         private ObservableCollection<Materia> listaMaterias;
 
         private Organismo organismo;
-        private bool isUpdating;
+        private bool? isUpdating;
 
         /// <summary>
         /// Permite generar un nuevo registro de Organismo y al finalizar agregar dicho organismo al listado previo
@@ -41,7 +42,7 @@ namespace Organismos
             this.listaOrganismos = listaOrganismos;
             this.organismo = new Organismo();
             this.organismo.Integrantes = new ObservableCollection<Titular>();
-            this.isUpdating = false;
+            this.isUpdating = null;
         }
 
         /// <summary>
@@ -54,6 +55,7 @@ namespace Organismos
             InitializeComponent();
             this.organismo = organismo;
             this.isUpdating = isUpdating;
+            Principal.IsEnabled = isUpdating;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -77,10 +79,54 @@ namespace Organismos
             if (listaOrganismos != null)
                 CbxPais.SelectedValue = 39;
 
+            if (isUpdating != null)
+                LoadNoBindings();
+
         }
+
+
+        private void LoadNoBindings()
+        {
+            organismo.Integrantes = new TitularModel().GetTitulares(organismo.IdOrganismo);
+            GridIntegrantes.DataContext = organismo.Integrantes;
+            CbxTipoOrg.SelectedValue = organismo.TipoOrganismo;
+            CbxOrdinal.SelectedValue = organismo.Ordinal;
+            CbxCircuito.SelectedValue = organismo.Circuito;
+            CbxDistribucion.SelectedValue = organismo.TipoDistr;
+            int idPais = new PaisEstadoModel().GetPaises(organismo.Estado).IdPais;
+            CbxPais.SelectedValue = idPais;
+            CbxEstado.SelectedValue = organismo.Estado;
+            CbxCiudad.SelectedValue = organismo.Ciudad;
+
+            List<int> materias = ScjnUtilities.NumericUtilities.GetDecimalsInBinary(organismo.Materia);
+
+            if (materias.Count == 1)
+                CbxMateria1.SelectedValue = materias[0];
+            if (materias.Count == 2)
+            {
+                CbxMateria1.SelectedValue = materias[0];
+                CbxMateria2.SelectedValue = materias[1];
+            }
+            if (materias.Count == 3)
+            {
+                CbxMateria1.SelectedValue = materias[0];
+                CbxMateria2.SelectedValue = materias[1];
+                CbxMateria3.SelectedValue = materias[2];
+            }
+
+            //Pais thePais = (from n in PaisesSingleton.Paises
+            //                where n.IdPais == idPais
+            //                select n).ToList()[0];
+
+            //CbxPais.SelectedItem = thePais;
+
+        }
+
+
 
         private void CbxTipoOrg_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            TxtOrganismo.Text = String.Empty;
             selectedTipoOrg = CbxTipoOrg.SelectedItem as ElementalProperties;
 
             if (selectedTipoOrg.IdElemento < 2 || selectedTipoOrg.IdElemento > 10)
@@ -89,6 +135,7 @@ namespace Organismos
                 CbxOrdinal.IsEnabled = false;
                 CbxCircuito.IsEnabled = false;
                 LblDescripcion.IsEnabled = false;
+                TxtOrganismo.IsEnabled = true;
 
                 CbxCircuito.SelectedIndex = -1;
                 CbxOrdinal.SelectedIndex = -1;
@@ -102,6 +149,7 @@ namespace Organismos
                 CbxOrdinal.IsEnabled = true;
                 CbxCircuito.IsEnabled = true;
                 LblDescripcion.IsEnabled = true;
+                TxtOrganismo.IsEnabled = false;
             }
         }
 
@@ -267,9 +315,21 @@ namespace Organismos
             {
                 organismo.Ordinal = Convert.ToInt32(CbxOrdinal.SelectedValue);
                 organismo.Circuito = Convert.ToInt32(CbxCircuito.SelectedValue);
-                foreach (Materia materia in listaMaterias)
-                    if (materia.IsChecked == true)
-                        organismo.Materia += materia.DecimalValue;
+
+                if (CbxMateria1.SelectedIndex != -1)
+                {
+                    organismo.Materia += ((Materia)CbxMateria1.SelectedItem).DecimalValue;
+
+                    if (CbxMateria2.SelectedIndex != -1)
+                    {
+                        organismo.Materia += ((Materia)CbxMateria2.SelectedItem).DecimalValue;
+
+                        if (CbxMateria3.SelectedIndex != -1)
+                        {
+                            organismo.Materia += ((Materia)CbxMateria3.SelectedItem).DecimalValue;
+                        }
+                    }
+                }
             }
 
             if (String.IsNullOrEmpty(TxtOrganismo.Text) || String.IsNullOrWhiteSpace(TxtOrganismo.Text))
@@ -317,22 +377,89 @@ namespace Organismos
             if (CbxCiudad.SelectedIndex != -1)
                 organismo.Ciudad = Convert.ToInt32(CbxCiudad.SelectedValue);
 
-            bool complete = new OrganismoModel().InsertaOrganismo(organismo);
 
-            if (complete)
+            if (isUpdating == null)
             {
-                listaOrganismos.Insert(0, organismo);
-                this.Close();
+                bool complete = new OrganismoModel().InsertaOrganismo(organismo);
+
+                if (complete)
+                {
+                    listaOrganismos.Insert(0, organismo);
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Hubo un error al intentar crear el organismo, intentelo nuevamente", "Atención", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            else
+            else if (isUpdating == true)
             {
-                MessageBox.Show("Hubo un error al intentar crear el organismo, intentelo nuevamente", "Atención", MessageBoxButton.OK, MessageBoxImage.Error);
+                new OrganismoModel().UpdateOrganismo(organismo);
             }
         }
 
         private void BtnCancelar_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void LblDescripcion_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            string materias = String.Empty;
+
+            if (CbxMateria1.SelectedIndex != -1)
+            {
+                materias += "en materia " + CbxMateria1.Text + " ";
+
+                if (CbxMateria2.SelectedIndex != -1)
+                {
+                    if (CbxMateria3.SelectedIndex != -1)
+                    {
+                        materias += ", " + CbxMateria2.Text + " y " + CbxMateria3.Text + " ";
+                    }
+                    else
+                    {
+                        materias += " y " + CbxMateria2.Text + " ";
+                    }
+
+                }
+                    
+            }
+
+            if (selectedTipoOrg.IdElemento == 2)
+            {
+                if (CbxCircuito.SelectedIndex != -1)
+                    TxtOrganismo.Text = ((CbxOrdinal.SelectedIndex != -1) ? CbxOrdinal.Text + " " : String.Empty) +
+                        "Tribunal Colegiado " + materias + "del " + CbxCircuito.Text;
+                else
+                    MessageBox.Show("Selecciona el circuito al cual pertenece el tribunal");
+            }
+            else if (selectedTipoOrg.IdElemento == 4)
+            {
+                if (CbxCircuito.SelectedIndex != -1)
+                    TxtOrganismo.Text = ((CbxOrdinal.SelectedIndex != -1) ? CbxOrdinal.Text + " " : String.Empty) +
+                        "Tribunal Unitario " + materias + "del " + CbxCircuito.Text;
+                else
+                    MessageBox.Show("Selecciona el circuito al cual pertenece el tribunal");
+            }
+            else if (selectedTipoOrg.IdElemento == 8)
+            {
+                if (CbxCircuito.SelectedIndex != -1 )
+                    TxtOrganismo.Text = "Juzgado " + ((CbxOrdinal.SelectedIndex != -1) ? CbxOrdinal.Text + " " : String.Empty) + " de Distrito " +
+                         materias + "del " + CbxCircuito.Text;
+                else
+                    MessageBox.Show("Selecciona el ordinal y el circuito al cual pertenece el tribunal");
+            }
+        }
+
+        private void CbxMateria1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CbxMateria2.IsEnabled = true;
+        }
+
+        private void CbxMateria2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CbxMateria3.IsEnabled = true;
         }
 
         

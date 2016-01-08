@@ -9,19 +9,23 @@ namespace Organismos.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value != null)
+            try
             {
-                int number = 0;
-                int.TryParse(value.ToString(), out number);
+                if (value != null)
+                {
+                    int number = 0;
+                    int.TryParse(value.ToString(), out number);
 
-                
 
-                return (from n in PaisesSingleton.Ciudades
-                        where n.IdCiudad == number
-                        select n.CiudadDesc).ToList()[0];
+
+                    return (from n in PaisesSingleton.Ciudades
+                            where n.IdCiudad == number
+                            select n.CiudadDesc).ToList()[0];
+                }
+
+                return " ";
             }
-
-            return " ";
+            catch (ArgumentOutOfRangeException) { return " "; }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
