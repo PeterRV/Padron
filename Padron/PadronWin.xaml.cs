@@ -8,6 +8,8 @@ using Obras.Padron;
 using Organismos;
 using Padron.PapeleriaFolder;
 using PadronApi.Model;
+using Microsoft.Windows.Controls.Ribbon;
+using System.Collections.Generic;
 
 namespace Padron
 {
@@ -21,6 +23,7 @@ namespace Padron
         Papeleria papeleriaControl;
         ListaFuncionarios funcionariosControl;
         ListaOrganismos organismosControl;
+        List<RibbonTab> pestanasBarra;
 
         public PadronWin()
         {
@@ -29,10 +32,14 @@ namespace Padron
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            pestanasBarra = new List<RibbonTab>() { TabObras, TabPadron, TabTitulares, TabOrganismos, TabDistribucion, TabReportes };
+            this.OcultaPestana();
+            
         }
 
         private void TreeViewItem_Selected(object sender, RoutedEventArgs e)
         {
+            this.OcultaPestana();
             TreeViewItem item = sender as TreeViewItem;
 
             int switchy = Convert.ToInt32(item.Tag);
@@ -45,12 +52,16 @@ namespace Padron
                         obraControl = new CatalogoObrasPadron();
 
                     CentralPanel.Children.Add(obraControl);
+                    TabObras.Visibility = Visibility.Visible;
+                    BarraPrincipal.SelectedItem = TabObras;
                     break;
                 case 3:
                     if (papeleriaControl == null)
                         papeleriaControl = new Papeleria();
 
                     CentralPanel.Children.Add(papeleriaControl);
+                    TabPadron.Visibility = Visibility.Visible;
+                    BarraPrincipal.SelectedItem = TabPadron;
                     break;
                 case 4: 
                     break;
@@ -59,12 +70,16 @@ namespace Padron
                         funcionariosControl = new ListaFuncionarios();
 
                     CentralPanel.Children.Add(funcionariosControl);
+                    TabTitulares.Visibility = Visibility.Visible;
+                    BarraPrincipal.SelectedItem = TabTitulares;
                     break;
                 case 6:
                     if (organismosControl == null)
                         organismosControl = new ListaOrganismos();
 
                     CentralPanel.Children.Add(organismosControl);
+                    TabOrganismos.Visibility = Visibility.Visible;
+                    BarraPrincipal.SelectedItem = TabOrganismos;
                     break;
                 case 7:
                     break;
@@ -89,7 +104,11 @@ namespace Padron
             papeConfig.ShowDialog();
         }
 
-        
+        private void OcultaPestana()
+        {
+            foreach (RibbonTab tab in pestanasBarra)
+                tab.Visibility = Visibility.Collapsed;
+        }
 
         
 

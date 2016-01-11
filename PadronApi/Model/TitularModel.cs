@@ -22,7 +22,7 @@ namespace PadronApi.Model
         {
             ObservableCollection<Titular> catalogoTitulares = new ObservableCollection<Titular>();
 
-            string sqlCadena = "SELECT T.*,O.IdOrg, O.DescOrg FROM C_Titular T INNER JOIN C_Organismo O ON O.IdOrg = T.IdOrg WHERE IdOrg <> 7090 AND IdOrg <> 0 ORDER BY Apellidos";
+            string sqlCadena = "SELECT T.*,O.IdOrg, O.DescOrg FROM C_Titular T INNER JOIN C_Organismo O ON O.IdOrg = T.IdOrg WHERE T.IdOrg <> 7090 AND T.IdOrg <> 0 ORDER BY Apellidos";
 
 
             OleDbConnection connection = new OleDbConnection(connectionString);
@@ -116,7 +116,7 @@ namespace PadronApi.Model
                         titular.Apellidos = reader["Apellidos"].ToString();
                         titular.NombreStr = reader["NombMay"].ToString();
                         titular.IdTitulo = reader["IdTitulo"] as int? ?? 0;
-                        titular.IdOrganismoAdscripcion = Convert.ToInt32(reader["IdOrg"]);
+                        titular.IdOrganismoAdscripcion = Convert.ToInt32(reader["T.IdOrg"]);
                         titular.Funcion = Convert.ToInt32(reader["IdFuncion"]);
                         titular.Observaciones = reader["Obs"].ToString();
                         titular.Activo = Convert.ToInt32(reader["Activo"]);

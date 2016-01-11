@@ -16,10 +16,10 @@
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
 
-        <Custom:Ribbon Margin="0,0,0,0"
+        <Custom:Ribbon Margin="0,0,0,0" x:Name="BarraPrincipal"
                        HorizontalAlignment="Stretch"
                        VerticalAlignment="Stretch">
-            <Custom:RibbonTab Header="Obras">
+            <Custom:RibbonTab Header="Obras" x:Name="TabObras" >
                 <Custom:RibbonGroup Header="Acciones">
                     <Custom:RibbonButton x:Name="VerObra"
                                          Click="VerObra_Click"
@@ -53,7 +53,7 @@
                                          Visibility="Collapsed" />
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
-            <Custom:RibbonTab Header="Padrón">
+            <Custom:RibbonTab Header="Padrón" x:Name="TabPadron">
                 <Custom:RibbonGroup Header="Papelería">
                     <Custom:RibbonButton x:Name="GeneraCorte"
                                          Label="Genera SCJN"
@@ -64,7 +64,7 @@
                                          LargeImageSource="Resources/Building.png" />
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
-            <Custom:RibbonTab Header="Titulares">
+            <Custom:RibbonTab Header="Titulares" x:Name="TabTitulares">
                 <Custom:RibbonGroup Header="Acciones">
                     <Custom:RibbonButton x:Name="InfoTitular"
                                          Click="InfoTitular_Click"
@@ -88,7 +88,7 @@
                 </Custom:RibbonGroup>
 
             </Custom:RibbonTab>
-            <Custom:RibbonTab Header="Organismos">
+            <Custom:RibbonTab Header="Organismos" x:Name="TabOrganismos">
                 <Custom:RibbonGroup Header="Acciones">
                     <Custom:RibbonButton x:Name="InfoOrganismo"
                                          Click="InfoOrganismo_Click"
@@ -110,8 +110,8 @@
                                          LargeImageSource="Resources/schedule_128.png" />
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
-            <Custom:RibbonTab Header="Distribución" />
-            <Custom:RibbonTab Header="Reportes" />
+            <Custom:RibbonTab Header="Distribución" x:Name="TabDistribucion" />
+            <Custom:RibbonTab Header="Reportes" x:Name="TabReportes"/>
         </Custom:Ribbon>
 
         <Grid Grid.Row="1">
