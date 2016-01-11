@@ -49,12 +49,19 @@ namespace Obras.Padron
             String tempString = ((TextBox)sender).Text.ToUpper();
 
             if (!String.IsNullOrEmpty(tempString))
-                GObras.DataContext = (from n in CatalogoObras
-                                        where n.Titulo.ToUpper().Contains(tempString) || n.NumMaterial.ToUpper().Contains(tempString) ||
-                                        n.TituloStr.ToUpper().Contains(tempString) || n.Isbn.ToUpper().Contains(tempString)
-                                        select n).ToList();
+            {
+                var resultado = (from n in CatalogoObras
+                                 where n.Titulo.ToUpper().Contains(tempString) || n.NumMaterial.ToUpper().Contains(tempString) ||
+                                 n.TituloStr.ToUpper().Contains(tempString) || n.Isbn.ToUpper().Contains(tempString)
+                                 select n).ToList();
+                LblTotales.Content = resultado.Count + " registros";
+                GObras.DataContext = resultado;
+            }
             else
+            {
                 GObras.DataContext = CatalogoObras;
+                LblTotales.Content = CatalogoObras.Count + " registros";
+            }
         }
 
         private void GObras_SelectionChanged(object sender, SelectionChangedEventArgs e)

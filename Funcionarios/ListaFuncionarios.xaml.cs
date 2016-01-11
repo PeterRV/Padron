@@ -41,11 +41,18 @@ namespace Funcionarios
             String tempString = ((TextBox)sender).Text.ToUpper();
 
             if (!String.IsNullOrEmpty(tempString))
-                GTitulares.DataContext = (from n in CatalogoTitulares
-                                      where n.NombreStr.ToUpper().Contains(tempString) || n.OrganismoAdscripcion.ToUpper().Contains(tempString) 
-                                      select n).ToList();
+            {
+                var temporal = (from n in CatalogoTitulares
+                                          where n.NombreStr.ToUpper().Contains(tempString) || n.OrganismoAdscripcion.ToUpper().Contains(tempString)
+                                          select n).ToList();
+                LblTotales.Content = temporal.Count + " registros";
+                GTitulares.DataContext = temporal;
+            }
             else
+            {
                 GTitulares.DataContext = CatalogoTitulares;
+                LblTotales.Content = CatalogoTitulares.Count + " registros";
+            }
         }
     }
 }

@@ -10,9 +10,9 @@ namespace PadronApi.Model
 {
     public class PaisEstadoModel
     {
-        Pais dummyPais = new Pais() { IdPais = 999999999, PaisDesc = "Agregar país..." };
-        Estado dummyEstado = new Estado() { IdEstado = 999999999, EstadoDesc = "Agregar estado..." };
-        Ciudad dummyCiudad = new Ciudad() { IdCiudad = 999999999, CiudadDesc = "Agregar ciudad..." };
+        readonly Pais dummyPais = new Pais() { IdPais = 999999999, PaisDesc = "Agregar país..." };
+        readonly Estado dummyEstado = new Estado() { IdEstado = 999999999, EstadoDesc = "Agregar estado..." };
+        readonly Ciudad dummyCiudad = new Ciudad() { IdCiudad = 999999999, CiudadDesc = "Agregar ciudad..." };
 
         private readonly string connectionString = ConfigurationManager.ConnectionStrings["Base"].ConnectionString;
 

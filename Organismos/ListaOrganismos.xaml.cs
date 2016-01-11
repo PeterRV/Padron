@@ -34,11 +34,18 @@ namespace Organismos
             String tempString = ScjnUtilities.StringUtilities.PrepareToAlphabeticalOrder( ((TextBox)sender).Text);
 
             if (!String.IsNullOrEmpty(tempString))
-                GOrganismos.DataContext = (from n in CatalogoOrganismo
-                                          where n.OrganismoStr.Contains(tempString) 
-                                          select n).ToList();
+            {
+                var temporal = (from n in CatalogoOrganismo
+                                           where n.OrganismoStr.Contains(tempString)
+                                           select n).ToList();
+                LblTotales.Content = temporal.Count + " registros";
+                GOrganismos.DataContext = temporal;
+            }
             else
+            {
                 GOrganismos.DataContext = CatalogoOrganismo;
+                LblTotales.Content = CatalogoOrganismo.Count + " registros";
+            }
         }
 
         private void GOrganismos_SelectionChanged(object sender, SelectionChangedEventArgs e)
