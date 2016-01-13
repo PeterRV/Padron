@@ -16,10 +16,11 @@
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
 
-        <Custom:Ribbon Margin="0,0,0,0" x:Name="BarraPrincipal"
+        <Custom:Ribbon x:Name="BarraPrincipal"
+                       Margin="0,0,0,0"
                        HorizontalAlignment="Stretch"
                        VerticalAlignment="Stretch">
-            <Custom:RibbonTab Header="Obras" x:Name="TabObras" >
+            <Custom:RibbonTab x:Name="TabObras" Header="Obras">
                 <Custom:RibbonGroup Header="Acciones">
                     <Custom:RibbonButton x:Name="VerObra"
                                          Click="VerObra_Click"
@@ -52,8 +53,14 @@
                                          LargeImageSource="Resources/Books_128_add.png"
                                          Visibility="Collapsed" />
                 </Custom:RibbonGroup>
+                <Custom:RibbonGroup Header="Exportar">
+                    <Custom:RibbonButton x:Name="ObraTotWord"
+                                         Click="ObraTotWord_Click"
+                                         Label="Obra General Word"
+                                         LargeImageSource="Resources/Books_128.png" />
+                </Custom:RibbonGroup>
             </Custom:RibbonTab>
-            <Custom:RibbonTab Header="Padrón" x:Name="TabPadron">
+            <Custom:RibbonTab x:Name="TabPadron" Header="Padrón">
                 <Custom:RibbonGroup Header="Papelería">
                     <Custom:RibbonButton x:Name="GeneraCorte"
                                          Label="Genera SCJN"
@@ -64,7 +71,7 @@
                                          LargeImageSource="Resources/Building.png" />
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
-            <Custom:RibbonTab Header="Titulares" x:Name="TabTitulares">
+            <Custom:RibbonTab x:Name="TabTitulares" Header="Titulares">
                 <Custom:RibbonGroup Header="Acciones">
                     <Custom:RibbonButton x:Name="InfoTitular"
                                          Click="InfoTitular_Click"
@@ -88,7 +95,7 @@
                 </Custom:RibbonGroup>
 
             </Custom:RibbonTab>
-            <Custom:RibbonTab Header="Organismos" x:Name="TabOrganismos">
+            <Custom:RibbonTab x:Name="TabOrganismos" Header="Organismos">
                 <Custom:RibbonGroup Header="Acciones">
                     <Custom:RibbonButton x:Name="InfoOrganismo"
                                          Click="InfoOrganismo_Click"
@@ -110,8 +117,8 @@
                                          LargeImageSource="Resources/schedule_128.png" />
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
-            <Custom:RibbonTab Header="Distribución" x:Name="TabDistribucion" />
-            <Custom:RibbonTab Header="Reportes" x:Name="TabReportes"/>
+            <Custom:RibbonTab x:Name="TabDistribucion" Header="Distribución" />
+            <Custom:RibbonTab x:Name="TabReportes" Header="Reportes" />
         </Custom:Ribbon>
 
         <Grid Grid.Row="1">

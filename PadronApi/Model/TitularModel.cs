@@ -55,6 +55,7 @@ namespace PadronApi.Model
                         titular.QuiereDistribucion = Convert.ToBoolean(reader["QuiereDist"]);
                         titular.IdOrganismoAdscripcion = Convert.ToInt32(reader["T.IdOrg"]);
                         titular.OrganismoAdscripcion = reader["descOrg"].ToString();
+                        titular.Correo = reader["Correo"].ToString();
 
                         catalogoTitulares.Add(titular);
 
@@ -122,6 +123,7 @@ namespace PadronApi.Model
                         titular.Activo = Convert.ToInt32(reader["Activo"]);
                         titular.Estado = reader["IdEstatus"] as int? ?? 0;
                         titular.QuiereDistribucion = Convert.ToBoolean(reader["QuiereDist"]);
+                        titular.Correo = reader["Correo"].ToString();
 
                         catalogoTitulares.Add(titular);
 
@@ -146,6 +148,69 @@ namespace PadronApi.Model
             }
 
             return catalogoTitulares;
+        }
+
+        public Titular GetTitulares(Titular dtitular)
+        {
+            ObservableCollection<Titular> catalogoTitulares = new ObservableCollection<Titular>();
+
+            string sqlCadena = "SELECT T.*,O.IdOrg, O.DescOrg FROM C_Titular T INNER JOIN C_Organismo O ON O.IdOrg = T.IdOrg WHERE T.IdTitular = @IdTitular ORDER BY Apellidos";
+
+
+            OleDbConnection connection = new OleDbConnection(connectionString);
+            OleDbCommand cmd = null;
+            OleDbDataReader reader = null;
+
+            Titular dummyTitular = null;
+            try
+            {
+                connection.Open();
+
+                cmd = new OleDbCommand(sqlCadena, connection);
+                cmd.Parameters.AddWithValue("@IdOrg", dtitular.IdTitular);
+                reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        dummyTitular = new Titular();
+                        dummyTitular.IdTitular = Convert.ToInt32(reader["IdTitular"]);
+                        dummyTitular.Nombre = reader["Nombre"].ToString();
+                        dummyTitular.Apellidos = reader["Apellidos"].ToString();
+                        dummyTitular.NombreStr = reader["NombMay"].ToString();
+                        dummyTitular.IdTitulo = reader["IdTitulo"] as int? ?? 0;
+                        dummyTitular.IdOrganismoAdscripcion = Convert.ToInt32(reader["T.IdOrg"]);
+                        dummyTitular.Funcion = Convert.ToInt32(reader["IdFuncion"]);
+                        dummyTitular.Observaciones = reader["Obs"].ToString();
+                        dummyTitular.Activo = Convert.ToInt32(reader["Activo"]);
+                        dummyTitular.Estado = reader["IdEstatus"] as int? ?? 0;
+                        dummyTitular.QuiereDistribucion = Convert.ToBoolean(reader["QuiereDist"]);
+                        dummyTitular.Correo = reader["Correo"].ToString();
+
+                        catalogoTitulares.Add(dummyTitular);
+
+                    }
+                }
+                cmd.Dispose();
+                reader.Close();
+            }
+            catch (OleDbException ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TitularModel", "PadronApi");
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TitularModel", "PadronApi");
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return dummyTitular;
         }
 
 
@@ -184,6 +249,7 @@ namespace PadronApi.Model
                         titular.Activo = Convert.ToInt32(reader["Activo"]);
                         titular.Estado = reader["IdEstatus"] as int? ?? 0;
                         titular.QuiereDistribucion = Convert.ToBoolean(reader["QuiereDist"]);
+                        titular.Correo = reader["Correo"].ToString();
 
                         catalogoTitulares.Add(titular);
 
@@ -222,17 +288,16 @@ namespace PadronApi.Model
             {
                 connection.Open();
 
-                string sqlQuery = "INSERT INTO C_Titular(IdTitular, Nombre,Apellidos,IdOrg,IdFuncion,NombMay,Fecha,Obs,Activo,QuiereDist,IdTitulo,IdEstatus)" +
-                                "VALUES (@IdTitular, @Nombre,@Apellidos,@IdOrg,@IdFuncion,@NombMay,@Fecha,@Obs,@Activo,@QuiereDist,@IdTitulo,@IdEstatus)";
+                string sqlQuery = "INSERT INTO C_Titular(IdTitular, Nombre,Apellidos,IdOrg,IdTitulo,IdFuncion,NombMay,Fecha,Obs,Activo,QuiereDist,IdTitulo,IdEstatus,Correo)" +
+                                "VALUES (@IdTitular, @Nombre,@Apellidos,@IdOrg,@IdTitulo,@IdFuncion,@NombMay,@Fecha,@Obs,@Activo,@QuiereDist,@IdTitulo,@IdEstatus,@Correo)";
 
                 OleDbCommand cmd = new OleDbCommand(sqlQuery, connection);
                 cmd.Parameters.AddWithValue("@IdTitular", titular.IdTitular);
-               // cmd.Parameters.AddWithValue("@[Id de Licenciado]", titular.IdTitular);
                 cmd.Parameters.AddWithValue("@Nombre", titular.Nombre);
                 cmd.Parameters.AddWithValue("@Apellidos", titular.Apellidos);
                 cmd.Parameters.AddWithValue("@IdOrg", titular.IdOrganismoAdscripcion);
-                //cmd.Parameters.AddWithValue("@Cargo", titular.Cargo);
-                cmd.Parameters.AddWithValue("@Funcion", titular.Funcion);
+                cmd.Parameters.AddWithValue("@IdTitulo", titular.IdTitulo);
+                cmd.Parameters.AddWithValue("@IdFuncion", titular.Funcion);
                 cmd.Parameters.AddWithValue("@NombMay", StringUtilities.PrepareToAlphabeticalOrder(titular.Apellidos) + " " + StringUtilities.PrepareToAlphabeticalOrder(titular.Nombre));
                 cmd.Parameters.AddWithValue("@Fecha", DateTimeUtilities.DateToInt(DateTime.Now));
 
@@ -244,11 +309,12 @@ namespace PadronApi.Model
                 cmd.Parameters.AddWithValue("@QuiereDist", 0);
                 cmd.Parameters.AddWithValue("@IdTitulo", titular.IdTitulo);
                 cmd.Parameters.AddWithValue("@IdEstatus", titular.Estado);
+                cmd.Parameters.AddWithValue("@Correo", titular.Correo);
 
 
                 cmd.ExecuteNonQuery();
-
                 cmd.Dispose();
+
                 insertCompleted = true;
             }
             catch (OleDbException ex)
@@ -283,7 +349,7 @@ namespace PadronApi.Model
 
                 string sqlQuery = "UPDATE C_Titular SET Nombre = @Nombre,Apellidos = @Apellidos," +
                           "IdOrg = @IdOrg,IdFuncion = @IdFuncion,NombMay = @NombMay," + 
-                          "Obs = @Obs, IdTitulo = @IdTitulo, IdEstatus = @IdEstatus, Activo = @Activo " +
+                          "Obs = @Obs, IdTitulo = @IdTitulo, IdEstatus = @IdEstatus, Activo = @Activo, Correo = @Correo " +
                           " WHERE IdTitular = @IdTitular";
 
                 OleDbCommand cmd = new OleDbCommand(sqlQuery, connection);
@@ -297,6 +363,7 @@ namespace PadronApi.Model
                 cmd.Parameters.AddWithValue("@IdTitulo", titular.IdTitulo);
                 cmd.Parameters.AddWithValue("@IdEstatus", titular.Estado);
                 cmd.Parameters.AddWithValue("@Activo", titular.Activo);
+                cmd.Parameters.AddWithValue("@Correo", titular.Correo);
                 cmd.Parameters.AddWithValue("@IdTitular", titular.IdTitular);
                 
 
@@ -365,6 +432,42 @@ namespace PadronApi.Model
             }
         }
 
+        public void EstableceAdscripcion(int idOrganismo, int idTitular)
+        {
+            OleDbConnection connection = new OleDbConnection(connectionString);
+
+            try
+            {
+                connection.Open();
+
+
+                    string sqlQuery = "UPDATE C_Titular SET IdOrg = @IdOrg WHERE IdTitular = @IdLIdTitularic";
+
+                    OleDbCommand cmd = new OleDbCommand(sqlQuery, connection);
+                    cmd.Parameters.AddWithValue("@IdOrg", idOrganismo);
+                    cmd.Parameters.AddWithValue("@IdTitular", idTitular);
+
+
+                    cmd.ExecuteNonQuery();
+
+                    cmd.Dispose();
+            }
+            catch (OleDbException ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TitularModel", "PadronApi");
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TitularModel", "PadronApi");
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
         /// <summary>
         /// Elimina relación organismo-titular
         /// </summary>
@@ -410,6 +513,59 @@ namespace PadronApi.Model
             }
             return updateCompleted;
         }
+
+
+
+        #region Historico
+
+
+        public bool InsertaHistorico(Titular titular)
+        {
+            OleDbConnection connection = new OleDbConnection(connectionString);
+
+            bool insertCompleted = false;
+
+
+            try
+            {
+                connection.Open();
+
+                string sqlQuery = "INSERT INTO C_TitularHistorico(IdTitular, IdOrg,IdFuncion,IdUsr,Fecha,Activo)" +
+                                "VALUES (@IdTitular,@IdOrg,@IdFuncion,@IdUsr,@Fecha,@Activo)";
+
+                OleDbCommand cmd = new OleDbCommand(sqlQuery, connection);
+                cmd.Parameters.AddWithValue("@IdTitular", titular.IdTitular);
+                cmd.Parameters.AddWithValue("@IdOrg", titular.IdOrganismoAdscripcion);
+                cmd.Parameters.AddWithValue("@IdFuncion", titular.Funcion);
+                cmd.Parameters.AddWithValue("@IdUsr", 5);
+                cmd.Parameters.AddWithValue("@Fecha", DateTimeUtilities.DateToInt(DateTime.Now));
+                cmd.Parameters.AddWithValue("@Activo", titular.Activo);
+                cmd.Parameters.AddWithValue("@Correo", titular.Correo);
+
+                cmd.ExecuteNonQuery();
+
+                cmd.Dispose();
+                insertCompleted = true;
+            }
+            catch (OleDbException ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TitularModel", "PadronApi");
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,TitularModel", "PadronApi");
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return insertCompleted;
+        }
+
+        #endregion
 
 
     }

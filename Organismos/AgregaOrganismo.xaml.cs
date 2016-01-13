@@ -350,6 +350,30 @@ namespace Organismos
                 MessageBox.Show("Ingresa la calle y número donde se encuentra ubicado el organismo");
                 return;
             }
+            else if(TxtCalle.Text.StartsWith("Calle"))
+            {
+                char[] letras = TxtCalle.Text.ToCharArray();
+
+                if (!VerificationUtilities.IsNumber(letras[7].ToString()))
+                {
+                    MessageBox.Show("El campo Calle no puede contener la palabra calle");
+                    return;
+                }
+
+            }
+
+            if (TxtCalle.Text.StartsWith("Col ") || TxtCalle.Text.StartsWith("Col. ") || TxtCalle.Text.StartsWith("Colonia "))
+            {
+                MessageBox.Show("El campo Colonia no puede contener la palabra colonia, ni ninguna de sus abreviaturas");
+                return;
+            }
+
+            if (TxtCalle.Text.StartsWith("Del ") || TxtCalle.Text.StartsWith("Del. ") || TxtCalle.Text.StartsWith("Delegacion ") || TxtCalle.Text.StartsWith("Delegación ") || TxtCalle.Text.StartsWith("Municipio ") || TxtCalle.Text.StartsWith("Mun. ") || TxtCalle.Text.StartsWith("Mun "))
+            {
+                MessageBox.Show("El campo Dlegación/Municipio no puede contener estas palabras, ni ninguna de sus abreviaturas");
+                return;
+            }
+
 
             if ((String.IsNullOrEmpty(TxtCp.Text) || String.IsNullOrWhiteSpace(TxtCp.Text)) || TxtCp.Text.Length < 4)
             {

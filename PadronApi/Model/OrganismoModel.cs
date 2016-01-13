@@ -59,7 +59,7 @@ namespace PadronApi.Model
                         obra.Telefono2 = reader["Tel2"].ToString();
                         obra.Telefono3 = reader["Tel3"].ToString();
                         obra.Observaciones = reader["Obs"].ToString();
-                        obra.Activo = Convert.ToInt32(reader["lActivo"]);
+                        obra.Activo = Convert.ToInt32(reader["Activo"]);
                         obra.TipoDistr = Convert.ToInt32(reader["TpoDist"]);
                         obra.Abreviado = reader["Abreviado"].ToString();
                         obra.TipoOrganismoStr = reader["TpoOrgAvr"].ToString();
@@ -163,8 +163,8 @@ namespace PadronApi.Model
             {
                 connection.Open();
 
-                string sqlQuery = "INSERT INTO C_Organismo(IdOrg,TpoOrg,DescOrg,Cto,Ordinal,Materia,Ciudad,Estado,OrdenVer,DescOrgMay,Calle,Colonia,Delegacion,CP,Tel,Tel1,Tel2,Tel3,IdUsr,Fecha,Obs,lActivo,TpoDist,Abreviado)" +
-                                "VALUES (@IdOrg,@TpoOrg,@DescOrg,@Cto,@Ordinal,@Materia,@Ciudad,@Estado,@OrdenVer,@DescOrgMay,@Calle,@Colonia,@Delegacion,@CP,@Tel,@Tel1,@Tel2,@Tel3,@IdUsr,@Fecha,@Obs,@lActivo,@TpoDist,@Abreviado)";
+                string sqlQuery = "INSERT INTO C_Organismo(IdOrg,TpoOrg,DescOrg,Cto,Ordinal,Materia,Ciudad,Estado,OrdenVer,DescOrgMay,Calle,Colonia,Delegacion,CP,Tel,Tel1,Tel2,Tel3,IdUsr,Fecha,Obs,Activo,TpoDist,Abreviado)" +
+                                "VALUES (@IdOrg,@TpoOrg,@DescOrg,@Cto,@Ordinal,@Materia,@Ciudad,@Estado,@OrdenVer,@DescOrgMay,@Calle,@Colonia,@Delegacion,@CP,@Tel,@Tel1,@Tel2,@Tel3,@IdUsr,@Fecha,@Obs,@Activo,@TpoDist,@Abreviado)";
 
                 OleDbCommand cmd = new OleDbCommand(sqlQuery, connection);
                 cmd.Parameters.AddWithValue("@IdOrg", organismo.IdOrganismo);
@@ -188,7 +188,7 @@ namespace PadronApi.Model
                 cmd.Parameters.AddWithValue("@IdUsr", 0);
                 cmd.Parameters.AddWithValue("@Fecha", DateTimeUtilities.DateToInt(DateTime.Now));
                 cmd.Parameters.AddWithValue("@Obs", organismo.Observaciones);
-                cmd.Parameters.AddWithValue("@lActivo", organismo.Activo);
+                cmd.Parameters.AddWithValue("@Activo", organismo.Activo);
                 cmd.Parameters.AddWithValue("@TpoDist", organismo.TipoDistr);
                 cmd.Parameters.AddWithValue("@Abreviado", organismo.Abreviado);
 
@@ -233,7 +233,7 @@ namespace PadronApi.Model
                 string sqlQuery = "UPDATE C_Organismo SET TpoOrg = @TpoOrg,DescOrg = @DescOrg,Cto = @Cto,Ordinal = @Ordinal," + 
                             "Materia = @Materia,Ciudad = @Ciudad,Estado = @estado,OrdenVer = @OrdenVer,DescOrgMay = @DescOrgMay," +
                             "Calle = @Calle,Colonia = @Colonia,Delegacion = @Delegacion,CP = @CP,Tel = @Tel,Tel1 = @Tel1,"+
-                            "Tel2 = @Tel1,Tel3 = @Tel3,IdUsr = @IdUsr,Fecha = @Fecha,Obs = @Obs,lActivo = @lActivo," +
+                            "Tel2 = @Tel1,Tel3 = @Tel3,IdUsr = @IdUsr,Fecha = @Fecha,Obs = @Obs,Activo = @Activo," +
                             "TpoDist = @TpoDist,Abreviado = @Abreviado WHERE IdOrg = @IdOrg";
 
                 OleDbCommand cmd = new OleDbCommand(sqlQuery, connection);
@@ -257,7 +257,7 @@ namespace PadronApi.Model
                 cmd.Parameters.AddWithValue("@IdUsr", 0);
                 cmd.Parameters.AddWithValue("@Fecha", DateTimeUtilities.DateToInt(DateTime.Now));
                 cmd.Parameters.AddWithValue("@Obs", organismo.Observaciones);
-                cmd.Parameters.AddWithValue("@lActivo", organismo.Activo);
+                cmd.Parameters.AddWithValue("@Activo", organismo.Activo);
                 cmd.Parameters.AddWithValue("@TpoDist", organismo.TipoDistr);
                 cmd.Parameters.AddWithValue("@Abreviado", organismo.Abreviado);
                 cmd.Parameters.AddWithValue("@IdOrg", organismo.IdOrganismo);

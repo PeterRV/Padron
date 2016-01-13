@@ -4,7 +4,7 @@
         xmlns:converter="clr-namespace:Funcionarios.Converters"
         Title="Alta de funcionario"
         Width="600"
-        Height="670"
+        Height="710"
         Icon="Resources/rocket.ico"
         Loaded="Window_Loaded"
         ResizeMode="NoResize"
@@ -18,7 +18,7 @@
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
         <Grid Name="PanelPrincipal">
-            <GroupBox Height="220"
+            <GroupBox Height="270"
                       Margin="15,31,15,0"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Top"
@@ -65,27 +65,49 @@
                            VerticalAlignment="Top"
                            Content="Título:" />
                     <CheckBox x:Name="ChkActivado"
-                              Margin="17,172,0,0"
+                              Margin="17,213,0,0"
                               HorizontalAlignment="Left"
                               VerticalAlignment="Top"
+                              Checked="ChkActivado_Checked"
                               Content="  Activado/Desactivado"
-                              IsChecked="{Binding Activo}" />
-                    <Label Margin="370,167,0,0"
+                              IsChecked="{Binding Activo}"
+                              Unchecked="ChkActivado_Unchecked" />
+                    <Label Margin="370,208,0,0"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Top"
                            Content="Estatus:" />
                     <ComboBox x:Name="CbxEstado"
                               Width="120"
-                              Margin="420,166,0,0"
+                              Margin="420,207,0,0"
                               HorizontalAlignment="Left"
                               VerticalAlignment="Top"
                               DisplayMemberPath="Descripcion"
                               ItemsSource="{Binding}"
                               SelectedValuePath="IdElemento" />
+                    <Label Margin="17,169,0,0"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           Content="Correo:" />
+                    <TextBox x:Name="TxtCorreo"
+                             Width="235"
+                             Height="23"
+                             Margin="103,169,0,0"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Top"
+                             Text="{Binding Correo,
+                                            Mode=TwoWay}"
+                             TextWrapping="Wrap" />
+                    <CheckBox x:Name="Chkdistribucion"
+                              Margin="408,26,0,0"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Top"
+                              Content=" ¿Quiere distribución?"
+                              IsChecked="{Binding QuiereDistribucion,
+                                                  Mode=TwoWay}" />
                 </Grid>
             </GroupBox>
             <GroupBox Height="160"
-                      Margin="15,270,15,0"
+                      Margin="15,308,15,0"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Top"
                       Header="Adscrito al Organismo">
@@ -134,17 +156,18 @@
                               VerticalAlignment="Top"
                               DisplayMemberPath="Descripcion"
                               ItemsSource="{Binding}"
-                              SelectedValuePath="IdElemento" />
+                              SelectedValuePath="IdElemento"
+                              SelectionChanged="CbxFuncion_SelectionChanged" />
                 </Grid>
             </GroupBox>
-            <Label Margin="15,450,0,0"
+            <Label Margin="15,488,0,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
                    Content="Observaciones:" />
             <TextBox x:Name="TxtObservaciones"
                      Width="562"
                      Height="90"
-                     Margin="15,480,0,0"
+                     Margin="15,518,0,0"
                      HorizontalAlignment="Left"
                      VerticalAlignment="Top"
                      AcceptsReturn="True"

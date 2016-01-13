@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ScjnUtilities;
+using System;
 using System.ComponentModel;
 using System.Linq;
 
@@ -21,7 +22,20 @@ namespace PadronApi.Dto
         private bool quiereDistribucion;
         private int idOrganismoAdscripcion;
         private string organismoAdscripcion;
+        private string correo;
        
+        public string Correo
+        {
+            get
+            {
+                return this.correo;
+            }
+            set
+            {
+                this.correo = value;
+            }
+        }
+
         public int IdTitular
         {
             get
@@ -164,6 +178,7 @@ namespace PadronApi.Dto
             set
             {
                 this.observaciones = value;
+                this.OnPropertyChanged("Observaciones");
             }
         }
 
@@ -176,6 +191,7 @@ namespace PadronApi.Dto
             set
             {
                 this.quiereDistribucion = value;
+                this.OnPropertyChanged("QuiereDistribucion");
             }
         }
 
@@ -212,6 +228,14 @@ namespace PadronApi.Dto
         {
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+
+            //if (propertyName.Equals("QuiereDistribucion"))
+            //{
+            //    if (quiereDistribucion)
+            //        this.Observaciones += "\r\n" + "Con fecha de " + DateTimeUtilities.ToLongDateFormat(DateTime.Now) + " solicito se le vuelva a considerar en la distribución";
+            //    else
+            //        this.Observaciones += "\r\n" + "Con fecha de " + DateTimeUtilities.ToLongDateFormat(DateTime.Now) + " indico que no desea continuar recibiendo obras";
+            //}
         }
 
         #endregion // INotifyPropertyChanged Members

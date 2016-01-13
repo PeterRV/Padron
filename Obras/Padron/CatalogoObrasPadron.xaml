@@ -59,6 +59,9 @@
                 <DataGridTextColumn Width="150"
                                     Binding="{Binding Isbn}"
                                     Header="ISBN" />
+                <DataGridTextColumn Width="90"
+                                    Binding="{Binding Tiraje}"
+                                    Header="Tiraje" />
             </DataGrid.Columns>
         </filter:FilterDataGrid>
     </Grid>

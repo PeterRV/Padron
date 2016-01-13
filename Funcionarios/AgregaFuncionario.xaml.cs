@@ -17,6 +17,7 @@ namespace Funcionarios
         private bool isUpdating;
         private ObservableCollection<Titular> catalogoTitulares;
         private Titular titular;
+        string qCambio = String.Empty;
 
         public AgregaFuncionario(ObservableCollection<Titular> catalogoTitulares)
         {
@@ -65,6 +66,8 @@ namespace Funcionarios
             }
             else
                 CbxEstado.SelectedIndex = 0;
+
+            qCambio = String.Empty;
         }
 
         private void BtnEliminaAdscripcion_Click(object sender, RoutedEventArgs e)
@@ -91,7 +94,8 @@ namespace Funcionarios
 
             BtnAgregaAdscripcion.IsEnabled = false;
             BtnEliminaAdscripcion.IsEnabled = true;
-            //Entrada en base de datos
+
+            qCambio += "O";
         }
 
         private void BtnSalir_Click(object sender, RoutedEventArgs e)
@@ -104,7 +108,7 @@ namespace Funcionarios
             if (CbxGrado.SelectedIndex == -1)
             {
                 MessageBox.Show("Selecciona el título con el cual se deben dirigir los oficios al titular", "Agregar Titular", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
+                return;
             }
 
             if (String.IsNullOrEmpty(TxtNombre.Text) || String.IsNullOrEmpty(TxtApellidos.Text))
@@ -112,7 +116,6 @@ namespace Funcionarios
                 MessageBox.Show("Ingresa el nombre y los apellidos del titular", "Agregar Titular", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-
 
             if ((titular.IdOrganismoAdscripcion != 0 && titular.IdOrganismoAdscripcion != 7090) && CbxFuncion.SelectedIndex == -1)
             {
@@ -136,6 +139,12 @@ namespace Funcionarios
                 titular.Funcion = Convert.ToInt32(CbxFuncion.SelectedValue);
             }
 
+            if ((!String.IsNullOrWhiteSpace(titular.Correo) && !String.IsNullOrEmpty(titular.Correo) && !VerificationUtilities.IsMailAddress(titular.Correo)))
+            {
+                MessageBox.Show("El correo electrónico ingresado no es válido, si no cuentas con uno deja el campo en blanco", "Titulares", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
             TitularModel model = new TitularModel();
             bool exito = false;
 
@@ -144,6 +153,8 @@ namespace Funcionarios
 
             if (isUpdating)
             {
+                Titular dummyTitular = model.GetTitulares(titular);
+                
                 exito = model.UpdateTitular(titular);
 
                 if (!exito)
@@ -153,6 +164,10 @@ namespace Funcionarios
                 }
                 else
                 {
+                    if ((titular.IdOrganismoAdscripcion != dummyTitular.IdOrganismoAdscripcion) || (titular.Funcion != dummyTitular.Funcion) || (titular.Activo != dummyTitular.Activo) )
+                    {
+                        model.InsertaHistorico(dummyTitular);
+                    }
                     this.Close();
                 }
             }
@@ -176,6 +191,21 @@ namespace Funcionarios
         private void TxtPreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
             e.Handled = VerificationUtilities.ContieneCaractNoPermitidos(e.Text);
+        }
+
+        private void CbxFuncion_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            qCambio += "F";
+        }
+
+        private void ChkActivado_Unchecked(object sender, RoutedEventArgs e)
+        {
+            qCambio += "A";
+        }
+
+        private void ChkActivado_Checked(object sender, RoutedEventArgs e)
+        {
+            qCambio += "A";
         }
     }
 }

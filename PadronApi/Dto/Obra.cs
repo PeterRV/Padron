@@ -36,6 +36,7 @@ namespace PadronApi.Dto
         private int idUsuario;
         private DateTime fechaUsuario;
         private int fechaUsuarioInt;
+        private int tiraje = 1000;
         private int agotado;
         private int activo;
 
@@ -48,6 +49,18 @@ namespace PadronApi.Dto
 
         private ObservableCollection<Autor> autores;
         
+        public int Tiraje
+        {
+            get
+            {
+                return this.tiraje;
+            }
+            set
+            {
+                this.tiraje = value;
+            }
+        }
+
         public int IdObra
         {
             get

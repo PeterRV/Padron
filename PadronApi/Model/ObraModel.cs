@@ -23,7 +23,7 @@ namespace PadronApi.Model
             ObservableCollection<Obra> catalogoObras = new ObservableCollection<Obra>();
 
             string sqlCadena = "SELECT IdObra,Orden, Titulo, TituloTxt,Sintesis,IdPresentacion,NumeroMaterial," + 
-                "AnioPublicacion,ISBN,Paginas,IdTipoObra,IdMedio FROM C_Obra WHERE Activo = @Activo ORDER BY Orden";
+                "AnioPublicacion,ISBN,Paginas,IdTipoObra,IdMedio,Tiraje FROM C_Obra WHERE Activo = @Activo ORDER BY AnioPublicacion desc,TituloTxt";
 
 
             OleDbConnection connection = new OleDbConnection(connectionString);
@@ -56,6 +56,7 @@ namespace PadronApi.Model
                         obra.Presentacion = reader["IdPresentacion"] as int? ?? 0;
                         obra.TipoObra = reader["IdTipoObra"] as Int16? ?? 0;
                         obra.MedioPublicacion = reader["IdMedio"] as int? ?? 0;
+                        obra.Tiraje = reader["Tiraje"] as int? ?? 0;
 
                         catalogoObras.Add(obra);
 
@@ -82,11 +83,6 @@ namespace PadronApi.Model
             return catalogoObras;
         }
 
-
-
-
-
-
         /// <summary>
         /// Inserta una obra dentro del catálogo. Solamente ingresa los campos que interesan para la generación del
         /// padrón de distribución
@@ -105,8 +101,8 @@ namespace PadronApi.Model
             {
                 connection.Open();
 
-                string sqlQuery = "INSERT INTO C_Obra(IdObra,Titulo,TituloTxt,NumeroMaterial,NoVolumenes,IdPresentacion,IdTipoObra,AnioPublicacion,Isbn,Activo)" +
-                                "VALUES (@IdObra,@Titulo,@TituloTxt,@NumeroMaterial,@NoVolumenes,@IdPresentacion,@IdTipoObra,@AnioPublicacion,@Isbn,@Activo)";
+                string sqlQuery = "INSERT INTO C_Obra(IdObra,Titulo,TituloTxt,NumeroMaterial,NoVolumenes,IdPresentacion,IdTipoObra,AnioPublicacion,Isbn,Activo,Tiraje)" +
+                                "VALUES (@IdObra,@Titulo,@TituloTxt,@NumeroMaterial,@NoVolumenes,@IdPresentacion,@IdTipoObra,@AnioPublicacion,@Isbn,@Activo,@Tiraje)";
 
                 OleDbCommand cmd = new OleDbCommand(sqlQuery, connection);
                 cmd.Parameters.AddWithValue("@IdObra", obra.IdObra);
@@ -122,6 +118,7 @@ namespace PadronApi.Model
                 else
                     cmd.Parameters.AddWithValue("@Isbn", String.Empty);
                 cmd.Parameters.AddWithValue("@Activo", 1);
+                cmd.Parameters.AddWithValue("@Tiraje", obra.Tiraje);
 
                 cmd.ExecuteNonQuery();
 
@@ -162,7 +159,7 @@ namespace PadronApi.Model
                 connection.Open();
 
                 string sqlQuery = "UPDATE C_Obra SET Titulo = @Titulo, TituloTxt = @TituloTxt, NumeroMaterial = @NumeroMaterial," +
-                    "NoVolumenes = @NoVolumenes, IdPresentacion = @IdPresentacion,IdTipoObra = @IdTipoObra, AnioPublicacion = @AnioPublicacion, Isbn = @Isbn " +
+                    "NoVolumenes = @NoVolumenes, IdPresentacion = @IdPresentacion,IdTipoObra = @IdTipoObra, AnioPublicacion = @AnioPublicacion, Isbn = @Isbn, Tiraje = @Tiraje " +
                     "WHERE IdObra = @IdObra";
 
 
@@ -175,6 +172,7 @@ namespace PadronApi.Model
                 cmd.Parameters.AddWithValue("@IdTipoObra", obra.TipoObra);
                 cmd.Parameters.AddWithValue("@AnioPublicacion", obra.AnioPublicacion);
                 cmd.Parameters.AddWithValue("@Isbn", obra.Isbn);
+                cmd.Parameters.AddWithValue("@Tiraje", obra.Tiraje);
                 cmd.Parameters.AddWithValue("@IdObra", obra.IdObra);
 
                 cmd.ExecuteNonQuery();
@@ -199,8 +197,6 @@ namespace PadronApi.Model
 
             return updateCompleted;
         }
-
-
 
         /// <summary>
         /// Activa o Desactiva un registro del catálogo de la base de datos. Si un registro es desactivado dicho registro no se 

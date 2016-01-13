@@ -244,9 +244,9 @@ namespace Padron
 
         private void ModificaTitular_Click(object sender, RoutedEventArgs e)
         {
-            if (funcionariosControl == null)
+            if (funcionariosControl.SelectedTitular == null)
             {
-                MessageBox.Show("Primero debes de cargar el listado de titulares");
+                MessageBox.Show("Selecciona el titular que quieres modificar");
                 return;
             }
 
@@ -300,6 +300,12 @@ namespace Padron
         }
 
         #endregion
+
+        private void ObraTotWord_Click(object sender, RoutedEventArgs e)
+        {
+            Obras.Reportes.WordReport word = new Obras.Reportes.WordReport(obraControl.CatalogoObras);
+            word.InformeGenerlaObras();
+        }
 
         
 
