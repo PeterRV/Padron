@@ -10,33 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Padron
+namespace Padron.Controles
 {
     /// <summary>
-    /// Interaction logic for SeleccionaTiraje.xaml
+    /// Interaction logic for Padrones.xaml
     /// </summary>
-    public partial class SeleccionaTiraje : Window
+    public partial class Padrones : UserControl
     {
-        public SeleccionaTiraje()
+        public Padrones()
         {
             InitializeComponent();
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void BtnGuardar_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void BtnCancelar_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }

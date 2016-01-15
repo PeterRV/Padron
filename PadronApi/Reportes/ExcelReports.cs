@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Obras.Reportes
+namespace PadronApi.Reportes
 {
-    class Excel
+    class ExcelReports
     {
     }
 }

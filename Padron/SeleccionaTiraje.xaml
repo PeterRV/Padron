@@ -3,24 +3,62 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Seleccionar tiraje"
         Width="300"
-        Height="300"
-        Icon="Resources/rocket.ico">
+        Height="322"
+        Icon="Resources/rocket.ico"
+        Loaded="Window_Loaded">
     <Grid>
-        <Label Margin="25,128,0,0"
+        <Label Margin="25,107,0,0"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
                Content="Tiraje:" />
-        <ComboBox Width="245"
-                  Margin="25,159,0,0"
+        <ComboBox x:Name="CbxTiraje"
+                  Width="245"
+                  Margin="25,138,0,0"
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top">
             <ComboBoxItem>1000</ComboBoxItem>
             <ComboBoxItem>2000</ComboBoxItem>
             <ComboBoxItem>3000</ComboBoxItem>
+            <ComboBoxItem>4000</ComboBoxItem>
             <ComboBoxItem>5000</ComboBoxItem>
+            <ComboBoxItem>6000</ComboBoxItem>
             <ComboBoxItem>10000</ComboBoxItem>
             <ComboBoxItem>15000</ComboBoxItem>
         </ComboBox>
+        <Label Margin="28,30,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Content="Obra:" />
+        <ComboBox x:Name="CbxObra"
+                  Width="242"
+                  Margin="28,61,0,0"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top" />
+        <Label Margin="29,185,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Content="Clave del padrón:" />
+        <TextBox x:Name="TxtClave"
+                 Width="241"
+                 Height="23"
+                 Margin="29,216,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 TextWrapping="Wrap" />
+        <Button x:Name="BtnGuardar"
+                Width="75"
+                Margin="195,260,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Click="BtnGuardar_Click"
+                Content="Guardar" />
+        <Button x:Name="BtnCancelar"
+                Width="75"
+                Margin="115,260,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Click="BtnCancelar_Click"
+                Content="Cancelar" />
 
     </Grid>
 </Window>

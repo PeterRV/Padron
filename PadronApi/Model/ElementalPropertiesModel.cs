@@ -281,6 +281,59 @@ namespace PadronApi.Model
         }
 
 
+        public ObservableCollection<ElementalProperties> GetAcuerdos()
+        {
+            ObservableCollection<ElementalProperties> catalogoAcuerdos = new ObservableCollection<ElementalProperties>();
+
+            string sqlCadena = "SELECT * FROM C_Acuerdo ORDER BY Acuerdo";
+
+
+            OleDbConnection connection = new OleDbConnection(connectionString);
+            OleDbCommand cmd = null;
+            OleDbDataReader reader = null;
+
+
+            try
+            {
+                connection.Open();
+
+                cmd = new OleDbCommand(sqlCadena, connection);
+                reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        ElementalProperties elemento = new ElementalProperties();
+                        elemento.IdElemento = Convert.ToInt32(reader["Acuerdo"]);
+                        elemento.Descripcion = reader["Acuerdo"].ToString();
+
+                        catalogoAcuerdos.Add(elemento);
+
+                    }
+                }
+                cmd.Dispose();
+                reader.Close();
+            }
+            catch (OleDbException ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,ElementalPropertiesModel", "PadronApi");
+            }
+            catch (Exception ex)
+            {
+                string methodName = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                ErrorUtilities.SetNewErrorMessage(ex, methodName + " Exception,ElementalPropertiesModel", "PadronApi");
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return catalogoAcuerdos;
+        }
+
+
         #endregion
 
 

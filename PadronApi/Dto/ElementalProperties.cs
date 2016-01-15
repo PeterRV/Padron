@@ -9,10 +9,24 @@ namespace PadronApi.Dto
     /// </summary>
     public class ElementalProperties
     {
+        private bool isChecked;
         private int idElemento;
         private string descripcion;
         private string elementoAuxiliar;
-public int IdElemento
+
+        public bool IsChecked
+        {
+            get
+            {
+                return this.isChecked;
+            }
+            set
+            {
+                this.isChecked = value;
+            }
+        }
+        
+        public int IdElemento
         {
             get
             {
@@ -47,6 +61,6 @@ public int IdElemento
             }
         }
 
-        
+
     }
 }

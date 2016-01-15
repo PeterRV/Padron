@@ -10,6 +10,7 @@ using Padron.PapeleriaFolder;
 using PadronApi.Model;
 using Microsoft.Windows.Controls.Ribbon;
 using System.Collections.Generic;
+using PadronApi.Reportes;
 
 namespace Padron
 {
@@ -303,7 +304,8 @@ namespace Padron
 
         private void ObraTotWord_Click(object sender, RoutedEventArgs e)
         {
-            Obras.Reportes.WordReport word = new Obras.Reportes.WordReport(obraControl.CatalogoObras);
+
+            WordReports word = new WordReports(obraControl.CatalogoObras);
             word.InformeGenerlaObras();
         }
 

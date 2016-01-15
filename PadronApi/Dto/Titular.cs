@@ -23,7 +23,33 @@ namespace PadronApi.Dto
         private int idOrganismoAdscripcion;
         private string organismoAdscripcion;
         private string correo;
+        private string obrasRecibe;
+        private string tirajeRecibe;
        
+        public string ObrasRecibe
+        {
+            get
+            {
+                return this.obrasRecibe;
+            }
+            set
+            {
+                this.obrasRecibe = value;
+            }
+        }
+
+        public string TirajeRecibe
+        {
+            get
+            {
+                return this.tirajeRecibe;
+            }
+            set
+            {
+                this.tirajeRecibe = value;
+            }
+        }
+
         public string Correo
         {
             get

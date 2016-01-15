@@ -10,33 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Padron
+namespace Organismos.Ciudades
 {
     /// <summary>
-    /// Interaction logic for SeleccionaTiraje.xaml
+    /// Interaction logic for Mantenimiento.xaml
     /// </summary>
-    public partial class SeleccionaTiraje : Window
+    public partial class Mantenimiento : UserControl
     {
-        public SeleccionaTiraje()
+        public Mantenimiento()
         {
             InitializeComponent();
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void BtnGuardar_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void BtnCancelar_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }

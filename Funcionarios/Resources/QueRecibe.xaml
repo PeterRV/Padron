@@ -1,0 +1,65 @@
+﻿<Window x:Class="Funcionarios.Resources.QueRecibe"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="QueRecibe"
+        Width="550"
+        Height="386"
+        Loaded="Window_Loaded"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+
+        <ListBox x:Name="LstTipoObras"
+                 Margin="10,45,10,50"
+                 HorizontalAlignment="Stretch"
+                 VerticalAlignment="Stretch"
+                 DisplayMemberPath="Descripcion"
+                 ItemsSource="{Binding}"
+                 SelectedValuePath="IdElemento" />
+        <Label Margin="10,14,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Content="Obras que recibe:"
+               FontWeight="Bold" />
+
+        <ListBox x:Name="LstAcuerdos"
+                 Grid.Column="1"
+                 Margin="10,45,10,50"
+                 HorizontalAlignment="Stretch"
+                 VerticalAlignment="Stretch"
+                 DisplayMemberPath="Descripcion"
+                 ItemsSource="{Binding}"
+                 SelectedValuePath="IdElemento" />
+
+
+        <Button x:Name="BtnGuardar"
+                Grid.Column="1"
+                Width="75"
+                Margin="0,326,10,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Click="BtnGuardar_Click"
+                Content="Guardar" />
+        <Button x:Name="BtnCancelar"
+                Grid.Column="1"
+                Width="75"
+                Margin="0,326,93,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Click="BtnCancelar_Click"
+                Content="Cancelar" />
+        <Label Grid.Column="1"
+               Margin="10,14,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Content="Acuerdo en el que esta incluido:"
+               FontWeight="Bold" />
+
+    </Grid>
+</Window>

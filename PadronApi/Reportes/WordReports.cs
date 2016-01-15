@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using Microsoft.Office.Interop.Word;
-using ScjnUtilities;
 using PadronApi.Dto;
+using ScjnUtilities;
 
-namespace Obras.Reportes
+namespace PadronApi.Reportes
 {
-    public class WordReport
+    public class WordReports
     {
 
         private readonly ObservableCollection<Obra> obrasImprimir;
@@ -23,7 +22,7 @@ namespace Obras.Reportes
 
         readonly string filepath = Path.GetTempFileName() + ".docx";
 
-        public WordReport(ObservableCollection<Obra> obrasImprimir)
+        public WordReports(ObservableCollection<Obra> obrasImprimir)
         {
             this.obrasImprimir = obrasImprimir;
         }

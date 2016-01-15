@@ -111,7 +111,7 @@
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Top"
                       Header="Adscrito al Organismo">
-                <Grid>
+                <Grid Margin="-560,514,560,-514">
                     <Label Margin="10,7,0,0"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Top"

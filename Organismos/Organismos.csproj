@@ -67,6 +67,9 @@
     <Compile Include="Ciudades\ListaCiudades.xaml.cs">
       <DependentUpon>ListaCiudades.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Ciudades\Mantenimiento.xaml.cs">
+      <DependentUpon>Mantenimiento.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Ciudades\PaisEstadoWin.xaml.cs">
       <DependentUpon>PaisEstadoWin.xaml</DependentUpon>
     </Compile>
@@ -118,6 +121,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Ciudades\ListaCiudades.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ciudades\Mantenimiento.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
