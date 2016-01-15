@@ -7,67 +7,33 @@ namespace PadronApi.Dto
     public class Organismo
     {
         private int idOrganismo;
-        private string organismoDesc;
-        private string organismoStr;
+        private string organismoDesc = String.Empty;
+        private string organismoStr = String.Empty;
         private int tipoOrganismo;
-        private string tipoOrganismoStr;
+        private string tipoOrganismoStr = String.Empty;
         private int circuito;
         private int ordinal;
         private int materia;
         private int ciudad;
         private int estado;
-        private string calle;
-        private string colonia;
-        private string delegacion;
-        private string cp;
-        private string telefono;
-        private string telefono1;
-        private string telefono2;
-        private string telefono3;
-        private string mail;
-        private string observaciones;
+        private string calle = String.Empty;
+        private string colonia = String.Empty;
+        private string delegacion = String.Empty;
+        private string cp = String.Empty;
+        private string telefono = String.Empty;
+        private string telefono1 = String.Empty;
+        private string telefono2 = String.Empty;
+        private string telefono3 = String.Empty;
+        private string mail = String.Empty;
+        private string observaciones = String.Empty;
         private int activo;
         private int tipoDistr;
-        private string distribucion;
-        private string abreviado;
+        private string distribucion = String.Empty;
+        private string abreviado = String.Empty;
         private int orden;
         private ObservableCollection<Titular> integrantes;
-
-        public string Mail
-        {
-            get
-            {
-                return this.mail;
-            }
-            set
-            {
-                this.mail = value;
-            }
-        }
-
-        public string Distribucion
-        {
-            get
-            {
-                return this.distribucion;
-            }
-            set
-            {
-                this.distribucion = value;
-            }
-        }
-
-        public string TipoOrganismoStr
-        {
-            get
-            {
-                return this.tipoOrganismoStr;
-            }
-            set
-            {
-                this.tipoOrganismoStr = value;
-            }
-        }
+        private int idUsuario;
+        private int fecha;
 
         public int IdOrganismo
         {
@@ -114,6 +80,18 @@ namespace PadronApi.Dto
             set
             {
                 this.tipoOrganismo = value;
+            }
+        }
+
+        public string TipoOrganismoStr
+        {
+            get
+            {
+                return this.tipoOrganismoStr;
+            }
+            set
+            {
+                this.tipoOrganismoStr = value;
             }
         }
 
@@ -273,6 +251,18 @@ namespace PadronApi.Dto
             }
         }
 
+        public string Mail
+        {
+            get
+            {
+                return this.mail;
+            }
+            set
+            {
+                this.mail = value;
+            }
+        }
+
         public string Observaciones
         {
             get
@@ -306,6 +296,18 @@ namespace PadronApi.Dto
             set
             {
                 this.tipoDistr = value;
+            }
+        }
+
+        public string Distribucion
+        {
+            get
+            {
+                return this.distribucion;
+            }
+            set
+            {
+                this.distribucion = value;
             }
         }
 
@@ -345,6 +347,37 @@ namespace PadronApi.Dto
             }
         }
 
-        
+        public int IdUsuario
+        {
+            get
+            {
+                return this.idUsuario;
+            }
+            set
+            {
+                this.idUsuario = value;
+            }
+        }
+
+        public int Fecha
+        {
+            get
+            {
+                return this.fecha;
+            }
+            set
+            {
+                this.fecha = value;
+            }
+        }
+
+        public bool IsEqualTo(Organismo compareTo)
+        {
+            return (TipoOrganismo == compareTo.TipoOrganismo && OrganismoDesc.Equals(compareTo.organismoDesc) && 
+                Circuito == compareTo.Circuito && Ordinal == compareTo.Ordinal && Materia == compareTo.Materia && 
+                Ciudad == compareTo.Ciudad && Estado == compareTo.Estado && Calle.Equals(compareTo.Calle) && 
+                Colonia.Equals(compareTo.Colonia) && Delegacion.Equals(compareTo.Delegacion) && Cp.Equals(compareTo.Cp) && 
+                TipoDistr == compareTo.TipoDistr && Activo == compareTo.Activo);
+        }
     }
 }

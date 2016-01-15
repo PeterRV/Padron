@@ -5,6 +5,7 @@ using System.Data.OleDb;
 using System.Linq;
 using PadronApi.Dto;
 using ScjnUtilities;
+using MantesisVerIusCommonObjects.Dto;
 
 namespace PadronApi.Model
 {
@@ -101,8 +102,8 @@ namespace PadronApi.Model
             {
                 connection.Open();
 
-                string sqlQuery = "INSERT INTO C_Obra(IdObra,Titulo,TituloTxt,NumeroMaterial,NoVolumenes,IdPresentacion,IdTipoObra,AnioPublicacion,Isbn,Activo,Tiraje)" +
-                                "VALUES (@IdObra,@Titulo,@TituloTxt,@NumeroMaterial,@NoVolumenes,@IdPresentacion,@IdTipoObra,@AnioPublicacion,@Isbn,@Activo,@Tiraje)";
+                string sqlQuery = "INSERT INTO C_Obra(IdObra,Titulo,TituloTxt,NumeroMaterial,NoVolumenes,IdPresentacion,IdTipoObra,AnioPublicacion,Isbn,Activo,Tiraje,IdUsr,Fecha)" +
+                                "VALUES (@IdObra,@Titulo,@TituloTxt,@NumeroMaterial,@NoVolumenes,@IdPresentacion,@IdTipoObra,@AnioPublicacion,@Isbn,@Activo,@Tiraje,@IdUsr,@Fecha)";
 
                 OleDbCommand cmd = new OleDbCommand(sqlQuery, connection);
                 cmd.Parameters.AddWithValue("@IdObra", obra.IdObra);
@@ -119,6 +120,8 @@ namespace PadronApi.Model
                     cmd.Parameters.AddWithValue("@Isbn", String.Empty);
                 cmd.Parameters.AddWithValue("@Activo", 1);
                 cmd.Parameters.AddWithValue("@Tiraje", obra.Tiraje);
+                cmd.Parameters.AddWithValue("@IdUsr", AccesoUsuarioModel.Llave);
+                cmd.Parameters.AddWithValue("@Fecha", DateTimeUtilities.DateToInt(DateTime.Now));
 
                 cmd.ExecuteNonQuery();
 

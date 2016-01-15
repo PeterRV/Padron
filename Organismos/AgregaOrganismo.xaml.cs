@@ -249,56 +249,62 @@ namespace Organismos
 
         private void CbxEstado_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            selectedEstado = CbxEstado.SelectedItem as Estado;
-
-            if (selectedEstado.IdEstado == 999999999)
+            if (selectedEstado != null)
             {
-                Estado estado = new Estado();
-                estado.IdPais = selectedPais.IdPais;
-                PaisEstadoWin addEstado = new PaisEstadoWin(estado, false);
-                addEstado.Owner = this;
-                addEstado.ShowDialog();
+                selectedEstado = CbxEstado.SelectedItem as Estado;
 
-                if (addEstado.DialogResult == true)
+                if (selectedEstado.IdEstado == 999999999)
                 {
-                    selectedPais.Estados.Insert(0, estado);
-                    CbxEstado.SelectedItem = estado;
+                    Estado estado = new Estado();
+                    estado.IdPais = selectedPais.IdPais;
+                    PaisEstadoWin addEstado = new PaisEstadoWin(estado, false);
+                    addEstado.Owner = this;
+                    addEstado.ShowDialog();
+
+                    if (addEstado.DialogResult == true)
+                    {
+                        selectedPais.Estados.Insert(0, estado);
+                        CbxEstado.SelectedItem = estado;
+                    }
+                    else
+                    {
+                        CbxEstado.SelectedIndex = -1;
+                    }
                 }
                 else
                 {
-                    CbxEstado.SelectedIndex = -1;
+
+                    if (selectedEstado.Ciudades == null)
+                        selectedEstado.Ciudades = new PaisEstadoModel().GetCiudades(selectedEstado.IdEstado);
                 }
-            }
-            else
-            {
 
-                if (selectedEstado.Ciudades == null)
-                    selectedEstado.Ciudades = new PaisEstadoModel().GetCiudades(selectedEstado.IdEstado);
+                CbxCiudad.DataContext = selectedEstado.Ciudades;
+                CbxCiudad.IsEnabled = true;
             }
-
-            CbxCiudad.DataContext = selectedEstado.Ciudades;
-            CbxCiudad.IsEnabled = true;
         }
 
        
 
         private void CbxCiudad_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            selectedCiudad = CbxCiudad.SelectedItem as Ciudad;
-
-            if (selectedCiudad.IdCiudad == 999999999)
+            if (selectedCiudad != null)
             {
-                AddCiudad addCiudad = new AddCiudad(selectedEstado);
-                addCiudad.Owner = this;
-                addCiudad.ShowDialog();
+                selectedCiudad = CbxCiudad.SelectedItem as Ciudad;
 
-                if (addCiudad.DialogResult == true)
+                if (selectedCiudad.IdCiudad == 999999999)
                 {
-                    CbxCiudad.SelectedIndex = 0;
-                }
-                else
-                {
-                    CbxCiudad.SelectedIndex = -1;
+                    AddCiudad addCiudad = new AddCiudad(selectedEstado);
+                    addCiudad.Owner = this;
+                    addCiudad.ShowDialog();
+
+                    if (addCiudad.DialogResult == true)
+                    {
+                        CbxCiudad.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        CbxCiudad.SelectedIndex = -1;
+                    }
                 }
             }
         }
@@ -402,10 +408,11 @@ namespace Organismos
             if (CbxCiudad.SelectedIndex != -1)
                 organismo.Ciudad = Convert.ToInt32(CbxCiudad.SelectedValue);
 
+            OrganismoModel model = new OrganismoModel();
 
             if (isUpdating == null)
             {
-                bool complete = new OrganismoModel().InsertaOrganismo(organismo);
+                bool complete = model.InsertaOrganismo(organismo);
 
                 if (complete)
                 {
@@ -419,7 +426,16 @@ namespace Organismos
             }
             else if (isUpdating == true)
             {
-                new OrganismoModel().UpdateOrganismo(organismo);
+                Organismo orHistorial = model.GetOrganismos(organismo.IdOrganismo);
+
+                if (!organismo.IsEqualTo(orHistorial))
+                {
+                    model.UpdateOrganismo(organismo);
+                    model.InsertaHistorial(orHistorial);
+                }
+
+                this.Close();
+                
             }
         }
 

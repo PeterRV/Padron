@@ -235,6 +235,7 @@
                          VerticalAlignment="Top"
                          PreviewKeyDown="TxtCp_PreviewKeyDown"
                          PreviewTextInput="TxtPreviewTextInput"
+                         Text="{Binding Cp}"
                          TextWrapping="Wrap" />
                 <Label Margin="638,103,0,0"
                        HorizontalAlignment="Left"

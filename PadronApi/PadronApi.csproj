@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MantesisVerIusCommonObjects">
+      <HintPath>..\..\..\..\Visual Studio 2010\Projects\MantesisWpf\MantesisVerIusCommonObjects\bin\Debug\MantesisVerIusCommonObjects.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
@@ -56,6 +59,7 @@
     <Compile Include="Dto\Organismo.cs" />
     <Compile Include="Dto\Pais.cs" />
     <Compile Include="Dto\Titular.cs" />
+    <Compile Include="Model\AccesoModel.cs" />
     <Compile Include="Model\AutorModel.cs" />
     <Compile Include="Model\ElementalPropertiesModel.cs" />
     <Compile Include="Model\ObraModel.cs" />

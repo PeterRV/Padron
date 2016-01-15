@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PadronApi.Model;
+using System;
 using System.Configuration;
 using System.IO;
 using System.Linq;
@@ -27,8 +28,11 @@ namespace Padron
                 Directory.CreateDirectory(path);
             }
 
-            PadronWin padron = new PadronWin();
-            padron.Show();
+            if (new AccesoModel().ObtenerUsuarioContraseña("Prueba", "PRUEBA"))
+            {
+                PadronWin padron = new PadronWin();
+                padron.Show();
+            }
 
             this.Close();
         }

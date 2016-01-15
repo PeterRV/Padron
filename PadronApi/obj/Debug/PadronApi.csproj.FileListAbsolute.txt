@@ -5,3 +5,7 @@ C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\PadronApi\bin\Debug
 C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\PadronApi\obj\Debug\PadronApi.csprojResolveAssemblyReference.cache
 C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\PadronApi\obj\Debug\PadronApi.dll
 C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\PadronApi\obj\Debug\PadronApi.pdb
+C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\PadronApi\bin\Debug\MantesisVerIusCommonObjects.dll
+C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\PadronApi\bin\Debug\UtilsMantesis.dll
+C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\PadronApi\bin\Debug\MantesisVerIusCommonObjects.pdb
+C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\PadronApi\bin\Debug\UtilsMantesis.pdb
