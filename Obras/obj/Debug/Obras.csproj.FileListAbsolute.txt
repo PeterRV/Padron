@@ -34,3 +34,35 @@ C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\Obras\bin\Debug\Man
 C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\Obras\bin\Debug\UtilsMantesis.dll
 C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\Obras\bin\Debug\MantesisVerIusCommonObjects.pdb
 C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\Obras\bin\Debug\UtilsMantesis.pdb
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\bin\Debug\Obras.dll
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\bin\Debug\Obras.pdb
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\bin\Debug\PadronApi.dll
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\bin\Debug\MantesisVerIusCommonObjects.dll
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\bin\Debug\UtilsMantesis.dll
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\bin\Debug\PadronApi.pdb
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\bin\Debug\ItemsFilter.pdb
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\bin\Debug\NumericUpDownControl.pdb
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\bin\Debug\ScjnUtilities.pdb
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\bin\Debug\UIControls.pdb
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\bin\Debug\MantesisVerIusCommonObjects.pdb
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\bin\Debug\UtilsMantesis.pdb
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\obj\Debug\Obras.csprojResolveAssemblyReference.cache
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\obj\Debug\AutoresFolder\AutorWin.baml
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\obj\Debug\Kiosko\ManageObras.baml
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\obj\Debug\ObrasWin.baml
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\obj\Debug\Padron\CatalogoObrasPadron.baml
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\obj\Debug\PorAutor.baml
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\obj\Debug\PorObra.baml
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\obj\Debug\AutoresFolder\AutorWin.g.cs
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\obj\Debug\Kiosko\ManageObras.g.cs
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\obj\Debug\ObrasWin.g.cs
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\obj\Debug\Padron\CatalogoObrasPadron.g.cs
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\obj\Debug\PorAutor.g.cs
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\obj\Debug\PorObra.g.cs
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\obj\Debug\Obras_MarkupCompile.cache
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\obj\Debug\Obras.g.resources
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\obj\Debug\Obras.Properties.Resources.resources
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\obj\Debug\Obras.csproj.GenerateResource.Cache
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\obj\Debug\Obras.dll
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\obj\Debug\Obras.pdb
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Obras\bin\Debug\itextsharp.dll

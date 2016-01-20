@@ -10,30 +10,27 @@ namespace PadronApi.Reportes
 {
     public class WordReports
     {
-
         private readonly ObservableCollection<Obra> obrasImprimir;
 
         Microsoft.Office.Interop.Word.Application oWord;
         Microsoft.Office.Interop.Word.Document oDoc;
         object oMissing = System.Reflection.Missing.Value;
         object oEndOfDoc = "\\endofdoc";
-
         //Microsoft.Office.Interop.Word.Table oTable;
+        //readonly string filepath = Path.GetTempFileName() + ".docx";
+        readonly string filepath;
 
-        readonly string filepath = Path.GetTempFileName() + ".docx";
-
-        public WordReports(ObservableCollection<Obra> obrasImprimir)
+        public WordReports(ObservableCollection<Obra> obrasImprimir, string ruta)
         {
-            this.obrasImprimir = obrasImprimir;
+            this.filepath = ruta;
+            this.obrasImprimir = obrasImprimir;            
         }
-
-
+        
         public void InformeGenerlaObras()
         {
             oWord = new Microsoft.Office.Interop.Word.Application();
             oDoc = oWord.Documents.Add(ref oMissing, ref oMissing, ref oMissing, ref oMissing);
             oDoc.PageSetup.Orientation = WdOrientation.wdOrientLandscape;
-
 
             try
             {
@@ -62,7 +59,6 @@ namespace PadronApi.Reportes
                 oPara1.Range.InsertParagraphAfter();
                 oPara1.Range.InsertParagraphAfter();
 
-
                 int fila = 1;
                 Range wrdRng = oDoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
 
@@ -81,7 +77,6 @@ namespace PadronApi.Reportes
                 oTable.Columns[4].SetWidth(60, WdRulerStyle.wdAdjustSameWidth);
                 oTable.Columns[5].SetWidth(60, WdRulerStyle.wdAdjustSameWidth);
 
-
                 oTable.Cell(fila, 1).Range.Text = "Consecutivo";
                 oTable.Cell(fila, 2).Range.Text = "Título";
                 oTable.Cell(fila, 3).Range.Text = "Núm. de Material";
@@ -93,7 +88,6 @@ namespace PadronApi.Reportes
                 oTable.Cell(fila, 3).Range.Font.Bold = 1;
                 oTable.Cell(fila, 4).Range.Font.Bold = 1;
                 oTable.Cell(fila, 5).Range.Font.Bold = 1;
-
 
                 fila++;
                 int consecutivo = 1;
@@ -132,14 +126,9 @@ namespace PadronApi.Reportes
             {
                 oWord.Visible = true;
                 //oDoc.Close();
-
             }
         }
-
-
-
-
-
+        
         private WdColorIndex GetCellColor(int idColor)
         {
             if (idColor == 2)
@@ -155,7 +144,5 @@ namespace PadronApi.Reportes
             else
                 return WdColorIndex.wdBlack;
         }
-
-
     }
 }

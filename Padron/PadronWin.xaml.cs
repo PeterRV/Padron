@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
+using Microsoft.Win32;
 using System.Windows.Controls;
+using System.Collections.Generic;
+using System.IO;
 using Funcionarios;
 using Obras;
 using Obras.Padron;
@@ -9,8 +12,8 @@ using Organismos;
 using Padron.PapeleriaFolder;
 using PadronApi.Model;
 using Microsoft.Windows.Controls.Ribbon;
-using System.Collections.Generic;
 using PadronApi.Reportes;
+
 
 namespace Padron
 {
@@ -304,19 +307,62 @@ namespace Padron
 
         private void ObraTotWord_Click(object sender, RoutedEventArgs e)
         {
-
-            WordReports word = new WordReports(obraControl.CatalogoObras);
-            word.InformeGenerlaObras();
+            if(obraControl.CatalogoObras.Count != 0)
+            {
+                SaveFileDialog save = new SaveFileDialog();
+                save.Filter = "Word Files (*.docx)|*.docx|All Files (*.*)|*.*";
+                Nullable<bool> result = save.ShowDialog();
+                if (result == true)
+                {
+                    string filename = save.FileName;
+                    WordReports word = new WordReports(obraControl.CatalogoObras, filename);
+                    word.InformeGenerlaObras();
+                }
+            }
+            else
+            {
+                MessageBox.Show("No Hay Datos Para Realizar Un Reporte", "Mensaje", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
-        
+        private void ObraTotExcel_Click(object sender, RoutedEventArgs e)
+        {
+            if (obraControl.CatalogoObras.Count != 0)
+            {
+                SaveFileDialog save = new SaveFileDialog();
+                save.Filter = "Excel Files (*.xlsx)|*.xlsx|All Files (*.*)|*.*";
+                Nullable<bool> result = save.ShowDialog();
+                if (result == true)
+                {                    
+                    string filename = save.FileName;
+                    ExcelReports excel = new ExcelReports(obraControl.CatalogoObras, filename);
+                    excel.InformeGeneralObras();
+                }
+            }
+            else
+            {
+                MessageBox.Show("No Hay Datos Para Realizar Un Reporte", "Mensaje", MessageBoxButton.OK, MessageBoxImage.Information);
+            }  
+        }
 
-        
-
-        
-
-        
-
-
+        private void ObraTotPDF_Click(object sender, RoutedEventArgs e)
+        {
+            if (obraControl.CatalogoObras.Count != 0)
+            {
+                SaveFileDialog save = new SaveFileDialog();
+                save.Filter = "PDF Files (*.pdf)|*.pdf|All Files (*.*)|*.*";
+                Nullable<bool> result = save.ShowDialog();
+                if (result == true)
+                {
+                    string filename = save.FileName;
+                    PDFReports pdf = new PDFReports(obraControl.CatalogoObras, filename);
+                    pdf.InformeGenerlaObras();
+                }
+            }
+            else
+            {
+                MessageBox.Show("No Hay Datos Para Realizar Un Reporte", "Mensaje", MessageBoxButton.OK, MessageBoxImage.Information);
+            }            
+        }
     }
 }

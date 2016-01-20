@@ -59,6 +59,18 @@
                                          Label="Obra General Word"
                                          LargeImageSource="Resources/Books_128.png" />
                 </Custom:RibbonGroup>
+                <Custom:RibbonGroup Header="Exportar">
+                    <Custom:RibbonButton x:Name="ObraTotExcel"
+                                         Click="ObraTotExcel_Click"
+                                         Label="Obra General Excel"
+                                         LargeImageSource="Resources/Books_128.png" />
+                </Custom:RibbonGroup>
+                <Custom:RibbonGroup Header="Exportar">
+                    <Custom:RibbonButton x:Name="ObraTotPDF"
+                                         Click="ObraTotPDF_Click"
+                                         Label="Obra General PDF"
+                                         LargeImageSource="Resources/Books_128.png" />
+                </Custom:RibbonGroup>
             </Custom:RibbonTab>
             <Custom:RibbonTab x:Name="TabPadron" Header="Padrón">
                 <Custom:RibbonGroup Header="Papelería">
@@ -132,21 +144,19 @@
                       FontSize="16">
                 <TreeViewItem Header="Catálogo de Obras"
                               Selected="TreeViewItem_Selected"
-                              Tag="1" />
-                <TreeViewItem Header="Preparación del padrón" IsExpanded="True">
-                    <TreeViewItem Header="Papelería"
-                                  Selected="TreeViewItem_Selected"
-                                  Tag="3" />
-                    <TreeViewItem Header="Padrón"
-                                  Selected="TreeViewItem_Selected"
-                                  Tag="4" />
-                    <TreeViewItem Header="Titulares"
-                                  Selected="TreeViewItem_Selected"
-                                  Tag="5" />
-                    <TreeViewItem Header="Organismos"
-                                  Selected="TreeViewItem_Selected"
-                                  Tag="6" />
-                </TreeViewItem>
+                              Tag="1" />                
+                <TreeViewItem Header="Papelería"
+                                Selected="TreeViewItem_Selected"
+                                Tag="3" />
+                <TreeViewItem Header="Padrón"
+                                Selected="TreeViewItem_Selected"
+                                Tag="4" />
+                <TreeViewItem Header="Titulares"
+                                Selected="TreeViewItem_Selected"
+                                Tag="5" />
+                <TreeViewItem Header="Organismos"
+                                Selected="TreeViewItem_Selected"
+                                Tag="6" />
                 <TreeViewItem Header="Distribución de padrón" />
                 <TreeViewItem Header="Reportes de padrón" />
             </TreeView>

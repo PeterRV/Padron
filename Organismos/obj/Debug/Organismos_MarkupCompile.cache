@@ -4,7 +4,7 @@
 library
 C#
 .cs
-C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\Organismos\obj\Debug\
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Organismos\obj\Debug\
 Organismos
 none
 false
@@ -13,7 +13,7 @@ DEBUG;TRACE
 91852516390
 
 15165657666
-18-1049668906
+18-1051864990
 AgregaOrganismo.xaml;Ciudades\AddCiudad.xaml;Ciudades\ListaCiudades.xaml;Ciudades\Mantenimiento.xaml;Ciudades\PaisEstadoWin.xaml;Exportar.xaml;FiltroOrganismos.xaml;ListaOrganismos.xaml;SelecccionaFuncionarios.xaml;
 
 False

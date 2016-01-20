@@ -31,3 +31,34 @@ C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\Funcionarios\bin\De
 C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\Funcionarios\bin\Debug\UtilsMantesis.pdb
 C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\Funcionarios\obj\Debug\Resources\QueRecibe.baml
 C:\Users\lavega\Documents\Visual Studio 2013\Projects\Padron\Funcionarios\obj\Debug\Resources\QueRecibe.g.cs
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\bin\Debug\Funcionarios.dll
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\bin\Debug\Funcionarios.pdb
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\bin\Debug\PadronApi.dll
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\bin\Debug\MantesisVerIusCommonObjects.dll
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\bin\Debug\UtilsMantesis.dll
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\bin\Debug\PadronApi.pdb
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\bin\Debug\ItemsFilter.pdb
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\bin\Debug\ScjnUtilities.pdb
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\bin\Debug\UIControls.pdb
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\bin\Debug\MantesisVerIusCommonObjects.pdb
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\bin\Debug\UtilsMantesis.pdb
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\obj\Debug\Funcionarios.csprojResolveAssemblyReference.cache
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\obj\Debug\Resources\Historial.baml
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\obj\Debug\Resources\QueRecibe.baml
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\obj\Debug\SeleccionaOrgAdscrip.baml
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\obj\Debug\AgregaFuncionario.g.cs
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\obj\Debug\ListaFuncionarios.g.cs
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\obj\Debug\Resources\Historial.g.cs
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\obj\Debug\Resources\QueRecibe.g.cs
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\obj\Debug\SeleccionaOrgAdscrip.g.cs
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\obj\Debug\Funcionarios_MarkupCompile.cache
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\obj\Debug\Funcionarios_MarkupCompile.lref
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\obj\Debug\AgregaFuncionario.baml
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\obj\Debug\ListaFuncionarios.baml
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\obj\Debug\Funcionarios.g.resources
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\obj\Debug\Funcionarios.Properties.Resources.resources
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\obj\Debug\Funcionarios.csproj.GenerateResource.Cache
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\obj\Debug\Funcionarios.dll
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\obj\Debug\Funcionarios.pdb
+C:\Users\prueda\Documents\2016\ProyectoPadronWin\Padron\Funcionarios\bin\Debug\itextsharp.dll
